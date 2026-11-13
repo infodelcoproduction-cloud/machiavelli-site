@@ -1275,7 +1275,17 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   <div class="piece-bar">
     <div class="wrap row1">
       <a class="lnk" href="#stock"><span class="ar" aria-hidden="true">←</span> Le stock</a>
-      <span class="kicker" id="piece-no"></span>
+      <span id="piece-no" hidden></span>
+      <div class="menu" id="pmenu">
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="pmenu-list">Menu <span class="bars" aria-hidden="true"><i></i><i></i></span></button>
+        <div class="menu-list" id="pmenu-list" role="navigation" aria-label="Navigation principale" hidden>
+          <span class="led" aria-hidden="true"></span>
+          <a href="#stock"><span class="k">I</span>Notre stock</a>
+          <a href="#maison" data-go><span class="k">II</span>Qui sommes-nous</a>
+          <a href="#services" data-go><span class="k">III</span>Nos services</a>
+          <a href="#contact" data-go><span class="k">IV</span>Contact</a>
+        </div>
+      </div>
     </div>
     <div class="led" aria-hidden="true"></div>
   </div>
@@ -1548,14 +1558,14 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       view.hidden = true; body.classList.remove('locked'); body.style.top = ''; lightout.classList.remove('on');
       const hl = document.getElementById('hall');
       const end = hl.offsetTop + hl.offsetHeight - innerHeight;
-      if (toMaison) { toMaison = false; leaveHall(); scrollTo(0, document.getElementById('maison').getBoundingClientRect().top + scrollY); lastHp = 1; autoStock = false; }
+      if (toMaison || goTo) { const id = goTo || 'maison'; toMaison = false; goTo = null; leaveHall(); scrollTo(0, document.getElementById(id).getBoundingClientRect().top + scrollY); lastHp = 1; autoStock = false; }
       else if (hallMode) { scrollTo(0, 0); HP = 0.5; lastHp = 0.5; autoStock = false; lockHall(); onScroll(); }
       else scrollTo(0, savedY > end - innerHeight * 0.3 && savedY <= end + 2 ? hl.offsetTop + (hl.offsetHeight - innerHeight) * 0.45 : savedY);
     };
     anim ? pass('Machiavelli Watches', go) : go();
   }
   // défilement animé (couloir automatique, découverte)
-  let autoMode = null, lastHp = null, scrollAnim = 0, toMaison = false;
+  let autoMode = null, lastHp = null, scrollAnim = 0, toMaison = false, goTo = null;
   function animScroll(to, dur, done, fast) {
     cancelAnimationFrame(scrollAnim);
     const from = scrollY, t0 = performance.now();
@@ -1813,6 +1823,21 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       ? 'Votre proposition s’est ouverte dans WhatsApp. Ajoutez-y vos 3 photos, puis envoyez : nous vous répondons au plus vite.'
       : 'Votre demande s’est ouverte dans WhatsApp. Envoyez-la : nous lançons la recherche et revenons vers vous.';
   });
+
+  // ---------- menu de la fiche produit (même menu, en haut à droite) ----------
+  {
+    const pBtn = document.querySelector('#pmenu .menu-btn'), pList = document.getElementById('pmenu-list');
+    const setP = (open) => { pList.hidden = !open; pBtn.setAttribute('aria-expanded', String(open)); };
+    pBtn.addEventListener('click', (e) => { e.stopPropagation(); setP(pList.hidden); });
+    document.addEventListener('click', (e) => { if (!pList.hidden && !e.target.closest('#pmenu')) setP(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pList.hidden) { setP(false); pBtn.focus(); } });
+    pList.addEventListener('click', (e) => {
+      const a = e.target.closest('a'); if (!a) return;
+      e.preventDefault(); setP(false);
+      if (a.hasAttribute('data-go')) goTo = a.getAttribute('href').slice(1);
+      location.hash = a.getAttribute('href');
+    });
+  }
 
   // ---------- menu déroulant ----------
   const menuBtn = document.querySelector('.menu-btn');
