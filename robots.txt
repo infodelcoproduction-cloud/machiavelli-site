@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://infodelcoproduction-cloud.github.io/machiavelli-site/sitemap.xml
