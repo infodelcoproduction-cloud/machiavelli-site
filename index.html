@@ -2315,10 +2315,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   addEventListener('resize', onScroll);
   update();
   if (reduce) return;
-  addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse') return;
-    mx = (e.clientX / innerWidth) * 2 - 1; my = (e.clientY / innerHeight) * 2 - 1; onScroll();
-  }, { passive: true });
 })();
 </script>
 <script type="importmap">
