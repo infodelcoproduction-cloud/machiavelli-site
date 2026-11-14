@@ -7,9 +7,8 @@
 <style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Machiavelli Watches — Montres de luxe d'occasion à Liège</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alike&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&display=swap">
+<!-- polices hébergées avec le site : aucune requête vers un service tiers -->
+<style>@font-face{font-family:'Alike';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/alike-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url(fonts/cormorant-garamond-latin-300-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2')}</style>
 <style>
 /* Layout : une porte d'inox avec un bouton « Entrer » ; elle se lève pendant qu'on avance dans l'espace.
    L'intérieur est un mur d'inox brossé continu, traversé de liserés lumineux et de grilles en nid d'abeille rétroéclairées.
@@ -791,6 +790,28 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
 @keyframes zoomframe { from { opacity: .6; transform: scale(.9); } to { opacity: 1; transform: none; } }
 @keyframes arrivelight { from { transform: scale(.88); filter: brightness(1.45); } to { transform: none; filter: none; } }
 @keyframes arrive { from { transform: scale(1.14); filter: brightness(.5); } to { transform: none; filter: none; } }
+/* bandeau légal en bas de chaque page + pages Mentions légales / Confidentialité */
+.legal-bar { position: relative; margin-top: clamp(60px, 8vw, 110px); padding: 26px 0 calc(22px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(180deg, rgba(34,32,30,.62), rgba(34,32,30,.9)); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.legal-bar .rule { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--glow-core); box-shadow: 0 0 10px 2px rgba(255,200,127,.45); }
+.legal-bar .lb-in { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 30px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--mute); }
+.legal-bar a { color: var(--mute); text-decoration: none; padding: 10px 0; transition: color .3s; }
+.legal-bar a:hover, .legal-bar a:focus-visible { color: var(--glow); }
+.legal-bar .lb-c { display: inline-flex; align-items: center; gap: 14px; color: var(--ink); }
+.legal-bar .lb-c img { width: 24px; opacity: .9; }
+.legal-bar .lb-note { margin-top: 14px; font-size: 11px; letter-spacing: .03em; line-height: 1.6; color: var(--dim); }
+@media (max-width: 640px) { .legal-bar .lb-in { flex-direction: column; align-items: flex-start; gap: 2px; } .legal-bar .lb-c { order: -1; margin-bottom: 6px; } }
+.legal { position: fixed; inset: 0; z-index: 92; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.legal[hidden], .legal article[hidden] { display: none; }
+.legal .legal-body { position: relative; max-width: 900px; padding-top: clamp(50px, 7vw, 100px); }
+.legal .upd { display: block; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--glow); margin-bottom: 18px; }
+.legal h1 { font-size: clamp(46px, 5.4vw, 80px); font-weight: 300; line-height: 1.02; margin-bottom: clamp(24px, 3vw, 40px); }
+.legal h2 { font-size: clamp(26px, 2.4vw, 34px); font-weight: 400; margin: clamp(34px, 4vw, 50px) 0 12px; }
+.legal p, .legal li { color: var(--mute); line-height: 1.75; max-width: 70ch; }
+.legal p + p { margin-top: 12px; }
+.legal ul { margin: 0; padding-left: 1.1em; }
+.legal strong { color: var(--ink); font-weight: 400; }
+.legal article a { color: var(--ink); }
+.legal .todo { color: var(--glow); }
 /* page du stock : aucune animation d'apparition des blocs (demande du 14 nov.) */
 .stock .shelf, .stock .shelf.in, .stock .shelf .nk .watch, .stock .shelf.in .nk .watch { opacity: 1; transform: none; transition: none; }
 .stock .latest .frame, .stock.arrive .latest .frame, .stock.arrive-light .latest .frame { animation: none; opacity: 1; transform: none; }
@@ -1021,7 +1042,15 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <div class="led floorled" aria-hidden="true" style="grid-column:1/-1"></div>
       <div class="base" aria-hidden="true"></div>
     </div>
-    <footer class="end"><div class="wrap in"><img src="img/monogramme.png" alt="Machiavelli Watches"><span>© 2026 MACHIAVELLI · LIÈGE</span><span>MACHIAVELLI N'EST AFFILIÉ À AUCUNE MANUFACTURE HORLOGÈRE</span></div></footer>
+<footer class="legal-bar">
+  <div class="rule" aria-hidden="true"></div>
+  <div class="wrap lb-in">
+    <a href="#mentions-legales">Mentions légales</a>
+    <span class="lb-c"><img src="img/monogramme.png" alt="">© 2027 Machiavelli Watches</span>
+    <a href="#confidentialite">Politique de confidentialité</a>
+  </div>
+  <p class="wrap lb-note">Machiavelli Watches est un revendeur indépendant de montres d'occasion. Il n'est affilié à aucune maison horlogère ni à aucun distributeur officiel.</p>
+</footer>
   </section>
 </main>
 
@@ -1057,6 +1086,15 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <p class="stock-note">Montres représentées par des illustrations en attendant les photos réelles. Prix en euros.</p>
     </div>
   </div>
+<footer class="legal-bar">
+  <div class="rule" aria-hidden="true"></div>
+  <div class="wrap lb-in">
+    <a href="#mentions-legales">Mentions légales</a>
+    <span class="lb-c"><img src="img/monogramme.png" alt="">© 2027 Machiavelli Watches</span>
+    <a href="#confidentialite">Politique de confidentialité</a>
+  </div>
+  <p class="wrap lb-note">Machiavelli Watches est un revendeur indépendant de montres d'occasion. Il n'est affilié à aucune maison horlogère ni à aucun distributeur officiel.</p>
+</footer>
 </section>
 
 <!-- formulaires : vendre / sourcer -->
@@ -1293,7 +1331,110 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     <div class="led" aria-hidden="true"></div>
   </div>
   <div class="wrap pbody" id="piece-body"></div>
+<footer class="legal-bar">
+  <div class="rule" aria-hidden="true"></div>
+  <div class="wrap lb-in">
+    <a href="#mentions-legales">Mentions légales</a>
+    <span class="lb-c"><img src="img/monogramme.png" alt="">© 2027 Machiavelli Watches</span>
+    <a href="#confidentialite">Politique de confidentialité</a>
+  </div>
+  <p class="wrap lb-note">Machiavelli Watches est un revendeur indépendant de montres d'occasion. Il n'est affilié à aucune maison horlogère ni à aucun distributeur officiel.</p>
+</footer>
 </section>
+
+<!-- informations légales -->
+<section class="legal" id="legal" hidden aria-labelledby="legal-title">
+  <div class="sbg inox" aria-hidden="true"></div>
+  <div class="piece-bar">
+    <div class="wrap row1">
+      <a class="lnk" href="#" data-legal-back><span class="ar" aria-hidden="true">←</span> Retour au site</a>
+      <span class="kicker" id="legal-title">Informations légales</span>
+    </div>
+    <div class="led" aria-hidden="true"></div>
+  </div>
+  <div class="wrap legal-body">
+    <article data-legal="mentions-legales">
+      <span class="upd">Dernière mise à jour : 14 novembre 2026</span>
+      <h1>Mentions <em>légales.</em></h1>
+
+      <h2>Éditeur du site</h2>
+      <p>Le site machiavelliwatches.com est édité par <span class="todo">[DÉNOMINATION SOCIALE]</span>, <span class="todo">[FORME JURIDIQUE]</span>, qui exploite la marque Machiavelli Watches.</p>
+      <ul>
+        <li>Siège social : <span class="todo">[ADRESSE DU SIÈGE SOCIAL]</span></li>
+        <li>Numéro d'entreprise (BCE) : <span class="todo">[NUMÉRO BCE]</span> · RPM <span class="todo">[TRIBUNAL DE L'ENTREPRISE]</span></li>
+        <li>TVA : <span class="todo">[NUMÉRO DE TVA BE]</span></li>
+        <li>Téléphone et WhatsApp : <a href="https://wa.me/32484709109" target="_blank" rel="noopener">+32 484 70 91 09</a></li>
+        <li>E-mail : <span class="todo">[ADRESSE E-MAIL]</span></li>
+        <li>Responsable de la publication : Nizar Baeri</li>
+      </ul>
+
+      <h2>Activité</h2>
+      <p>Machiavelli Watches est un commerce de montres de luxe d'occasion : vente, rachat, recherche de pièces sur demande (sourcing), dépôt-vente, ainsi que services d'entretien (révision, polissage, films de protection).</p>
+
+      <h2>Indépendance</h2>
+      <p>Machiavelli Watches est un revendeur indépendant. Il n'est affilié à aucune maison horlogère, à aucune manufacture ni à aucun distributeur officiel, et n'est ni autorisé, ni sponsorisé, ni approuvé par eux. Les noms de marques, de modèles et les références sont cités uniquement pour désigner les pièces proposées ; ils restent la propriété de leurs titulaires respectifs.</p>
+      <p>Chaque montre est authentifiée par un expert avant sa mise en vente. La garantie proposée par Machiavelli Watches est une garantie propre à Machiavelli Watches : elle ne constitue pas une garantie du fabricant et ne remplace pas la garantie légale de conformité dont bénéficient les consommateurs.</p>
+
+      <h2>Prix et ventes</h2>
+      <p>Les prix sont indiqués en euros (<span class="todo">[PRÉCISER LE RÉGIME DE TVA]</span>). Les pièces sont proposées sous réserve de disponibilité ; les informations et photos sont données de bonne foi et peuvent être précisées à tout moment. Le site présente le stock : aucune vente n'y est conclue en ligne. Lorsqu'une vente est conclue à distance avec un consommateur, celui-ci dispose du droit de rétractation de 14 jours prévu par le Code de droit économique, sauf exceptions légales.</p>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>Les textes, photographies, le monogramme MW, l'identité visuelle et la conception du site sont la propriété de Machiavelli Watches ou sont utilisés avec autorisation. Toute reproduction, totale ou partielle, sans accord écrit préalable est interdite.</p>
+
+      <h2>Responsabilité et liens</h2>
+      <p>Machiavelli Watches veille à l'exactitude des informations publiées, sans pouvoir garantir l'absence d'erreur. Les liens vers WhatsApp, Instagram, TikTok et Facebook mènent vers des services tiers soumis à leurs propres conditions.</p>
+
+      <h2>Hébergement</h2>
+      <p>Le site est hébergé par GitHub Pages, service de GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+
+      <h2>Droit applicable et litiges</h2>
+      <p>Le présent site et son utilisation sont soumis au droit belge. En cas de litige, les tribunaux de Liège sont compétents, sans préjudice des règles impératives protégeant les consommateurs. Un consommateur peut aussi s'adresser gratuitement au Service de médiation pour le consommateur (<a href="https://mediationconsommateur.be" target="_blank" rel="noopener">mediationconsommateur.be</a>).</p>
+    </article>
+
+    <article data-legal="confidentialite" hidden>
+      <span class="upd">Dernière mise à jour : 14 novembre 2026</span>
+      <h1>Politique de <em>confidentialité.</em></h1>
+      <p>Cette politique explique quelles données personnelles Machiavelli Watches traite, pourquoi et quels sont vos droits, conformément au Règlement général sur la protection des données (RGPD) et à la loi belge du 30 juillet 2018.</p>
+
+      <h2>Responsable du traitement</h2>
+      <p><span class="todo">[DÉNOMINATION SOCIALE]</span> (Machiavelli Watches), <span class="todo">[ADRESSE DU SIÈGE SOCIAL]</span>, BCE <span class="todo">[NUMÉRO BCE]</span>. Contact pour toute question relative à vos données : <span class="todo">[ADRESSE E-MAIL]</span>.</p>
+
+      <h2>Navigation sur le site</h2>
+      <p>Le site n'utilise <strong>aucun cookie</strong>, aucun outil de mesure d'audience, aucune publicité et aucun traceur. Ses polices et ses scripts sont hébergés avec le site : la consultation des pages ne transmet aucune donnée à des tiers.</p>
+      <p>Comme tout hébergeur, GitHub enregistre des journaux techniques (adresse IP, date et page consultée) afin d'assurer la sécurité et le bon fonctionnement du service. GitHub étant établi aux États-Unis, ces données peuvent y être transférées, dans le cadre des garanties prévues par le RGPD (cadre de protection des données UE–États-Unis ou clauses contractuelles types).</p>
+
+      <h2>Quand vous nous contactez</h2>
+      <p>Les boutons « Demander », « Prendre rendez-vous », « Proposer ma montre » et « Sourcer ma montre » préparent un message dans WhatsApp : le site lui-même n'enregistre rien. Les informations que vous nous envoyez (nom, numéro de téléphone, description et photos d'une montre, budget…) sont utilisées uniquement pour vous répondre et donner suite à votre demande. Base légale : les mesures précontractuelles prises à votre demande et notre intérêt légitime à répondre aux personnes qui nous écrivent. WhatsApp, Instagram, TikTok et Facebook sont des services de Meta et de TikTok, soumis à leurs propres politiques de confidentialité.</p>
+
+      <h2>Clients, vendeurs et dépôt-vente</h2>
+      <p>Pour un achat, un rachat ou un dépôt-vente, nous traitons les données nécessaires à la transaction : identité, coordonnées, informations sur la pièce et documents qui l'accompagnent, données de paiement et de facturation. Base légale : l'exécution du contrat et le respect de nos obligations légales (comptables, fiscales et, le cas échéant, de lutte contre le blanchiment d'argent).</p>
+
+      <h2>Durée de conservation</h2>
+      <p>Les échanges sans suite sont conservés au maximum 12 mois. Les données liées à une transaction sont conservées pendant la durée imposée par la loi, notamment 10 ans pour les documents comptables.</p>
+
+      <h2>Destinataires</h2>
+      <p>Vos données ne sont ni vendues ni louées. Elles ne sont communiquées qu'à nos prestataires lorsque c'est nécessaire (comptable, expert en authentification, transporteur) ou aux autorités lorsque la loi l'impose.</p>
+
+      <h2>Vos droits</h2>
+      <p>Vous pouvez demander l'accès à vos données, leur rectification, leur effacement, la limitation du traitement, vous opposer au traitement, demander la portabilité de vos données et retirer à tout moment un consentement donné. Écrivez-nous à <span class="todo">[ADRESSE E-MAIL]</span> ou sur WhatsApp ; nous répondons dans un délai d'un mois.</p>
+      <p>Vous pouvez aussi introduire une réclamation auprès de l'Autorité de protection des données, rue de la Presse 35, 1000 Bruxelles (<a href="https://www.autoriteprotectiondonnees.be" target="_blank" rel="noopener">autoriteprotectiondonnees.be</a>).</p>
+
+      <h2>Modifications</h2>
+      <p>Cette politique peut être mise à jour, par exemple si de nouveaux services sont ajoutés au site. La date de dernière mise à jour figure en haut de la page.</p>
+    </article>
+  </div>
+<footer class="legal-bar">
+  <div class="rule" aria-hidden="true"></div>
+  <div class="wrap lb-in">
+    <a href="#mentions-legales">Mentions légales</a>
+    <span class="lb-c"><img src="img/monogramme.png" alt="">© 2027 Machiavelli Watches</span>
+    <a href="#confidentialite">Politique de confidentialité</a>
+  </div>
+  <p class="wrap lb-note">Machiavelli Watches est un revendeur indépendant de montres d'occasion. Il n'est affilié à aucune maison horlogère ni à aucun distributeur officiel.</p>
+</footer>
+</section>
+
+
 
 <div class="shutter inox" id="shutter" aria-hidden="true">
   <img src="img/monogramme.png" alt="">
@@ -1740,8 +1881,23 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const t = e.target.closest('.gth'); if (t) { setView(+t.dataset.v); return; }
     const st = e.target.closest('[data-step]'); if (st) setView(gv + +st.dataset.step);
   });
+
+  // ---------- pages légales (#mentions-legales, #confidentialite) ----------
+  const legal = document.getElementById('legal');
+  let legalFromSite = false;
+  function showLegal(id) {
+    legal.querySelectorAll('[data-legal]').forEach((a) => (a.hidden = a.dataset.legal !== id));
+    legal.hidden = false; legal.scrollTop = 0;
+  }
+  legal.querySelector('[data-legal-back]').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (legalFromSite) history.back(); else { legal.hidden = true; history.replaceState(null, '', location.pathname + location.search); }
+  });
   function route(first) {
     const h = location.hash;
+    const lg = h.match(/^#(mentions-legales|confidentialite)$/);
+    if (lg) { legalFromSite = !first; showLegal(lg[1]); return; }
+    legal.hidden = true;
     const m = h.match(/^#montre-([A-Za-z0-9_-]+)$/);
     if (m) { gv = 0; if (view.hidden) showStock(false); openPiece(m[1]); return; }
     piece.hidden = true;
@@ -1751,8 +1907,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   addEventListener('hashchange', () => route(false));
   // au rechargement : toujours repartir de l'accueil (« Bienvenue chez Machiavelli »), sauf lien direct vers le stock, une fiche ou l'espace privé
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  if (!/^#(stock|montre-|gestion|stories|demandes)/.test(location.hash)) { if (location.hash) history.replaceState(null, '', location.pathname + location.search); scrollTo(0, 0); }
-  if (location.hash === '#stock' || /^#montre-/.test(location.hash)) route(true);
+  if (!/^#(stock|montre-|gestion|stories|demandes|mentions-legales|confidentialite)/.test(location.hash)) { if (location.hash) history.replaceState(null, '', location.pathname + location.search); scrollTo(0, 0); }
+  if (location.hash === '#stock' || /^#(montre-|mentions-legales|confidentialite)/.test(location.hash)) route(true);
 
   // ---------- formulaires : vendre / sourcer ----------
   const SITE_URL = 'https://claude.ai/artifact/38eLFw8r4fRmy3FcNxcUnx';
@@ -2356,7 +2512,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
 })();
 </script>
 <script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+{ "imports": { "three": "./vendor/three/build/three.module.js", "three/addons/": "./vendor/three/examples/jsm/" } }
 </script>
 <script type="module">
 // Couloir en WebGL : plaques d'inox, lattes au plafond, béton ciré, porte blindée qui s'ouvre sur la lumière.
