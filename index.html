@@ -2,8 +2,8 @@
 <meta name="description" content="Machiavelli Watches, Liège : vente, rachat, dépôt-vente et sourcing de montres de luxe d'occasion. Chaque pièce est authentifiée par un expert.">
 <meta property="og:title" content="Machiavelli Watches — Montres de luxe d'occasion à Liège">
 <meta property="og:description" content="Vente, rachat, dépôt-vente et sourcing de montres de luxe. Chaque pièce authentifiée par un expert.">
-<meta property="og:image" content="https://machiavelliwatches.com/img/og.jpg"><meta property="og:type" content="website"><meta property="og:url" content="https://machiavelliwatches.com/">
-<link rel="icon" type="image/png" href="img/favicon.png"><link rel="canonical" href="https://machiavelliwatches.com/">
+<meta property="og:image" content="https://infodelcoproduction-cloud.github.io/machiavelli-site/img/og.jpg"><meta property="og:type" content="website"><meta property="og:url" content="https://infodelcoproduction-cloud.github.io/machiavelli-site/">
+<link rel="icon" type="image/png" href="img/favicon.png"><link rel="canonical" href="https://infodelcoproduction-cloud.github.io/machiavelli-site/">
 <style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Machiavelli Watches — Montres de luxe d'occasion à Liège</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -481,6 +481,13 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 .gmain .ledbox, .gth .ledbox { position: absolute; inset: -12px; border: 2px solid var(--glow-core); box-shadow: 0 0 8px 1px rgba(255,217,160,.85), 0 0 40px 8px rgba(255,200,127,.25), inset 0 0 22px 2px rgba(255,200,127,.2); pointer-events: none; }
 .gmain .nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border: 0; background: rgba(34,32,30,.45); color: var(--ink); font-family: var(--font-display); font-size: 26px; cursor: pointer; z-index: 2; }
 .gmain .nav.p { left: 10px; } .gmain .nav.n { right: 10px; }
+.share-wrap { position: relative; margin-top: 30px; }
+.share-wrap .share { display: inline-flex; align-items: center; gap: 12px; }
+.share-wrap .share svg { color: var(--glow); }
+.share-menu { position: absolute; left: 0; top: calc(100% + 12px); z-index: 6; min-width: 230px; display: flex; flex-direction: column; padding: 8px 0; background: rgba(34,32,30,.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(255,240,214,.45), 0 0 26px rgba(255,200,127,.25); }
+.share-menu[hidden] { display: none; }
+.share-menu a, .share-menu button { display: block; text-align: left; padding: 12px 20px; background: none; border: 0; color: var(--ink); text-decoration: none; cursor: pointer; font: inherit; font-size: 15px; }
+.share-menu a:hover, .share-menu button:hover { color: var(--glow); }
 .gvid { width: min(100% - 24px, 54vh); margin: 18px auto 0; display: flex; flex-direction: column; gap: 18px; }
 .gvid .gv { position: relative; }
 .gvid video { display: block; width: 100%; max-height: 80vh; object-fit: contain; background: #1d1b19; }
@@ -1887,6 +1894,30 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const pieceBody = document.getElementById('piece-body');
   const VIEWS = ['Face', 'Trois-quarts', 'Cadran', 'Profil'];
   let curPhotos = [];
+  // ---------- bouton Partager de la fiche : feuille de partage du téléphone (toutes les applis + copier le lien),
+  //            menu de secours sur ordinateur. Le lien mène à une page d'aperçu (photo, prix) qui ouvre la fiche.
+  const shareBase = () => (/github\.io$|machiavelliwatches\.com$/.test(location.hostname) ? location.origin + location.pathname.replace(/[^/]*$/, '') : 'https://infodelcoproduction-cloud.github.io/machiavelli-site/');
+  pieceBody.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-share]'), item = e.target.closest('[data-sh]');
+    const wrap = e.target.closest('.share-wrap'); if (!wrap) return;
+    const id = wrap.querySelector('[data-share]').dataset.share, w = S.find((x) => x.id === id); if (!w) return;
+    const url = shareBase() + 'm/' + encodeURIComponent(id) + '.html', title = `${w.brand} ${w.model}`;
+    const text = `${title}${w.ref ? ' · réf. ' + w.ref : ''} — ${w.price === null ? 'Réservée' : euro(w.price) + ' TTC'} chez Machiavelli Watches`;
+    const menu = wrap.querySelector('.share-menu');
+    if (btn) {
+      if (navigator.share) { try { await navigator.share({ title, text, url }); } catch (err) {} return; }
+      menu.querySelector('[data-sh="wa"]').href = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
+      menu.querySelector('[data-sh="fb"]').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+      menu.querySelector('[data-sh="mail"]').href = 'mailto:?subject=' + encodeURIComponent(title + ' — Machiavelli Watches') + '&body=' + encodeURIComponent(text + '\n' + url);
+      menu.hidden = !menu.hidden; return;
+    }
+    if (item && item.dataset.sh === 'copy') {
+      try { await navigator.clipboard.writeText(url); item.textContent = 'Lien copié ✓'; } catch (err) { item.textContent = url; }
+      setTimeout(() => { item.textContent = 'Copier le lien'; menu.hidden = true; }, 1600);
+    } else if (item) menu.hidden = true;
+  });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.share-wrap')) document.querySelectorAll('.share-menu').forEach((m) => (m.hidden = true)); });
+
   function openPiece(id, quiet) {
     const w = S.find((x) => x.id === id); if (!w) { if (!quiet) location.hash = 'stock'; return; }
     const wa = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Bonjour, je suis intéressé par la ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''}.`);
@@ -1923,6 +1954,15 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           <li>Garantie 1 an, extensible à 2 ans</li>
           <li>Disponible immédiatement</li>
         </ul>
+        <div class="share-wrap">
+          <button class="lnk lit share" type="button" data-share="${esc(w.id)}">Partager <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 11v9h14v-9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="share-menu" hidden role="menu">
+            <button type="button" data-sh="copy" role="menuitem">Copier le lien</button>
+            <a data-sh="wa" role="menuitem" target="_blank" rel="noopener">WhatsApp</a>
+            <a data-sh="fb" role="menuitem" target="_blank" rel="noopener">Facebook</a>
+            <a data-sh="mail" role="menuitem">E-mail</a>
+          </div>
+        </div>
         ${curPhotos.length ? '' : '<p class="note">Illustration en attendant les photos réelles de la pièce.</p>'}
       </div>`;
     syncSeconds(pieceBody);
