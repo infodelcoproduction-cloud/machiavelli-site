@@ -2444,22 +2444,25 @@ if (renderer) {
   scene.add(new THREE.HemisphereLight('#ffe9cc', '#3a3026', 0.35));
   for (let z = 0; z > -L; z -= 5) { const l = new THREE.PointLight('#ffd6a0', 3.2, 7, 1.8); l.position.set(0, H - 0.6, z); scene.add(l); }
 
-  // --- fond : porte blindée en deux plaques + lumière derrière
+  // --- fond : mur d'inox percé d'un hublot rond. La porte de coffre pivote sur sa charnière (à droite)
+  //     et l'on plonge à travers le hublot, dans la lumière, jusqu'au stock.
   const endZ = -L;
-  const glowMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#FFF4E4').multiplyScalar(1) });
-  const glow = new THREE.Mesh(new THREE.PlaneGeometry(W * 3, H * 3), glowMat); glow.position.set(0, H / 2, endZ - 0.14); scene.add(glow); // la lumière est collée derrière les portes : aucun couloir visible au-delà
-  // deux plaques pleines qui se chevauchent au centre : aucune fente, aucune lueur
-  const dw = W / 2 + 0.03;
-  const doorGeo = new THREE.BoxGeometry(dw, H + 0.3, 0.18);
-  const doorL = new THREE.Mesh(doorGeo, doorMat), doorR = new THREE.Mesh(doorGeo, doorMat);
-  doorL.position.set(-dw / 2 + 0.03, H / 2, endZ + 0.01); doorR.position.set(dw / 2 - 0.03, H / 2, endZ - 0.01); scene.add(doorL, doorR);
-  const doorWhole = new THREE.Mesh(new THREE.BoxGeometry(W + 0.02, H + 0.3, 0.2), doorMat); doorWhole.position.set(0, H / 2, endZ + 0.03); scene.add(doorWhole);
+  const RO = 0.74, HX = 0.86, HY = 1.62;   // rayon du hublot, axe de la charnière, hauteur du centre
+  const glowMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#FFF4E4') });
+  const glow = new THREE.Mesh(new THREE.PlaneGeometry(W * 4, H * 4), glowMat); glow.position.set(0, H / 2, endZ - 1.6); scene.add(glow);
+  const wallShape = new THREE.Shape();
+  wallShape.moveTo(-W / 2 - 0.01, -0.15); wallShape.lineTo(W / 2 + 0.01, -0.15); wallShape.lineTo(W / 2 + 0.01, H + 0.15); wallShape.lineTo(-W / 2 - 0.01, H + 0.15); wallShape.closePath();
+  { const h = new THREE.Path(); h.absarc(0, HY, RO, 0, Math.PI * 2, true); wallShape.holes.push(h); }
+  const wallGeo = new THREE.ExtrudeGeometry(wallShape, { depth: 0.2, bevelEnabled: false, curveSegments: 96 });
+  { const uv = wallGeo.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, (uv.getX(i) + W / 2) / W, uv.getY(i) / H); }
+  const wall = new THREE.Mesh(wallGeo, doorMat); wall.position.z = endZ - 0.08; scene.add(wall);
+  const tunnelMat = new THREE.MeshStandardMaterial({ color: '#d8d2c8', metalness: 0.75, roughness: 0.3, side: THREE.BackSide, envMapIntensity: 0.9 });
+  const tunnel = new THREE.Mesh(new THREE.CylinderGeometry(RO, RO, 0.7, 96, 1, true), tunnelMat); tunnel.rotation.x = Math.PI / 2; tunnel.position.set(0, HY, endZ - 0.43); scene.add(tunnel);
   // cadre d'inox autour de l'ouverture
   for (const side of [-1, 1]) { const f = new THREE.Mesh(new THREE.BoxGeometry(1.2, H + 0.4, 0.3), plateMat); f.position.set(side * (W / 2 + 0.6), H / 2, endZ - 0.05); scene.add(f); }
-  const behind = new THREE.PointLight('#fff1dc', 0, 30, 1.2); behind.position.set(0, H / 2, endZ - 0.4); scene.add(behind);
-  // --- porte de coffre ronde au centre de la porte : lunette boulonnée, pênes radiaux, mouvement automatique visible. Deux moitiés qui suivent chaque battant.
-  renderer.localClippingEnabled = true;
-  const WY = 1.62, WZ = endZ + 0.135;
+  const behind = new THREE.PointLight('#fff1dc', 0, 30, 1.2); behind.position.set(0, HY, endZ - 0.9); scene.add(behind);
+  // --- porte de coffre ronde : lunette boulonnée, pênes, mouvement automatique visible en façade, boulonnerie au dos.
+  const WY = HY;
   const TAU = Math.PI * 2;
   // textures de finition horlogère, dessinées une fois
   const mkTex = (draw, rep = 1) => { const c = document.createElement('canvas'); c.width = c.height = 512; draw(c.getContext('2d')); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; if (rep !== 1) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rep, rep); } return t; };
@@ -2584,13 +2587,11 @@ if (renderer) {
     logo: new THREE.MeshStandardMaterial({ map: logoTex, color: '#ffffff', emissive: '#fff6ea', emissiveMap: logoTex, emissiveIntensity: 0.35, metalness: 0.3, roughness: 0.35, transparent: true, alphaTest: 0.05 }),
   };
   function buildWheel(clip) {
-    const m = {}; for (const k in baseMats) { m[k] = baseMats[k].clone(); m[k].clippingPlanes = [clip]; }
-    const g = new THREE.Group(); g.position.set(0, WY, WZ);
+    const m = {}; for (const k in baseMats) { m[k] = baseMats[k].clone(); if (clip) m[k].clippingPlanes = [clip]; }
+    const g = new THREE.Group();
     const add = (geo, mat, x, y, z, parent = g, cyl = false) => { const o = new THREE.Mesh(geo, mat); o.position.set(x, y, z); if (cyl) o.rotation.x = Math.PI / 2; parent.add(o); return o; };
     const screw = (x, y, z, rot, parent = g) => { add(G.screw, m.steel, x, y, z, parent, true); const l = add(G.slotLine, m.dark, x, y, z + 0.005, parent); l.rotation.z = rot; };
     const P = {};
-    add(G.door, m.door, 0, 0, -0.005, g, true); add(G.seam, m.slot, 0, 0, -0.004);
-    add(G.logo, m.logo, 0, 1.12, 0.004);   // monogramme MW centré au-dessus du cercle
     const bez = add(lathe, m.bezel, 0, 0, 0); bez.rotation.x = Math.PI / 2;
     for (let k = 0; k < 24; k++) { const a = (k / 24) * TAU; const h = add(G.boltHead, m.chrome, Math.cos(a) * 0.645, Math.sin(a) * 0.645, 0.074, g, true); h.rotation.y = a; }
     add(G.main, m.plate, 0, 0, 0.012, g, true);
@@ -2623,22 +2624,53 @@ if (renderer) {
     add(G.hub, m.steel, 0, 0, 0.012, P.rotor, true);
     add(G.hubRing, m.rose, 0, 0, 0.02, P.rotor);
     add(G.hubScrew, m.rose, 0, 0, 0.026, P.rotor, true); const sl = add(G.slotLine, m.dark, 0, 0, 0.032, P.rotor); sl.scale.set(2.4, 1.2, 1); sl.rotation.z = Math.PI / 2;
-    scene.add(g);
     return { g, parts: P, clip };
   }
-  const clipL = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);   // garde x <= 0
-  const clipR = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);    // garde x >= 0
-  const wheels = [buildWheel(clipL), buildWheel(clipR)];
+  // ---- porte : charnière à droite, collerette, bouchon épais, pênes latéraux, boulonnerie au dos
+  const hinge = new THREE.Group(); hinge.position.set(HX, HY, endZ + 0.16); scene.add(hinge);
+  const doorG = new THREE.Group(); doorG.position.x = -HX; hinge.add(doorG);
+  const front = buildWheel(null); doorG.add(front.g);
+  const wheels = [front];
+  const M = baseMats;
+  const mk = (geo, mat, x, y, z, parent, cyl) => { const o = new THREE.Mesh(geo, mat); o.position.set(x, y, z); if (cyl) o.rotation.x = Math.PI / 2; parent.add(o); return o; };
+  mk(new THREE.CylinderGeometry(0.78, 0.78, 0.045, 128), M.door, 0, 0, -0.022, doorG, true);
+  mk(new THREE.TorusGeometry(0.78, 0.006, 8, 160), M.gold, 0, 0, 0, doorG);
+  mk(new THREE.CylinderGeometry(0.715, 0.7, 0.3, 96), M.lock, 0, 0, -0.19, doorG, true);
+  const edgeBolts = [];
+  for (let k = 0; k < 12; k++) { const a = (k / 12) * TAU + TAU / 24; const o = mk(new THREE.CylinderGeometry(0.03, 0.03, 0.16, 24), M.chrome, 0, 0, -0.19, doorG); o.rotation.z = a - Math.PI / 2; o.userData.a = a; edgeBolts.push(o); }
+  // dos de la porte : croix, couronne, tringles radiales et rivets dorés
+  const back = new THREE.Group(); back.position.z = -0.34; back.rotation.y = Math.PI; doorG.add(back);
+  mk(new THREE.CylinderGeometry(0.69, 0.69, 0.02, 96), M.dark, 0, 0, 0, back, true);
+  mk(new THREE.TorusGeometry(0.5, 0.028, 12, 120), M.steel, 0, 0, 0.03, back);
+  mk(new THREE.TorusGeometry(0.66, 0.02, 12, 120), M.steel, 0, 0, 0.025, back);
+  mk(new THREE.CylinderGeometry(0.14, 0.15, 0.08, 64), M.steel, 0, 0, 0.04, back, true);
+  mk(new THREE.TorusGeometry(0.1, 0.012, 10, 60), M.gold, 0, 0, 0.082, back);
+  for (const r of [0, Math.PI / 2]) { const bar = mk(new THREE.BoxGeometry(1.32, 0.08, 0.05), M.steel, 0, 0, 0.035, back); bar.rotation.z = r; }
+  for (let k = 0; k < 16; k++) { const a = (k / 16) * TAU; const rod = mk(new THREE.CylinderGeometry(0.014, 0.014, 0.4, 16), M.gold, Math.cos(a) * 0.42, Math.sin(a) * 0.42, 0.02, back); rod.rotation.z = a - Math.PI / 2; }
+  const rivet = new THREE.SphereGeometry(0.014, 12, 8);
+  for (let k = 0; k < 24; k++) { const a = (k / 24) * TAU; mk(rivet, M.gold, Math.cos(a) * 0.58, Math.sin(a) * 0.58, 0.02, back); }
+  for (const d of [-0.55, -0.4, -0.25, 0.25, 0.4, 0.55]) { mk(rivet, M.gold, d, 0, 0.065, back); mk(rivet, M.gold, 0, d, 0.065, back); }
+  // ferrures de charnière (bras dorés sur la porte, axe chromé sur le mur)
+  for (const y of [-0.42, 0.42]) {
+    mk(new THREE.BoxGeometry(0.24, 0.1, 0.06), M.gold, HX - 0.12, y, 0.03, doorG);
+    mk(new THREE.CylinderGeometry(0.045, 0.045, 0.2, 32), M.chrome, HX, HY + y, endZ + 0.16, scene);
+  }
+  mk(new THREE.CylinderGeometry(0.02, 0.02, 1.0, 16), M.chrome, HX, HY, endZ + 0.16, scene);
+  // sur le mur : couronne rivetée, joint sombre, cadre carré gravé, monogramme au-dessus
+  mk(ring(0.8, 0.93, 0.02), M.door, 0, HY, endZ + 0.12, scene);
+  mk(ring(0.78, 0.8, 0.012), M.slot, 0, HY, endZ + 0.12, scene);
+  for (let k = 0; k < 40; k++) { const a = (k / 40) * TAU; mk(rivet, M.gold, Math.cos(a) * 0.865, HY + Math.sin(a) * 0.865, endZ + 0.142, scene); }
+  for (const [w, h, x, y] of [[1.94, 0.012, 0, HY + 0.97], [1.94, 0.012, 0, HY - 0.97], [0.012, 1.94, -0.97, HY], [0.012, 1.94, 0.97, HY]]) mk(new THREE.BoxGeometry(w, h, 0.01), M.slot, x, y, endZ + 0.122, scene);
+  mk(G.logo, baseMats.logo, 0, HY + 1.33, endZ + 0.125, scene);   // monogramme MW centré au-dessus du hublot
   const ease = (v) => v * v * (3 - 2 * v);
   function setWheel(u, o, T = 0) {
-    const shift = o * (dw + 0.05);
-    clipL.constant = -shift; clipR.constant = -shift;
-    wheels[0].g.position.x = -shift; wheels[1].g.position.x = shift;
-    // déverrouillage : le rotor fait un tour complet puis revient en bas, les pênes se rétractent
+    hinge.rotation.y = ease(o) * Math.PI / 2 * 0.97;   // la porte pivote vers nous, sur sa charnière
+    // déverrouillage : le rotor fait un tour complet, puis les pênes se rétractent
     const spin = ease(Math.min(1, u / 0.8));
     const sway = Math.sin(T * 1.6) * (0.42 + 0.18 * Math.sin(T * 0.31));   // le rotor balance en permanence, comme au poignet
     const retract = ease(Math.min(1, Math.max(0, (u - 0.8) / 0.2)));
     const tick = T * 5, stepA = (Math.floor(tick) + Math.min(1, (tick % 1) * 5)) * (TAU / 15);
+    for (const b of edgeBolts) { const r = 0.74 - retract * 0.09, a = b.userData.a; b.position.x = Math.cos(a) * r; b.position.y = Math.sin(a) * r; }
     for (const w of wheels) {
       const P = w.parts;
       P.rotor.rotation.z = -spin * TAU + sway;
@@ -2670,7 +2702,7 @@ if (renderer) {
   function targets() {
     const p = state.p;
     const walk = sm(0, 0.55, p);
-    const z = 2 + walk * (endZ + 3.2 - 2) + sm(0.55, 0.88, p) * (-2.95);
+    const z = 2 + walk * (endZ + 3.2 - 2) + sm(0.55, 0.88, p) * (-3.75);   // on traverse le hublot
     return { z, unlock: sm(0.28, 0.48, p), open: sm(0.5, 0.7, p), mx: state.mx, my: state.my };
   }
   function frame() {
@@ -2684,12 +2716,11 @@ if (renderer) {
     camera.position.set(0, 1.62, cur.z);
     camera.rotation.set(-cur.my * 0.035, -cur.mx * 0.07, 0);
     const o = cur.open;
-    doorL.position.x = -dw / 2 + 0.03 - o * (dw + 0.05); doorR.position.x = dw / 2 - 0.03 + o * (dw + 0.05);
     setWheel(cur.unlock, o, performance.now() / 1000);
-    glow.visible = o > 0.004; doorWhole.visible = o <= 0.004; doorL.visible = doorR.visible = o > 0.004;
-    glowMat.color.setRGB(1, 0.957, 0.894).multiplyScalar(1 + o * 1.6 + sm(0.78, 1, state.p) * 3);
-    behind.intensity = o * 6 + sm(0.78, 1, state.p) * 18;
-    bloom.strength = (0.38 + o * 0.3) * (1 - sm(0.62, 0.78, state.p) * 0.85);
+    glow.visible = o > 0.004;
+    glowMat.color.setRGB(1, 0.957, 0.894).multiplyScalar(0.9 + o * 0.5 + sm(0.74, 1, state.p) * 3);
+    behind.intensity = o * 1.4 + sm(0.74, 1, state.p) * 18;
+    bloom.strength = (0.38 + o * 0.12) * (1 - sm(0.66, 0.8, state.p) * 0.85);
     renderer.toneMappingExposure = 0.92 + sm(0.8, 1, state.p) * 0.5;
     composer.render();
     dirty = false;
