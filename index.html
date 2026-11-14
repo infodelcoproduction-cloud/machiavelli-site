@@ -802,6 +802,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
 @media (max-width: 640px) { .legal-bar .lb-in { flex-direction: column; align-items: flex-start; gap: 2px; } .legal-bar .lb-c { order: -1; margin-bottom: 6px; } }
 .legal { position: fixed; inset: 0; z-index: 92; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .legal[hidden], .legal article[hidden] { display: none; }
+.legal .sbg { position: fixed; inset: -2%; z-index: -1; }
+.legal .sbg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(34,32,30,.72), rgba(34,32,30,.84)); }
 .legal .legal-body { position: relative; max-width: 900px; padding-top: clamp(50px, 7vw, 100px); }
 .legal .upd { display: block; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--glow); margin-bottom: 18px; }
 .legal h1 { font-size: clamp(46px, 5.4vw, 80px); font-weight: 300; line-height: 1.02; margin-bottom: clamp(24px, 3vw, 40px); }
