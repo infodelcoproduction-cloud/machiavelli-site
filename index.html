@@ -791,6 +791,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
 @keyframes zoomframe { from { opacity: .6; transform: scale(.9); } to { opacity: 1; transform: none; } }
 @keyframes arrivelight { from { transform: scale(.88); filter: brightness(1.45); } to { transform: none; filter: none; } }
 @keyframes arrive { from { transform: scale(1.14); filter: brightness(.5); } to { transform: none; filter: none; } }
+/* page du stock : aucune animation d'apparition des blocs (demande du 14 nov.) */
+.stock .shelf, .stock .shelf.in, .stock .shelf .nk .watch, .stock .shelf.in .nk .watch { opacity: 1; transform: none; transition: none; }
+.stock .latest .frame, .stock.arrive .latest .frame, .stock.arrive-light .latest .frame { animation: none; opacity: 1; transform: none; }
 
 /* ---------- la montre, dessinée ---------- */
 .watch { --s: 120px; position: relative; width: var(--s); height: calc(var(--s) * 1.2); }
