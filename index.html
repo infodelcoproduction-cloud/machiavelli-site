@@ -1693,13 +1693,17 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     document.getElementById('frames').innerHTML = html;
     syncSeconds(document);
   }
+  // lien direct vers une fiche (#montre-…) : si le stock n'est pas encore chargé, on attend son arrivée au lieu de renvoyer au stock
+  let stockReady = false, pendingPiece = null;
   function setStock(list) {
+    stockReady = true;
     S = [...list].sort((a, b) => (b.added || 0) - (a.added || 0));
     S.forEach((w, i) => (w.i = i));
     paintBrands(); paintLatest();
     if (!view.hidden) render();
     const m = location.hash.match(/^#montre-([A-Za-z0-9_-]+)$/);
-    if (m && !piece.hidden) openPiece(m[1], true);
+    if (m && pendingPiece === m[1]) { pendingPiece = null; openPiece(m[1]); }
+    else if (m && !piece.hidden) openPiece(m[1], true);
   }
   paintBrands(); paintLatest();
   brandsEl.addEventListener('click', (e) => {
@@ -1919,7 +1923,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   document.addEventListener('click', (e) => { if (!e.target.closest('.share-wrap')) document.querySelectorAll('.share-menu').forEach((m) => (m.hidden = true)); });
 
   function openPiece(id, quiet) {
-    const w = S.find((x) => x.id === id); if (!w) { if (!quiet) location.hash = 'stock'; return; }
+    const w = S.find((x) => x.id === id);
+    if (!w && !stockReady && !quiet) { pendingPiece = id; setTimeout(() => { if (pendingPiece === id) { pendingPiece = null; stockReady = true; openPiece(id); } }, 6000); return; }
+    if (!w) { if (!quiet) location.hash = 'stock'; return; }
     const wa = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Bonjour, je suis intéressé par la ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''}.`);
     const wv = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Bonjour, je souhaite prendre rendez-vous pour voir la ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''}.`);
     document.getElementById('piece-no').textContent = w.brand;
