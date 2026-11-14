@@ -486,6 +486,8 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 .share-wrap .share svg { color: var(--glow); }
 .share-menu { position: fixed; left: 0; top: 0; z-index: 400; min-width: 230px; display: flex; flex-direction: column; padding: 8px 0; background: rgba(34,32,30,.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(255,240,214,.45), 0 0 26px rgba(255,200,127,.25); }
 .share-menu[hidden] { display: none; }
+/* protection des photos et vidéos : pas d'appui long « Enregistrer l'image », pas de glisser-déposer, pas de sélection */
+img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
 .share-menu .sh-h { margin: 0; padding: 10px 20px 8px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,240,214,.6); }
 .share-menu .sh-close { display: none; }
 .share-menu .sh-mob { display: none; }
@@ -1407,7 +1409,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <p>Les prix sont indiqués en euros, toutes taxes comprises. S'agissant de biens d'occasion, ils relèvent du régime particulier d'imposition de la marge bénéficiaire : la TVA n'est pas mentionnée séparément sur la facture et n'est pas récupérable par l'acheteur. Les pièces sont proposées sous réserve de disponibilité ; les informations et photos sont données de bonne foi et peuvent être précisées à tout moment. Le site présente le stock : aucune vente n'y est conclue en ligne. Lorsqu'une vente est conclue à distance avec un consommateur, celui-ci dispose du droit de rétractation de 14 jours prévu par le Code de droit économique, sauf exceptions légales.</p>
 
       <h2>Propriété intellectuelle</h2>
-      <p>Les textes, photographies, le monogramme MW, l'identité visuelle et la conception du site sont la propriété de Machiavelli Watches ou sont utilisés avec autorisation. Toute reproduction, totale ou partielle, sans accord écrit préalable est interdite.</p>
+      <p>Les textes, photographies, vidéos, le monogramme MW, l'identité visuelle et la conception du site sont la propriété de Machiavelli Watches ou sont utilisés avec autorisation. Toute reproduction, totale ou partielle, sans accord écrit préalable est interdite.</p>
 
       <h2>Responsabilité et liens</h2>
       <p>Machiavelli Watches veille à l'exactitude des informations publiées, sans pouvoir garantir l'absence d'erreur. Les liens vers WhatsApp, Instagram, TikTok et Facebook mènent vers des services tiers soumis à leurs propres conditions.</p>
@@ -1909,6 +1911,10 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   let curPhotos = [];
   // ---------- bouton Partager de la fiche : feuille de partage du téléphone (toutes les applis + copier le lien),
   //            menu de secours sur ordinateur. Le lien mène à une page d'aperçu (photo, prix) qui ouvre la fiche.
+  // protection des photos et vidéos : clic droit, glisser-déposer et appui long désactivés sur les médias
+  const isMedia = (t) => t && t.closest && t.closest('img, video, .gv, .ledbox');
+  document.addEventListener('contextmenu', (e) => { if (isMedia(e.target)) e.preventDefault(); });
+  document.addEventListener('dragstart', (e) => { if (isMedia(e.target)) e.preventDefault(); });
   const shareBase = () => (/github\.io$|machiavelliwatches\.com$/.test(location.hostname) ? location.origin + location.pathname.replace(/[^/]*$/, '') : 'https://infodelcoproduction-cloud.github.io/machiavelli-site/');
   // menu de secours, posé directement dans <body> pour ne jamais être coupé par la fiche
   const shMenu = document.createElement('div');
@@ -1986,7 +1992,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           ${n > 1 ? '<button class="nav p" type="button" data-step="-1" aria-label="Photo précédente">‹</button><button class="nav n" type="button" data-step="1" aria-label="Photo suivante">›</button>' : ''}
           <span class="tag" id="gtag">${curPhotos.length ? `Photo 1 / ${n}` : 'Vue de face · photo réelle à venir'}</span></div>
         ${n > 1 ? `<div class="gths" role="group" aria-label="Photos de la montre">${Array.from({ length: n }, (_, i) => `<button class="gth" type="button" data-v="${i}" aria-pressed="${i === 0}" aria-label="${curPhotos.length ? 'Photo ' + (i + 1) : VIEWS[i]}"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length ? 'photo' : 'v' + i}">${thumb(i)}</span><span class="ledbox" aria-hidden="true"></span></button>`).join('')}</div>` : ''}
-        ${w.video && w.video.web ? `<div class="gvid"><span class="kicker">Vidéo de la pièce</span><div class="gv"><video src="${videoURL(w.video.web)}" ${w.video.poster ? `poster="${photoURL(w.video.poster)}"` : ''} controls playsinline muted loop preload="metadata"></video><span class="ledbox" aria-hidden="true"></span></div></div>` : ''}
+        ${w.video && w.video.web ? `<div class="gvid"><span class="kicker">Vidéo de la pièce</span><div class="gv"><video src="${videoURL(w.video.web)}" ${w.video.poster ? `poster="${photoURL(w.video.poster)}"` : ''} controls controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback playsinline muted loop preload="metadata"></video><span class="ledbox" aria-hidden="true"></span></div></div>` : ''}
       </div>
       <div class="pinfo">
         <span class="ref">Réf. ${esc(w.ref || 'à préciser')}</span>
