@@ -484,8 +484,17 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 .share-wrap { position: relative; margin-top: 30px; }
 .share-wrap .share { display: inline-flex; align-items: center; gap: 12px; }
 .share-wrap .share svg { color: var(--glow); }
-.share-menu { position: absolute; left: 0; top: calc(100% + 12px); z-index: 6; min-width: 230px; display: flex; flex-direction: column; padding: 8px 0; background: rgba(34,32,30,.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(255,240,214,.45), 0 0 26px rgba(255,200,127,.25); }
+.share-menu { position: fixed; left: 0; top: 0; z-index: 400; min-width: 230px; display: flex; flex-direction: column; padding: 8px 0; background: rgba(34,32,30,.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(255,240,214,.45), 0 0 26px rgba(255,200,127,.25); }
 .share-menu[hidden] { display: none; }
+.share-menu .sh-h { margin: 0; padding: 10px 20px 8px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,240,214,.6); }
+.share-menu .sh-close { display: none; }
+.share-menu .sh-mob { display: none; }
+@media (hover: none) and (pointer: coarse), (max-width: 700px) {
+  .share-menu .sh-mob { display: block; }
+  .share-menu { position: fixed; left: 0; right: 0; top: auto; bottom: 0; z-index: 400; min-width: 0; max-height: 75vh; overflow: auto; padding: 10px 0 calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -1px 0 rgba(255,240,214,.55), 0 -18px 40px rgba(0,0,0,.45), 0 -2px 26px rgba(255,200,127,.25), 0 0 0 200vmax rgba(20,19,18,.5); }
+  .share-menu a, .share-menu button { padding: 15px 24px; font-size: 16px; border-top: 1px solid rgba(255,240,214,.08); }
+  .share-menu .sh-close { display: block; text-align: center; color: rgba(255,240,214,.7); }
+}
 .share-menu a, .share-menu button { display: block; text-align: left; padding: 12px 20px; background: none; border: 0; color: var(--ink); text-decoration: none; cursor: pointer; font: inherit; font-size: 15px; }
 .share-menu a:hover, .share-menu button:hover { color: var(--glow); }
 .gvid { width: min(100% - 24px, 54vh); margin: 18px auto 0; display: flex; flex-direction: column; gap: 18px; }
@@ -1901,26 +1910,64 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   // ---------- bouton Partager de la fiche : feuille de partage du téléphone (toutes les applis + copier le lien),
   //            menu de secours sur ordinateur. Le lien mène à une page d'aperçu (photo, prix) qui ouvre la fiche.
   const shareBase = () => (/github\.io$|machiavelliwatches\.com$/.test(location.hostname) ? location.origin + location.pathname.replace(/[^/]*$/, '') : 'https://infodelcoproduction-cloud.github.io/machiavelli-site/');
+  // menu de secours, posé directement dans <body> pour ne jamais être coupé par la fiche
+  const shMenu = document.createElement('div');
+  shMenu.className = 'share-menu'; shMenu.hidden = true; shMenu.setAttribute('role', 'menu');
+  shMenu.innerHTML = '<p class="sh-h">Partager cette montre</p>'
+    + '<button type="button" data-sh="copy" role="menuitem">Copier le lien</button>'
+    + '<a data-sh="wa" role="menuitem" target="_blank" rel="noopener">WhatsApp</a>'
+    + '<a data-sh="sms" role="menuitem" class="sh-mob">Messages</a>'
+    + '<a data-sh="mail" role="menuitem">E-mail</a>'
+    + '<a data-sh="fb" role="menuitem" target="_blank" rel="noopener">Facebook</a>'
+    + '<a data-sh="tg" role="menuitem" target="_blank" rel="noopener">Telegram</a>'
+    + '<a data-sh="x" role="menuitem" target="_blank" rel="noopener">X</a>'
+    + '<a data-sh="in" role="menuitem" target="_blank" rel="noopener">LinkedIn</a>'
+    + '<button type="button" data-sh="close" class="sh-close" role="menuitem">Fermer</button>';
+  document.body.appendChild(shMenu);
+  let shUrl = '';
+  const shSheet = () => matchMedia('(hover: none) and (pointer: coarse), (max-width: 700px)').matches;
+  const shClose = () => { shMenu.hidden = true; };
   pieceBody.addEventListener('click', async (e) => {
-    const btn = e.target.closest('[data-share]'), item = e.target.closest('[data-sh]');
-    const wrap = e.target.closest('.share-wrap'); if (!wrap) return;
-    const id = wrap.querySelector('[data-share]').dataset.share, w = S.find((x) => x.id === id); if (!w) return;
+    const btn = e.target.closest('[data-share]'); if (!btn) return;
+    e.stopPropagation();
+    const id = btn.dataset.share, w = S.find((x) => x.id === id); if (!w) return;
     const url = shareBase() + 'm/' + encodeURIComponent(id) + '.html', title = `${w.brand} ${w.model}`;
     const text = `${title}${w.ref ? ' · réf. ' + w.ref : ''} — ${w.price === null ? 'Réservée' : euro(w.price) + ' TTC'} chez Machiavelli Watches`;
-    const menu = wrap.querySelector('.share-menu');
-    if (btn) {
-      if (navigator.share) { try { await navigator.share({ title, text, url }); } catch (err) {} return; }
-      menu.querySelector('[data-sh="wa"]').href = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
-      menu.querySelector('[data-sh="fb"]').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
-      menu.querySelector('[data-sh="mail"]').href = 'mailto:?subject=' + encodeURIComponent(title + ' — Machiavelli Watches') + '&body=' + encodeURIComponent(text + '\n' + url);
-      menu.hidden = !menu.hidden; return;
+    const E = encodeURIComponent, data = { title, text, url };
+    // 1) feuille de partage du système (iPhone, iPad, Mac, Android, Windows, ChromeOS) ;
+    // 2) si le navigateur ne l'a pas ou la refuse (Firefox ordinateur, aperçu Claude, navigateurs intégrés) : notre menu.
+    if (navigator.share && (!navigator.canShare || navigator.canShare(data))) {
+      try { await navigator.share(data); return; } catch (err) { if (err && err.name === 'AbortError') return; }
     }
-    if (item && item.dataset.sh === 'copy') {
-      try { await navigator.clipboard.writeText(url); item.textContent = 'Lien copié ✓'; } catch (err) { item.textContent = url; }
-      setTimeout(() => { item.textContent = 'Copier le lien'; menu.hidden = true; }, 1600);
-    } else if (item) menu.hidden = true;
+    if (!shMenu.hidden) { shClose(); return; }
+    shUrl = url;
+    const set = (k, h) => (shMenu.querySelector(`[data-sh="${k}"]`).href = h);
+    set('wa', 'https://wa.me/?text=' + E(text + ' ' + url));
+    set('sms', 'sms:' + (/iPhone|iPad|Macintosh/.test(navigator.userAgent) ? '&' : '?') + 'body=' + E(text + ' ' + url));
+    set('mail', 'mailto:?subject=' + E(title + ' — Machiavelli Watches') + '&body=' + E(text + '\n' + url));
+    set('fb', 'https://www.facebook.com/sharer/sharer.php?u=' + E(url));
+    set('tg', 'https://t.me/share/url?url=' + E(url) + '&text=' + E(text));
+    set('x', 'https://twitter.com/intent/tweet?url=' + E(url) + '&text=' + E(text));
+    set('in', 'https://www.linkedin.com/sharing/share-offsite/?url=' + E(url));
+    shMenu.style.left = shMenu.style.top = '';
+    shMenu.hidden = false;
+    if (!shSheet()) {
+      const r = btn.getBoundingClientRect(), mw = shMenu.offsetWidth, mh = shMenu.offsetHeight;
+      let top = r.bottom + 12; if (top + mh > innerHeight - 12) top = Math.max(12, r.top - 12 - mh);
+      shMenu.style.left = Math.max(12, Math.min(r.left, innerWidth - mw - 12)) + 'px'; shMenu.style.top = top + 'px';
+    }
   });
-  document.addEventListener('click', (e) => { if (!e.target.closest('.share-wrap')) document.querySelectorAll('.share-menu').forEach((m) => (m.hidden = true)); });
+  shMenu.addEventListener('click', async (e) => {
+    const it = e.target.closest('[data-sh]'); if (!it) return;
+    if (it.dataset.sh === 'copy') {
+      try { await navigator.clipboard.writeText(shUrl); it.textContent = 'Lien copié ✓'; } catch (err) { it.textContent = shUrl; }
+      setTimeout(() => { it.textContent = 'Copier le lien'; shClose(); }, 1600); return;
+    }
+    setTimeout(shClose, 60);
+  });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.share-menu')) shClose(); });
+  document.addEventListener('scroll', () => { if (!shMenu.hidden && !shSheet()) shClose(); }, true);
+  addEventListener('hashchange', shClose); addEventListener('resize', () => { if (!shSheet()) shClose(); });
 
   function openPiece(id, quiet) {
     const w = S.find((x) => x.id === id);
@@ -1962,12 +2009,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         </ul>
         <div class="share-wrap">
           <button class="lnk lit share" type="button" data-share="${esc(w.id)}">Partager <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 11v9h14v-9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="share-menu" hidden role="menu">
-            <button type="button" data-sh="copy" role="menuitem">Copier le lien</button>
-            <a data-sh="wa" role="menuitem" target="_blank" rel="noopener">WhatsApp</a>
-            <a data-sh="fb" role="menuitem" target="_blank" rel="noopener">Facebook</a>
-            <a data-sh="mail" role="menuitem">E-mail</a>
-          </div>
         </div>
         ${curPhotos.length ? '' : '<p class="note">Illustration en attendant les photos réelles de la pièce.</p>'}
       </div>`;
