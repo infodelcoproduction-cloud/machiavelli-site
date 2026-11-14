@@ -1060,8 +1060,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         </div>
         <dl class="coords">
           <div><dt>WhatsApp</dt><dd id="c-wa">+32 484 70 91 09</dd><button class="copy-btn" type="button" data-copy="c-wa">Copier</button></div>
-          <div><dt>Rendez-vous</dt><dd>Rue des Dominicains 15-17<br>4000 Liège</dd></div>
-          <div><dt>Réseaux</dt><dd>@machiavelli_watches</dd></div>
+          <div><dt>Rendez-vous</dt><dd id="c-adr">Rue des Dominicains 15-17<br>4000 Liège</dd><button class="copy-btn" type="button" data-copy="c-adr" data-copy-text="Rue des Dominicains 15-17, 4000 Liège">Copier</button></div>
         </dl>
       </div>
       <div class="side r" aria-hidden="true"><div class="hc"></div><div class="led-v"></div></div>
@@ -2608,7 +2607,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const el = document.getElementById(b.dataset.copy);
     const ok = () => { b.textContent = 'Copié'; setTimeout(() => (b.textContent = 'Copier'), 1600); };
     const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.textContent.trim()).then(ok).catch(sel); else sel();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(b.dataset.copyText || el.textContent.trim()).then(ok).catch(sel); else sel();
   }));
 
   // ---------- défilement ----------
