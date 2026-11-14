@@ -1746,6 +1746,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     else if (!view.hidden) hideStock();
   }
   addEventListener('hashchange', () => route(false));
+  // au rechargement : toujours repartir de l'accueil (« Bienvenue chez Machiavelli »), sauf lien direct vers le stock, une fiche ou l'espace privé
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!/^#(stock|montre-|gestion|stories|demandes)/.test(location.hash)) { if (location.hash) history.replaceState(null, '', location.pathname + location.search); scrollTo(0, 0); }
   if (location.hash === '#stock' || /^#montre-/.test(location.hash)) route(true);
 
   // ---------- formulaires : vendre / sourcer ----------
