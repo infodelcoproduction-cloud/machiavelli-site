@@ -481,6 +481,10 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 .gmain .ledbox, .gth .ledbox { position: absolute; inset: -12px; border: 2px solid var(--glow-core); box-shadow: 0 0 8px 1px rgba(255,217,160,.85), 0 0 40px 8px rgba(255,200,127,.25), inset 0 0 22px 2px rgba(255,200,127,.2); pointer-events: none; }
 .gmain .nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border: 0; background: rgba(34,32,30,.45); color: var(--ink); font-family: var(--font-display); font-size: 26px; cursor: pointer; z-index: 2; }
 .gmain .nav.p { left: 10px; } .gmain .nav.n { right: 10px; }
+.gvid { width: min(100% - 24px, 54vh); margin: 18px auto 0; display: flex; flex-direction: column; gap: 18px; }
+.gvid .gv { position: relative; }
+.gvid video { display: block; width: 100%; max-height: 80vh; object-fit: contain; background: #1d1b19; }
+.gvid .ledbox { position: absolute; inset: -12px; border: 2px solid var(--glow-core); box-shadow: 0 0 8px 1px rgba(255,217,160,.85), 0 0 40px 6px rgba(255,200,127,.3); pointer-events: none; }
 .gmain .tag { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; font-size: 10px; letter-spacing: .26em; text-transform: uppercase; color: rgba(34,24,14,.75); z-index: 2; }
 .gths { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding: 0 12px; }
 .gth { position: relative; aspect-ratio: 1; border: 0; padding: 0; background: none; cursor: pointer; opacity: .55; transition: opacity .4s; }
@@ -1641,6 +1645,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const syncSeconds = (root) => { const s = new Date().getSeconds(); root.querySelectorAll('.ss').forEach((h) => h.style.setProperty('--sd', `-${s}s`)); };
   const STATIC = true;
   const photoURL = (id) => 'photos/' + id + '.jpg';
+  const videoURL = (id) => 'videos/' + id + '.mp4';
   const phHTML = (w, k) => (w.photos && w.photos.length ? `<img src="${photoURL(w.photos[0])}" alt="${esc(w.brand + ' ' + w.model)}" loading="lazy">` : watchHTML(w, k));
   const metaHTML = (w) => `<span class="meta"><span class="ref">${esc(w.ref || 'Réf. à préciser')}</span><span class="nm">${esc(w.brand)} ${esc(w.model)}</span><span class="pr">${w.price === null ? 'Réservée' : euro(w.price)}</span></span>`;
   syncSeconds(document);
@@ -1897,6 +1902,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           ${n > 1 ? '<button class="nav p" type="button" data-step="-1" aria-label="Photo précédente">‹</button><button class="nav n" type="button" data-step="1" aria-label="Photo suivante">›</button>' : ''}
           <span class="tag" id="gtag">${curPhotos.length ? `Photo 1 / ${n}` : 'Vue de face · photo réelle à venir'}</span></div>
         ${n > 1 ? `<div class="gths" role="group" aria-label="Photos de la montre">${Array.from({ length: n }, (_, i) => `<button class="gth" type="button" data-v="${i}" aria-pressed="${i === 0}" aria-label="${curPhotos.length ? 'Photo ' + (i + 1) : VIEWS[i]}"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length ? 'photo' : 'v' + i}">${thumb(i)}</span><span class="ledbox" aria-hidden="true"></span></button>`).join('')}</div>` : ''}
+        ${w.video && w.video.web ? `<div class="gvid"><span class="kicker">Vidéo de la pièce</span><div class="gv"><video src="${videoURL(w.video.web)}" ${w.video.poster ? `poster="${photoURL(w.video.poster)}"` : ''} controls playsinline muted loop preload="metadata"></video><span class="ledbox" aria-hidden="true"></span></div></div>` : ''}
       </div>
       <div class="pinfo">
         <span class="ref">Réf. ${esc(w.ref || 'à préciser')}</span>
