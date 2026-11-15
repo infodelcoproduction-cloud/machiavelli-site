@@ -3,7 +3,7 @@
 <meta property="og:title" content="Machiavelli Watches — Montres de luxe d'occasion à Liège">
 <meta property="og:description" content="Vente, rachat, dépôt-vente et sourcing de montres de luxe. Chaque pièce authentifiée par un expert.">
 <meta property="og:image" content="https://infodelcoproduction-cloud.github.io/machiavelli-site/img/og.jpg"><meta property="og:type" content="website"><meta property="og:url" content="https://infodelcoproduction-cloud.github.io/machiavelli-site/">
-<link rel="icon" type="image/png" href="img/favicon.png"><link rel="canonical" href="https://infodelcoproduction-cloud.github.io/machiavelli-site/">
+<link rel="icon" type="image/png" href="img/favicon.png"><link rel="canonical" href="https://infodelcoproduction-cloud.github.io/machiavelli-site/"><link rel="alternate" hreflang="fr" href="https://infodelcoproduction-cloud.github.io/machiavelli-site/"><link rel="alternate" hreflang="en" href="https://infodelcoproduction-cloud.github.io/machiavelli-site/en.html">
 <style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Machiavelli Watches — Montres de luxe d'occasion à Liège</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -641,6 +641,8 @@ img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select
 .menu-list a .k { font-family: var(--font-text); font-size: 10px; letter-spacing: .26em; color: var(--glow); width: 22px; }
 .menu-list a::after { content: ""; position: absolute; left: 26px; right: 26px; bottom: 0; height: 1px; background: rgba(255,255,255,.14); }
 .menu-list a:last-child::after { display: none; }
+.menu-list a.lang-sw { font-family: var(--font-text); font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.78); min-height: 46px; align-items: center; border-top: 1px solid rgba(255,240,214,.22); }
+.menu-list a.lang-sw:hover { color: #fff; }
 .menu-list a:hover, .menu-list a:focus-visible { color: var(--glow); padding-left: 32px; }
 @media (max-width: 900px) { .menu-list { min-width: min(300px, calc(100vw - 40px)); } }
 /* ---------- espace vendeur ---------- */
@@ -942,6 +944,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         <a href="#contact" data-glide><span class="k">IV</span>Contact</a>
         <a href="#gestion" class="adm-link" hidden><span class="k">✦</span>Espace vendeur</a>
         <a href="#demandes" class="adm-link" hidden><span class="k">✦</span>Demandes &amp; matchs</a>
+        <a href="en.html" class="lang-sw" lang="en" hreflang="en"><span class="k">EN</span>English</a>
       </div>
     </div>
   </div>
@@ -1352,6 +1355,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           <a href="#maison" data-go><span class="k">II</span>Qui sommes-nous</a>
           <a href="#services" data-go><span class="k">III</span>Nos services</a>
           <a href="#contact" data-go><span class="k">IV</span>Contact</a>
+          <a href="en.html" class="lang-sw" lang="en" hreflang="en"><span class="k">EN</span>English</a>
         </div>
       </div>
     </div>
@@ -1973,6 +1977,15 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   document.addEventListener('click', (e) => { if (!e.target.closest('.share-menu')) shClose(); });
   document.addEventListener('scroll', () => { if (!shMenu.hidden && !shSheet()) shClose(); }, true);
   addEventListener('hashchange', shClose); addEventListener('resize', () => { if (!shSheet()) shClose(); });
+
+  // ---------- langue : FR ⇄ EN (en gardant la fiche ou la page ouverte) ----------
+  if (!STATIC) document.querySelectorAll('.lang-sw').forEach((a) => (a.hidden = true));
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('.lang-sw'); if (!a) return;
+    e.preventDefault(); e.stopPropagation();
+    const h = /^#(stock|montre-|mentions-legales|conditions-generales|confidentialite)/.test(location.hash) ? location.hash : '';
+    location.href = a.getAttribute('href') + h;
+  }, true);
 
   function openPiece(id, quiet) {
     const w = S.find((x) => x.id === id);
