@@ -749,7 +749,10 @@ img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select
   .adm-del { margin-left: 0; }
 }
 .pdesc { color: var(--mute); white-space: pre-line; }
-.gmain .ph.photo img, .gth .ph.photo img { width: 100%; height: 100%; object-fit: cover; }
+.gmain .ph.photo img, .gth .ph.photo img, .gmain .ph.photo video, .gth .ph.photo video { width: 100%; height: 100%; object-fit: cover; }
+.gmain .ph.photo video { background: #1d1b19; }
+.gth .vplay { position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 1.5px solid rgba(255,240,214,.95); box-shadow: 0 0 10px rgba(255,200,127,.6); background: rgba(34,32,30,.35); }
+.gth .vplay::after { content: ''; position: absolute; left: 11px; top: 8px; border-style: solid; border-width: 6.5px 0 6.5px 10px; border-color: transparent transparent transparent #fff; }
 /* ---------- demandes & correspondances ---------- */
 .lead-import { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; margin-bottom: 64px; }
 .lead-import .allbtn { min-height: 62px; font-size: 26px; }
@@ -1905,7 +1908,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const piece = document.getElementById('piece');
   const pieceBody = document.getElementById('piece-body');
   const VIEWS = ['Face', 'Trois-quarts', 'Cadran', 'Profil'];
-  let curPhotos = [];
+  let curPhotos = [], curVideo = null;
   // ---------- bouton Partager de la fiche : feuille de partage du téléphone (toutes les applis + copier le lien),
   //            menu de secours sur ordinateur. Le lien mène à une page d'aperçu (photo, prix) qui ouvre la fiche.
   // protection des photos et vidéos : clic droit, glisser-déposer et appui long désactivés sur les médias
@@ -1989,16 +1992,16 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const wv = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Bonjour, je souhaite prendre rendez-vous pour voir la ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''}.`);
     document.getElementById('piece-no').textContent = w.brand;
     curPhotos = w.photos || [];
+    curVideo = w.video && w.video.web ? w.video : null;
     const watch = watchHTML(w, 0);
-    const n = curPhotos.length || VIEWS.length;
-    const thumb = (i) => (curPhotos.length ? `<img src="${photoURL(curPhotos[i])}" alt="">` : watch);
+    const base = curPhotos.length || VIEWS.length, n = base + (curVideo ? 1 : 0);
+    const thumb = (i) => (i === base ? (curVideo.poster ? `<img src="${photoURL(curVideo.poster)}" alt="">` : `<video src="${videoURL(curVideo.web)}#t=0.5" muted playsinline preload="metadata"></video>`) + '<span class="vplay" aria-hidden="true"></span>' : curPhotos.length ? `<img src="${photoURL(curPhotos[i])}" alt="">` : watch);
     const main = curPhotos.length ? `<img src="${photoURL(curPhotos[0])}" alt="${esc(w.brand + ' ' + w.model)}, photo 1">` : watch;
     pieceBody.innerHTML = `<div class="gal">
         <div class="gmain"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length ? 'photo' : 'v0'}" id="gph">${main}</span><span class="ledbox" aria-hidden="true"></span>
           ${n > 1 ? '<button class="nav p" type="button" data-step="-1" aria-label="Photo précédente">‹</button><button class="nav n" type="button" data-step="1" aria-label="Photo suivante">›</button>' : ''}
-          <span class="tag" id="gtag">${curPhotos.length ? `Photo 1 / ${n}` : 'Vue de face · photo réelle à venir'}</span></div>
-        ${n > 1 ? `<div class="gths" role="group" aria-label="Photos de la montre">${Array.from({ length: n }, (_, i) => `<button class="gth" type="button" data-v="${i}" aria-pressed="${i === 0}" aria-label="${curPhotos.length ? 'Photo ' + (i + 1) : VIEWS[i]}"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length ? 'photo' : 'v' + i}">${thumb(i)}</span><span class="ledbox" aria-hidden="true"></span></button>`).join('')}</div>` : ''}
-        ${w.video && w.video.web ? `<div class="gvid"><span class="kicker">Vidéo de la pièce</span><div class="gv"><video src="${videoURL(w.video.web)}" ${w.video.poster ? `poster="${photoURL(w.video.poster)}"` : ''} controls controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback playsinline muted loop preload="metadata"></video><span class="ledbox" aria-hidden="true"></span></div></div>` : ''}
+          <span class="tag" id="gtag">${curPhotos.length ? `Photo 1 / ${base}` : 'Vue de face · photo réelle à venir'}</span></div>
+        ${n > 1 ? `<div class="gths" role="group" aria-label="Photos de la montre">${Array.from({ length: n }, (_, i) => `<button class="gth" type="button" data-v="${i}" aria-pressed="${i === 0}" aria-label="${i === base ? 'Vidéo' : curPhotos.length ? 'Photo ' + (i + 1) : VIEWS[i]}"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length || i === base ? 'photo' : 'v' + i}">${thumb(i)}</span><span class="ledbox" aria-hidden="true"></span></button>`).join('')}</div>` : ''}
       </div>
       <div class="pinfo">
         <span class="ref">Réf. ${esc(w.ref || 'à préciser')}</span>
@@ -2031,10 +2034,11 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   }
   let gv = 0;
   function setView(i) {
-    const n = curPhotos.length || VIEWS.length;
+    const base = curPhotos.length || VIEWS.length, n = base + (curVideo ? 1 : 0);
     gv = (i + n) % n;
     const ph = document.getElementById('gph'); if (!ph) return;
-    if (curPhotos.length) { ph.innerHTML = `<img src="${photoURL(curPhotos[gv])}" alt="Photo ${gv + 1}">`; document.getElementById('gtag').textContent = `Photo ${gv + 1} / ${n}`; }
+    if (gv === base) { ph.className = 'ph photo'; ph.innerHTML = `<video src="${videoURL(curVideo.web)}" ${curVideo.poster ? `poster="${photoURL(curVideo.poster)}"` : ''} autoplay controls controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback playsinline muted loop preload="metadata"></video>`; document.getElementById('gtag').textContent = 'Vidéo'; }
+    else if (curPhotos.length) { ph.className = 'ph photo'; ph.innerHTML = `<img src="${photoURL(curPhotos[gv])}" alt="Photo ${gv + 1}">`; document.getElementById('gtag').textContent = `Photo ${gv + 1} / ${base}`; }
     else { ph.className = 'ph v' + gv; document.getElementById('gtag').textContent = `Vue ${VIEWS[gv].toLowerCase()} · photo réelle à venir`; }
     pieceBody.querySelectorAll('.gth').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.v === gv)));
   }
