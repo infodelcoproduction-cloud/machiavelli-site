@@ -1294,7 +1294,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     <div id="lead-main" hidden>
       <div class="lead-import" id="lead-import">
         <div class="lead-pending" id="lead-pending" hidden></div>
-        <button class="allbtn" type="button" id="lead-paste-btn"><span class="t">Ajouter à nos listes</span><span class="ar" aria-hidden="true">+</span></button>
+        <button class="allbtn" type="button" id="lead-paste-btn"><span class="t">Ajouter un message WhatsApp copié</span><span class="ar" aria-hidden="true">+</span></button>
         <div class="lead-paste" id="lead-paste" hidden>
           <label class="fld wide"><span>Collez ici le message WhatsApp reçu (proposition de vente ou demande de sourcing)</span><textarea id="lead-paste-txt" rows="7" placeholder="*PROPOSITION DE VENTE* …"></textarea></label>
           <div class="adm-actions"><button class="lnk lit" type="button" id="lead-paste-go">Analyser et ajouter <span class="ar" aria-hidden="true">→</span></button><button class="lnk" type="button" id="lead-paste-cancel">Annuler</button></div>
@@ -2555,13 +2555,13 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   function parseWhatsApp(txt) {
     const m = txt.match(/#ajout=(wanted|offered)\.([A-Za-z0-9_-]+)/);
     if (m) { const it = unpackLead(m[2]); if (it) return { kind: m[1], item: it }; }
-    const get = (label) => { const r = txt.match(new RegExp('(?:^|\\n)\\s*[•\\-]?\\s*' + label + '\\s*:\\s*(.+)', 'i')); return r ? r[1].replace(/[*_]/g, '').trim() : ''; };
-    const sell = /PROPOSITION DE VENTE|vendre ma montre/i.test(txt), src = /DEMANDE DE SOURCING|trouviez une montre/i.test(txt);
+    const get = (label) => { const r = txt.match(new RegExp('(?:^|\\n)\\s*[•\\-]?\\s*(?:' + label + ')\\s*:\\s*(.+)', 'i')); return r ? r[1].replace(/[*_]/g, '').trim() : ''; };
+    const sell = /PROPOSITION DE VENTE|vendre ma montre|SALE OFFER/i.test(txt), src = /DEMANDE DE SOURCING|trouviez une montre|SOURCING REQUEST/i.test(txt);
     if (!sell && !src) return null;
-    const contact = [get('Contact'), get('Téléphone'), get('E-mail')].filter(Boolean).join(' · ');
-    const base = { id: 'l' + Date.now().toString(36), at: Date.now(), ref: get('Référence'), year: get('Année') === 'indifférente' ? '' : get('Année'), client: get('Nom'), contact };
-    if (sell) return { kind: 'offered', item: { ...base, name: get('Modèle') || get('Montre'), price: get('Prix désiré'), cond: get('État'), set: get('Full set'), formula: get('Formule') } };
-    return { kind: 'wanted', item: { ...base, name: '', price: get('Budget maximum') || get('Prix maximum') } };
+    const contact = [get('Contact'), get('Téléphone|Phone'), get('E-mail|Email')].filter(Boolean).join(' · ');
+    const base = { id: 'l' + Date.now().toString(36), at: Date.now(), ref: get('Référence|Reference'), year: /^(indifférente|any)$/i.test(get('Année|Year')) ? '' : get('Année|Year'), client: get('Nom|Name'), contact };
+    if (sell) return { kind: 'offered', item: { ...base, name: get('Modèle|Model') || get('Montre'), price: get('Prix désiré|Desired price'), cond: get('État|Condition'), set: get('Full set'), formula: get('Formule|Option') } };
+    return { kind: 'wanted', item: { ...base, name: '', price: get('Budget maximum|Maximum budget|Prix maximum') } };
   }
   function showPending(p) {
     pending = p;
@@ -2572,7 +2572,12 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     box.hidden = false;
   }
   document.getElementById('lead-import').addEventListener('click', async (e) => {
-    if (e.target.closest('#lead-paste-btn')) { const pz = document.getElementById('lead-paste'); pz.hidden = !pz.hidden; if (!pz.hidden) document.getElementById('lead-paste-txt').focus(); return; }
+    if (e.target.closest('#lead-paste-btn')) {
+      // un seul geste : on lit directement le message copié dans WhatsApp ; sinon, champ pour le coller à la main
+      const pz = document.getElementById('lead-paste');
+      try { const t = await navigator.clipboard.readText(); const p0 = t && parseWhatsApp(t); if (p0) { pz.hidden = true; showPending(p0); return; } } catch (err) {}
+      pz.hidden = !pz.hidden; if (!pz.hidden) document.getElementById('lead-paste-txt').focus(); return;
+    }
     if (e.target.closest('#lead-paste-cancel')) { document.getElementById('lead-paste').hidden = true; return; }
     if (e.target.closest('#lead-paste-go')) {
       const p = parseWhatsApp(document.getElementById('lead-paste-txt').value);
