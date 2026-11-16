@@ -486,6 +486,46 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 .share-wrap .share svg { color: var(--glow); }
 .share-menu { position: fixed; left: 0; top: 0; z-index: 400; min-width: 230px; display: flex; flex-direction: column; padding: 8px 0; background: rgba(34,32,30,.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(255,240,214,.45), 0 0 26px rgba(255,200,127,.25); }
 .share-menu[hidden] { display: none; }
+/* ---------- notre boutique ---------- */
+.boutique { position: relative; padding: clamp(110px, 14vw, 200px) 0 clamp(90px, 10vw, 150px); }
+.boutique .in { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 50px 80px; align-items: center; }
+.boutique .bplan { position: relative; margin: 12px; }
+.boutique .bplan .ledbox { position: absolute; inset: -12px; border: 2px solid var(--glow-core); box-shadow: 0 0 8px 1px rgba(255,217,160,.85), 0 0 40px 8px rgba(255,200,127,.25), inset 0 0 22px 2px rgba(255,200,127,.2); pointer-events: none; }
+.boutique .bmap { display: block; width: 100%; height: auto; }
+.boutique .txt { display: flex; flex-direction: column; gap: 26px; }
+.boutique h2 { font-size: clamp(44px, 5vw, 84px); font-weight: 300; }
+.binfo { margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.binfo div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,240,214,.18); }
+.binfo dt { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--dim); padding-top: 5px; }
+.binfo dd { margin: 0; color: var(--ink); }
+.binfo a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset: 4px; }
+.bacts { display: flex; flex-wrap: wrap; gap: 14px 26px; }
+@media (max-width: 900px) { .boutique .in { grid-template-columns: minmax(0, 1fr); } .binfo div { grid-template-columns: 1fr; gap: 4px; } }
+/* ---------- favoris, nouveauté, similaires ---------- */
+.fav { position: absolute; top: 10px; right: 10px; z-index: 3; width: 40px; height: 40px; display: grid; place-items: center; border: 0; padding: 0; cursor: pointer; background: rgba(34,32,30,.55); }
+.fav svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 1.6; transition: fill .25s, stroke .25s, transform .25s; }
+.fav[aria-pressed="true"] svg { fill: #4D6BFF; stroke: #9DB2FF; filter: drop-shadow(0 0 6px rgba(70,110,255,.8)); }
+.fav:active svg { transform: scale(.85); }
+.gmain .fav { top: 14px; right: 14px; width: 48px; height: 48px; } .gmain .fav svg { width: 24px; height: 24px; }
+.newb { position: absolute; left: 10px; top: 10px; z-index: 3; padding: 6px 10px 5px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #fff; background: rgba(34,32,30,.6); box-shadow: inset 0 0 0 1px var(--core), 0 0 10px rgba(255,200,127,.45); }
+.favbtn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; background: none; border: 1px solid rgba(255,240,214,.45); color: var(--ink); font-family: var(--font-text); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
+.favbtn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.favbtn[aria-pressed="true"] { border-color: var(--core); box-shadow: 0 0 12px rgba(255,200,127,.35); }
+.favbtn[aria-pressed="true"] svg { fill: #4D6BFF; stroke: #9DB2FF; }
+.favbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; margin: -24px 0 40px; color: var(--mute); }
+.favbar[hidden] { display: none; }
+.similar { margin-top: clamp(70px, 9vw, 120px); }
+.similar h3 { font-family: var(--font-display); font-weight: 300; font-size: clamp(36px, 4vw, 60px); margin: 10px 0 34px; }
+.similar h3 em { font-style: italic; color: var(--glow); }
+.similar .frames { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 30px; }
+@media (max-width: 900px) { .similar .frames { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 16px; } }
+.dv-steps { margin: 6px 0 34px; padding: 22px 24px; background: rgba(34,32,30,.4); box-shadow: inset 0 0 0 1px rgba(255,240,214,.3); }
+.dv-steps ol { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: dv; display: flex; flex-direction: column; gap: 12px; }
+.dv-steps li { counter-increment: dv; position: relative; padding-left: 44px; color: var(--mute); }
+.dv-steps li::before { content: counter(dv, upper-roman); position: absolute; left: 0; top: -2px; width: 30px; font-family: var(--font-display); font-size: 22px; color: var(--glow); }
+.dv-steps b { color: var(--ink); font-weight: 400; }
+@media (max-width: 900px) { .newb { left: 6px; top: 6px; padding: 4px 6px 3px; font-size: 8.5px; letter-spacing: .14em; } .fav { top: 6px; right: 6px; width: 32px; height: 32px; } .fav svg { width: 17px; height: 17px; } .similar .frames { gap: 34px 26px; } }
+
 /* protection des photos et vidéos : pas d'appui long « Enregistrer l'image », pas de glisser-déposer, pas de sélection */
 img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
 .share-menu .sh-h { margin: 0; padding: 10px 20px 8px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,240,214,.6); }
@@ -945,8 +985,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         <span class="led" aria-hidden="true"></span>
         <a href="#stock" data-open-stock><span class="k">I</span>Notre stock</a>
         <a href="#maison" data-glide><span class="k">II</span>Qui sommes-nous</a>
-        <a href="#services" data-glide><span class="k">III</span>Nos services</a>
-        <a href="#contact" data-glide><span class="k">IV</span>Contact</a>
+        <a href="#boutique" data-glide><span class="k">III</span>Notre boutique</a>
+        <a href="#services" data-glide><span class="k">IV</span>Nos services</a>
+        <a href="#contact" data-glide><span class="k">V</span>Contact</a>
         <a href="#gestion" class="adm-link" hidden><span class="k">✦</span>Espace vendeur</a>
         <a href="en.html" class="lang-sw" lang="en" hreflang="en"><span class="k">EN</span>English</a>
       </div>
@@ -990,20 +1031,23 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     </div>
   </section>
 
-  <!-- 4 · fondateur -->
-  <section class="founder" data-p aria-labelledby="founder-title">
+  <!-- 4 · notre boutique -->
+  <section class="boutique" id="boutique" data-p aria-labelledby="boutique-title">
     <div class="wrap in">
-      <div class="porthole" aria-hidden="true">
-        <div class="bezel"><div class="min"></div><div class="maj"></div></div>
-        <div class="ringled"></div><div class="orbit"></div>
-        <div class="disc inox"><img src="img/monogramme.png" alt=""></div>
-        <img class="photo" src="img/fondateur.jpg" alt="" onerror="this.remove()">
-      </div>
+      <div class="bplan"><span class="ledbox" aria-hidden="true"></span><svg class="bmap" viewBox="0 0 1000 920" role="img" aria-label="Plan : Rue des Dominicains 15-17, avec le Parking Opéra et le Parking Cathédrale à proximité"><defs><radialGradient id="bmg" cx="50%" cy="48%" r="60%"><stop offset="0" stop-color="#3a3835"/><stop offset="1" stop-color="#22201e"/></radialGradient><radialGradient id="bmh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".55"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient></defs><rect width="1000" height="920" fill="url(#bmg)"/><path d="M370.3,613.6 L490.1,796.1" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M117.9,809.5 L232.1,720.4 L370.3,613.6 L439.4,555.7 L507.1,504.5" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M-28.8,631.4 L96.7,544.6 L175.7,488.9 L233.5,446.6 L298.4,399.9 L388.6,337.6" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M480.3,148.4 L449.2,184.0 L339.3,264.1" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M604.3,206.2 L674.8,261.9 L738.3,313.1" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M681.9,858.5 L763.7,838.4 L846.9,818.4 L907.5,802.8 L1025.9,771.6" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M755.2,-25.3 L738.3,1.4 L608.6,106.1" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M505.6,-23.0 L587.4,-14.1 L604.3,-36.4 L755.2,-25.3" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M657.9,813.9 L701.6,780.5 L743.9,700.4" fill="none" stroke="rgba(228,222,214,.22)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M339.3,264.1 L374.5,315.3 L388.6,337.6 L405.5,359.8 L423.9,386.5 L446.4,415.5 L485.9,466.7 L500.0,484.5 L507.1,504.5" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M507.1,504.5 L567.7,464.5 L602.9,437.7 L636.8,408.8 L703.0,346.5 L738.3,313.1" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M738.3,313.1 L770.7,368.7 L808.8,422.2 L883.5,535.7 L890.6,546.8 L963.9,653.7 L1023.1,742.7" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M604.3,733.8 L529.6,582.4 L522.6,569.1 L507.1,504.5" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M514.1,785.0 L566.3,874.0 L576.1,891.8 L681.9,858.5 L655.1,820.6 L604.3,733.8 L563.5,758.3 L514.1,785.0" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M514.1,785.0 L490.1,796.1 L414.0,842.9 L335.0,891.8 L232.1,954.2" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M388.6,337.6 L411.2,339.8 L502.8,273.0 L567.7,226.3 L604.3,206.2" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M608.6,106.1 L573.3,123.9 L538.1,128.3 L495.8,117.2 L469.0,108.3 L456.3,126.1 L473.2,148.4 L495.8,135.0 L495.8,117.2" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M464.8,126.1 L316.7,90.5 L232.1,74.9 L139.0,77.1 L34.7,92.7 L-24.5,115.0" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M232.1,954.2 L123.5,816.2 L12.1,680.4 L-28.8,631.4" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M738.3,313.1 L794.7,342.0 L913.1,408.8 L1033.0,475.6" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M604.3,733.8 L711.5,664.8 L877.9,555.7 L890.6,546.8 L989.3,480.0 L1013.2,462.2" fill="none" stroke="rgba(228,222,214,.42)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M339.3,264.1 L374.5,315.3 L388.6,337.6 L405.5,359.8 L423.9,386.5 L446.4,415.5 L485.9,466.7 L500.0,484.5 L507.1,504.5" fill="none" stroke="#FFF0D6" stroke-width="5" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(255,200,127,.9))"/><text x="344" y="308" transform="rotate(-50 344 308)" font-family="Alike, Georgia, serif" font-size="17" letter-spacing="2.5" fill="rgba(255,240,214,0.95)" text-anchor="middle">RUE DES DOMINICAINS</text><text x="197" y="64" transform="rotate(-3 197 64)" font-family="Alike, Georgia, serif" font-size="16" letter-spacing="2.5" fill="rgba(255,240,214,0.62)" text-anchor="middle">BD DE LA SAUVENIÈRE</text><text x="486" y="33" transform="rotate(0 486 33)" font-family="Alike, Georgia, serif" font-size="15" letter-spacing="2.5" fill="rgba(255,240,214,0.62)" text-anchor="middle">PLACE DE L’OPÉRA</text><text x="527" y="638" transform="rotate(66 527 638)" font-family="Alike, Georgia, serif" font-size="15" letter-spacing="2.5" fill="rgba(255,240,214,0.62)" text-anchor="middle">VINÂVE D’ÎLE</text><text x="669" y="391" transform="rotate(-40 669 391)" font-family="Alike, Georgia, serif" font-size="15" letter-spacing="2.5" fill="rgba(255,240,214,0.62)" text-anchor="middle">PONT D’ÎLE</text><text x="359" y="864" transform="rotate(-31 359 864)" font-family="Alike, Georgia, serif" font-size="15" letter-spacing="2.5" fill="rgba(255,240,214,0.62)" text-anchor="middle">RUE PONT D’AVROY</text><g><rect x="487" y="274" width="34" height="34" fill="#1E2B7E" stroke="#9DB2FF" stroke-width="1.5"/><text x="504" y="299" font-family="Arial, sans-serif" font-weight="700" font-size="22" fill="#fff" text-anchor="middle">P</text></g><text x="530" y="297" transform="rotate(0 530 297)" font-family="Alike, Georgia, serif" font-size="15" letter-spacing="2.5" fill="rgba(255,240,214,0.95)" text-anchor="start">PARKING OPÉRA</text><g><rect x="522" y="768" width="34" height="34" fill="#1E2B7E" stroke="#9DB2FF" stroke-width="1.5"/><text x="539" y="793" font-family="Arial, sans-serif" font-weight="700" font-size="22" fill="#fff" text-anchor="middle">P</text></g><text x="565" y="791" transform="rotate(0 565 791)" font-family="Alike, Georgia, serif" font-size="15" letter-spacing="2.5" fill="rgba(255,240,214,0.95)" text-anchor="start">PARKING CATHÉDRALE</text><circle cx="500" cy="460" r="90" fill="url(#bmh)"/><circle cx="500" cy="460" r="26" fill="#2E2E2E" stroke="#FFF0D6" stroke-width="2.5" style="filter:drop-shadow(0 0 8px rgba(255,200,127,.9))"/><image href="img/monogramme.png" x="484" y="444" width="32" height="32"/><text x="534" y="466" transform="rotate(0 534 466)" font-family="Alike, Georgia, serif" font-size="17" letter-spacing="2.5" fill="rgba(255,240,214,1)" text-anchor="start">MACHIAVELLI</text><text x="986" y="908" font-family="Arial, sans-serif" font-size="12" fill="rgba(255,240,214,.45)" text-anchor="end">© OpenStreetMap</text></svg></div>
       <div class="txt">
-        <span class="kicker">Le fondateur</span>
-        <h2 id="founder-title">Nizar Baeri, <em>l'œil du marché.</em></h2>
-        <p>Fort de plusieurs années d'expérience dans l'achat et la revente de montres de luxe, Nizar Baeri suit de près les tendances du marché pour conseiller chaque client, qu'il achète, vende ou cherche une pièce précise.</p>
-        <span class="sig">Nizar Baeri</span>
+        <span class="kicker">Notre boutique</span>
+        <h2 id="boutique-title">Rue des Dominicains, <em>au cœur de Liège.</em></h2>
+        <dl class="binfo">
+          <div><dt>Adresse</dt><dd>Rue des Dominicains 15-17<br>4000 Liège</dd></div>
+          <div><dt>Visites</dt><dd>Uniquement sur rendez-vous</dd></div>
+          <div><dt>Parkings</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Parking%20Op%C3%A9ra%20Li%C3%A8ge" target="_blank" rel="noopener">Parking Opéra</a>, Place de l’Opéra<br><a href="https://www.google.com/maps/search/?api=1&amp;query=Parking%20Cath%C3%A9drale%20Li%C3%A8ge" target="_blank" rel="noopener">Parking Cathédrale</a>, Place de la Cathédrale</dd></div>
+        </dl>
+        <div class="bacts">
+          <a class="lnk lit" href="https://maps.apple.com/?q=Rue%20des%20Dominicains%2015%2C%204000%20Li%C3%A8ge%2C%20Belgique" target="_blank" rel="noopener">Itinéraire · Plans</a>
+          <a class="lnk lit" href="https://www.google.com/maps/dir/?api=1&amp;destination=Rue%20des%20Dominicains%2015%2C%204000%20Li%C3%A8ge%2C%20Belgique" target="_blank" rel="noopener">Itinéraire · Google Maps</a>
+          <a class="lnk lit" href="https://wa.me/32484709109?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous%20%C3%A0%20la%20boutique%20Machiavelli." target="_blank" rel="noopener">Prendre rendez-vous</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1110,11 +1154,13 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       </div>
         <div class="row2 stock-tools">
           <div class="brands" id="brands" role="group" aria-label="Filtrer par maison"></div>
+          <button class="favbtn" type="button" id="favbtn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.1-9.2C1.7 7.6 4 4.6 7.3 4.6c2 0 3.6 1.1 4.7 2.7 1.1-1.6 2.7-2.7 4.7-2.7 3.3 0 5.6 3 4.4 6.5-1.7 4.7-9.1 9.2-9.1 9.2z"/></svg>Mes favoris <span id="favn"></span></button>
           <div class="fields">
             <label for="q">Chercher</label><input id="q" type="search" placeholder="Chercher un modèle, une référence" autocomplete="off">
             <label for="sort">Trier</label><select id="sort"><option value="new">Plus récentes</option><option value="asc">Prix croissant</option><option value="desc" selected>Prix décroissant</option></select>
           </div>
         </div>
+      <div class="favbar" id="favbar" hidden><span>Votre sélection, gardée sur cet appareil.</span><button class="lnk lit" type="button" data-favsend>Envoyer ma liste par WhatsApp <span class="ar" aria-hidden="true">→</span></button></div>
       <div class="shelves" id="shelves"></div>
       <p class="stock-note">Montres représentées par des illustrations en attendant les photos réelles. Prix TTC en euros (régime de la marge, TVA non récupérable).</p>
     </div>
@@ -1145,6 +1191,12 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     <form class="fs-form" id="form-sell" data-kind="sell" novalidate hidden>
       <h2 id="fs-title-sell">Vendre <em>votre montre.</em></h2>
       <p class="fs-intro">Décrivez votre pièce : nous revenons vers vous avec une proposition.</p>
+      <div class="dv-steps"><span class="kicker">Comment fonctionne le dépôt-vente</span><ol>
+        <li><b>Le formulaire.</b> Remplissez le formulaire ci-dessous avec des informations complètes, puis envoyez-le-nous par WhatsApp.</li>
+        <li><b>L’estimation.</b> Nous convenons ensemble d’une estimation et du prix de vente de votre montre.</li>
+        <li><b>Le contrat.</b> Nous signons un contrat de dépôt-vente, dans lequel nous fixons ensemble la marge retenue par Machiavelli.</li>
+        <li><b>Le paiement.</b> Dès que votre montre est vendue, vous recevez votre paiement.</li>
+      </ol></div>
       <fieldset class="fs-choice"><legend>Formule souhaitée</legend>
         <label><input type="radio" name="formule" value="Dépôt-vente" checked><span>Dépôt-vente</span></label>
         <label><input type="radio" name="formule" value="Achat immédiat"><span>Achat immédiat</span></label>
@@ -1351,8 +1403,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           <span class="led" aria-hidden="true"></span>
           <a href="#stock"><span class="k">I</span>Notre stock</a>
           <a href="#maison" data-go><span class="k">II</span>Qui sommes-nous</a>
-          <a href="#services" data-go><span class="k">III</span>Nos services</a>
-          <a href="#contact" data-go><span class="k">IV</span>Contact</a>
+          <a href="#boutique" data-go><span class="k">III</span>Notre boutique</a>
+          <a href="#services" data-go><span class="k">IV</span>Nos services</a>
+          <a href="#contact" data-go><span class="k">V</span>Contact</a>
           <a href="en.html" class="lang-sw" lang="en" hreflang="en"><span class="k">EN</span>English</a>
         </div>
       </div>
@@ -1666,6 +1719,52 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const photoURL = (id) => 'photos/' + id + '.jpg';
   const videoURL = (id) => 'videos/' + id + '.mp4';
   const phHTML = (w, k) => (w.photos && w.photos.length ? `<img src="${photoURL(w.photos[0])}" alt="${esc(w.brand + ' ' + w.model)}" loading="lazy">` : watchHTML(w, k));
+  // ---------- favoris (gardés dans ce navigateur), badge nouveauté, montres similaires ----------
+  const FAVK = 'mw-favoris'; let FAV = [], favOnly = false;
+  try { FAV = JSON.parse(localStorage.getItem(FAVK) || '[]') || []; } catch (e) {}
+  const isFav = (id) => FAV.includes(id);
+  const HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.1-9.2C1.7 7.6 4 4.6 7.3 4.6c2 0 3.6 1.1 4.7 2.7 1.1-1.6 2.7-2.7 4.7-2.7 3.3 0 5.6 3 4.4 6.5-1.7 4.7-9.1 9.2-9.1 9.2z"/></svg>';
+  const heartHTML = (id) => `<button class="fav" type="button" data-fav="${esc(id)}" aria-pressed="${isFav(id)}" aria-label="Favori">${HEART}</button>`;
+  const newHTML = (w) => (w.added && Date.now() - w.added < 7 * 864e5 ? '<span class="newb">Nouveauté</span>' : '');
+  function paintFav() {
+    const n = FAV.filter((id) => S.some((w) => w.id === id)).length;
+    const fb = document.getElementById('favbtn'); if (fb) { fb.setAttribute('aria-pressed', String(favOnly)); document.getElementById('favn').textContent = n ? `(${n})` : ''; }
+    const bar = document.getElementById('favbar'); if (bar) bar.hidden = !(favOnly && n);
+  }
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-fav]'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    const id = b.dataset.fav; FAV = isFav(id) ? FAV.filter((x) => x !== id) : [...FAV, id];
+    try { localStorage.setItem(FAVK, JSON.stringify(FAV)); } catch (err) {}
+    document.querySelectorAll('[data-fav]').forEach((x) => { if (x.dataset.fav === id) x.setAttribute('aria-pressed', String(isFav(id))); });
+    paintFav(); if (favOnly) render();
+  }, true);
+  function favMessage() {
+    const ws = FAV.map((id) => S.find((w) => w.id === id)).filter(Boolean);
+    const base = typeof shareBase === 'function' ? shareBase() : '';
+    return 'Bonjour, voici ma sélection de montres Machiavelli :\n\n' + ws.map((w) => `• ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''} — ${w.price === null ? 'Réservée' : euro(w.price) + ' TTC'}\n${base}m/${encodeURIComponent(w.id)}.html`).join('\n\n') + '\n\nPouvez-vous me renseigner ?';
+  }
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#favbtn')) { favOnly = !favOnly; paintFav(); render(); return; }
+    if (e.target.closest('[data-favsend]')) window.open('https://wa.me/32484709109?text=' + encodeURIComponent(favMessage()), '_blank', 'noopener');
+  });
+  // similaires : même modèle d'abord, puis même maison, puis prix proche
+  const STOP = new Set(['oyster', 'perpetual', 'automatic', 'automatique', 'acier', 'steel', 'gold', 'blanc', 'noir', 'black', 'white', 'blue', 'bleu', 'date', 'edition', 'édition', 'limitée', 'pièces', 'chronograph', 'chronographe', 'platinum', 'platine', 'everose', 'rolesor', 'yellow', 'jaune', 'rose', 'titane', 'titanium', 'ceramic', 'céramique', 'carats', 'diamants', 'diamonds', 'lady', 'full']);
+  const toks = (s) => new Set(String(s || '').toLowerCase().split(/[^a-zà-ÿ0-9]+/).filter((t) => t.length >= 4 && !STOP.has(t) && !/^\d+$/.test(t)));
+  function similarHTML(w) {
+    const mt = toks(w.model), out = [];
+    for (const x of S) {
+      if (x.id === w.id) continue;
+      let s = 0; const xt = toks(x.model);
+      if (x.brand === w.brand) s += 3;
+      if (x.brand === w.brand && [...mt].some((t) => xt.has(t))) s += 5;
+      if (w.price && x.price) { const r = Math.min(w.price, x.price) / Math.max(w.price, x.price); s += r >= 0.75 ? 3 : r >= 0.55 ? 1.5 : 0; }
+      if (s > 0) out.push([s, Math.abs((x.price || 0) - (w.price || 0)), x]);
+    }
+    const best = out.sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 4).map((o) => o[2]);
+    if (!best.length) return '';
+    return `<section class="similar" aria-label="Montres similaires"><span class="kicker">Dans le stock</span><h3>Montres <em>similaires.</em></h3><div class="frames">${best.map((x, k) => `<a class="frame scard" href="#montre-${esc(x.id)}" style="--k:${k}" aria-label="${esc(x.brand + ' ' + x.model)}, voir la fiche"><span class="fr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(x, k)}</span>${newHTML(x)}${heartHTML(x.id)}<span class="ledbox" aria-hidden="true"></span></span>${metaHTML(x)}</a>`).join('')}</div></section>`;
+  }
   const metaHTML = (w) => `<span class="meta"><span class="ref">${esc(w.ref || 'Réf. à préciser')}</span><span class="nm">${esc(w.brand)} ${esc(w.model)}</span><span class="pr">${w.price === null ? 'Réservée' : euro(w.price)}</span></span>`;
   syncSeconds(document);
 
@@ -1700,7 +1799,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     brandsEl.innerHTML = ['Toutes', ...list].map((b) => `<button type="button" data-b="${esc(b)}" aria-pressed="${b === brand}">${esc(b)}</button>`).join('');
   }
   function paintLatest() {
-    const html = S.slice(0, 4).map((w, k) => `<a class="frame scard" href="#montre-${esc(w.id)}" style="--k:${k}" aria-label="${esc(w.brand + ' ' + w.model)}, voir la fiche"><span class="fr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(w, k)}</span><span class="ledbox" aria-hidden="true"></span></span>${metaHTML(w)}</a>`).join('');
+    const html = S.slice(0, 4).map((w, k) => `<a class="frame scard" href="#montre-${esc(w.id)}" style="--k:${k}" aria-label="${esc(w.brand + ' ' + w.model)}, voir la fiche"><span class="fr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(w, k)}</span>${newHTML(w)}${heartHTML(w.id)}<span class="ledbox" aria-hidden="true"></span></span>${metaHTML(w)}</a>`).join('');
     document.getElementById('latest-frames').innerHTML = html;
     document.getElementById('frames').innerHTML = html;
     syncSeconds(document);
@@ -1732,12 +1831,13 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const cols = mq.matches ? 2 : 4;
     const ws = mq.matches ? 'clamp(76px, 22vw, 120px)' : 'clamp(100px, 9.5vw, 150px)';
     const term = q.value.trim().toLowerCase();
-    let list = S.filter((w) => (brand === 'Toutes' || w.brand === brand) && (!term || (w.brand + ' ' + w.model + ' ' + w.ref).toLowerCase().includes(term)));
+    paintFav();
+    let list = S.filter((w) => (!favOnly || isFav(w.id)) && (brand === 'Toutes' || w.brand === brand) && (!term || (w.brand + ' ' + w.model + ' ' + w.ref).toLowerCase().includes(term)));
     if (sortSel.value === 'asc') list = [...list].sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
     if (sortSel.value === 'desc') list = [...list].sort((a, b) => (b.price ?? -1) - (a.price ?? -1));
-    if (!list.length) { shelvesEl.innerHTML = '<div class="empty">Aucune montre ne correspond. Essayez une autre maison ou un autre mot.</div>'; return; }
+    if (!list.length) { shelvesEl.innerHTML = favOnly ? '<div class="empty">Aucun favori pour l’instant : touchez le cœur d’une montre pour l’ajouter.</div>' : '<div class="empty">Aucune montre ne correspond. Essayez une autre maison ou un autre mot.</div>'; return; }
     shelvesEl.style.setProperty('--cols', cols);
-    const html = list.map((w, idx) => `<a class="shelf scard" href="#montre-${esc(w.id)}" style="--k:${idx % cols}" aria-label="${esc(w.brand + ' ' + w.model)}, voir la fiche"><span class="sfr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(w, 0)}</span><span class="ledbox" aria-hidden="true"></span></span>${metaHTML(w)}</a>`).join('');
+    const html = list.map((w, idx) => `<a class="shelf scard" href="#montre-${esc(w.id)}" style="--k:${idx % cols}" aria-label="${esc(w.brand + ' ' + w.model)}, voir la fiche"><span class="sfr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(w, 0)}</span>${newHTML(w)}${heartHTML(w.id)}<span class="ledbox" aria-hidden="true"></span></span>${metaHTML(w)}</a>`).join('');
     shelvesEl.innerHTML = html;
     syncSeconds(shelvesEl);
     if (io) io.disconnect();
@@ -1916,6 +2016,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const isMedia = (t) => t && t.closest && t.closest('img, video, .gv, .ledbox');
   document.addEventListener('contextmenu', (e) => { if (isMedia(e.target)) e.preventDefault(); });
   document.addEventListener('dragstart', (e) => { if (isMedia(e.target)) e.preventDefault(); });
+
   const shareBase = () => (/github\.io$|machiavelliwatches\.com$/.test(location.hostname) ? location.origin + location.pathname.replace(/[^/]*$/, '') : 'https://infodelcoproduction-cloud.github.io/machiavelli-site/');
   // menu de secours, posé directement dans <body> pour ne jamais être coupé par la fiche
   const shMenu = document.createElement('div');
@@ -1999,7 +2100,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const thumb = (i) => (i >= base ? ((v) => (v.poster ? `<img src="${photoURL(v.poster)}" alt="">` : `<video src="${videoURL(v.web)}#t=0.5" muted playsinline preload="metadata"></video>`))(curVideos[i - base]) + '<span class="vplay" aria-hidden="true"></span>' : curPhotos.length ? `<img src="${photoURL(curPhotos[i])}" alt="">` : watch);
     const main = curPhotos.length ? `<img src="${photoURL(curPhotos[0])}" alt="${esc(w.brand + ' ' + w.model)}, photo 1">` : watch;
     pieceBody.innerHTML = `<div class="gal">
-        <div class="gmain"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length ? 'photo' : 'v0'}" id="gph">${main}</span><span class="ledbox" aria-hidden="true"></span>
+        <div class="gmain"><span class="hc" aria-hidden="true"></span>${heartHTML(w.id)}<span class="ph ${curPhotos.length ? 'photo' : 'v0'}" id="gph">${main}</span><span class="ledbox" aria-hidden="true"></span>
           ${n > 1 ? '<button class="nav p" type="button" data-step="-1" aria-label="Photo précédente">‹</button><button class="nav n" type="button" data-step="1" aria-label="Photo suivante">›</button>' : ''}
           <span class="tag" id="gtag">${curPhotos.length ? `Photo 1 / ${base}` : 'Vue de face · photo réelle à venir'}</span></div>
         ${n > 1 ? `<div class="gths" role="group" aria-label="Photos de la montre">${Array.from({ length: n }, (_, i) => `<button class="gth" type="button" data-v="${i}" aria-pressed="${i === 0}" aria-label="${i >= base ? 'Vidéo' + (curVideos.length > 1 ? ' ' + (i - base + 1) : '') : curPhotos.length ? 'Photo ' + (i + 1) : VIEWS[i]}"><span class="hc" aria-hidden="true"></span><span class="ph ${curPhotos.length || i >= base ? 'photo' : 'v' + i}">${thumb(i)}</span><span class="ledbox" aria-hidden="true"></span></button>`).join('')}</div>` : ''}
@@ -2027,7 +2128,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           <button class="lnk lit share" type="button" data-share="${esc(w.id)}">Partager <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 11v9h14v-9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         ${curPhotos.length ? '' : '<p class="note">Illustration en attendant les photos réelles de la pièce.</p>'}
-      </div>`;
+      </div>${similarHTML(w)}`;
     syncSeconds(pieceBody);
     if (quiet) return;
     piece.hidden = false; piece.scrollTop = 0;
