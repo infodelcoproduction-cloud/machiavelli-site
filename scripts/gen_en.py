@@ -85,6 +85,8 @@ T = {
  'Formule souhaitée': 'Preferred option',
  'Dépôt-vente': 'Consignment',
  'Achat immédiat': 'Immediate purchase',
+ 'Peu importe': 'No preference',
+ 'Importez ici 3 photos de votre montre, sous différents angles et représentatives de son état.': 'Upload 3 photos of your watch here, from different angles and showing its condition.',
  '3 photos de la montre': '3 photos of the watch',
  'Face': 'Front',
  'Dos': 'Back',

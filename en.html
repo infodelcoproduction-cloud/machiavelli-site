@@ -583,6 +583,7 @@ img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select
 .fs-form legend, .fld > span { font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; padding: 0; }
 .fld > span i { font-style: normal; letter-spacing: .1em; text-transform: none; }
 .fs-choice { display: flex; flex-wrap: wrap; gap: 12px 40px; }
+.fs-hint { margin: -4px 0 18px; font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.72); }
 .fs-choice label { position: relative; display: inline-flex; align-items: center; gap: 14px; cursor: pointer; min-height: 44px; font-family: var(--font-display); font-size: 28px; }
 .fs-choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .fs-choice span::before { content: ""; display: inline-block; width: 16px; height: 16px; margin-right: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); vertical-align: 2px; transition: background .3s, box-shadow .3s; }
@@ -1144,8 +1145,10 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <fieldset class="fs-choice"><legend>Preferred option</legend>
         <label><input type="radio" name="formule" value="Dépôt-vente" checked><span>Consignment</span></label>
         <label><input type="radio" name="formule" value="Achat immédiat"><span>Immediate purchase</span></label>
+        <label><input type="radio" name="formule" value="Peu importe"><span>No preference</span></label>
       </fieldset>
       <fieldset class="fs-photos"><legend>3 photos of the watch</legend>
+        <p class="fs-hint">Upload 3 photos of your watch here, from different angles and showing its condition.</p>
         <div class="slots">
           <label class="slot"><input type="file" accept="image/*" name="photo1" required><span class="hc" aria-hidden="true"></span><img alt=""><span class="ledbox" aria-hidden="true"></span><span class="lbl">Front</span></label>
           <label class="slot"><input type="file" accept="image/*" name="photo2" required><span class="hc" aria-hidden="true"></span><img alt=""><span class="ledbox" aria-hidden="true"></span><span class="lbl">Back</span></label>
