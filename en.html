@@ -2153,6 +2153,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       : ['*SOURCING REQUEST*', '_Machiavelli Watches · website form (EN)_', sep,
          '*THE WATCH WANTED*', `• Reference: ${v('ref')}`, `• Year: ${v('annee') || 'any'}`, `• Maximum budget: ${eur(v('prix'))}`, sep,
          '*THE CLIENT*', `• Name: ${v('client')}`, `• Phone: ${v('tel')}`, `• Email: ${v('email')}`];
+    // 1re ligne : étiquette fixe, facile à retrouver dans la recherche WhatsApp (ex. « MW-VENTE 126710BLNR »)
+    lines.unshift((k === 'sell' ? 'MW-VENTE ' : 'MW-RECHERCHE ') + (v('ref') || v('nom') || '').toUpperCase().replace(/\s+/g, ''), '');
     const leadKind = k === 'sell' ? 'offered' : 'wanted';
     const leadItem = { id: 'l' + Date.now().toString(36), at: Date.now(), ...(k === 'sell'
       ? { ref: v('ref'), name: v('nom'), year: v('annee'), price: v('prix'), cond: v('etat'), set: v('fullset'), formula: v('formule'), client: v('client'), contact: v('contact') }
@@ -2566,7 +2568,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const m = txt.match(/#ajout=(wanted|offered)\.([A-Za-z0-9_-]+)/);
     if (m) { const it = unpackLead(m[2]); if (it) return { kind: m[1], item: it }; }
     const get = (label) => { const r = txt.match(new RegExp('(?:^|\\n)\\s*[•\\-]?\\s*(?:' + label + ')\\s*:\\s*(.+)', 'i')); return r ? r[1].replace(/[*_]/g, '').trim() : ''; };
-    const sell = /PROPOSITION DE VENTE|vendre ma montre|SALE OFFER/i.test(txt), src = /DEMANDE DE SOURCING|trouviez une montre|SOURCING REQUEST/i.test(txt);
+    const sell = /MW-VENTE|PROPOSITION DE VENTE|vendre ma montre|SALE OFFER/i.test(txt), src = /MW-RECHERCHE|DEMANDE DE SOURCING|trouviez une montre|SOURCING REQUEST/i.test(txt);
     if (!sell && !src) return null;
     const contact = [get('Contact'), get('Téléphone|Phone'), get('E-mail|Email')].filter(Boolean).join(' · ');
     const base = { id: 'l' + Date.now().toString(36), at: Date.now(), ref: get('Référence|Reference'), year: /^(indifférente|any)$/i.test(get('Année|Year')) ? '' : get('Année|Year'), client: get('Nom|Name'), contact };
