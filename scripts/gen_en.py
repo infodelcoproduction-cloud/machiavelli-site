@@ -310,7 +310,6 @@ J = [
  ("'*LA MONTRE RECHERCHÉE*', `• Référence : ${v('ref')}`, `• Année : ${v('annee') || 'indifférente'}`, `• Budget maximum : ${eur(v('prix'))}`",
   "'*THE WATCH WANTED*', `• Reference: ${v('ref')}`, `• Year: ${v('annee') || 'any'}`, `• Maximum budget: ${eur(v('prix'))}`"),
  ("'*LE CLIENT*', `• Nom : ${v('client')}`, `• Téléphone : ${v('tel')}`, `• E-mail : ${v('email')}`", "'*THE CLIENT*', `• Name: ${v('client')}`, `• Phone: ${v('tel')}`, `• Email: ${v('email')}`"),
- ("'➕ *Ajouter à nos listes :*'", "'➕ *Add to our lists:*'"),
  ("'Votre proposition s’est ouverte dans WhatsApp. Ajoutez-y vos 3 photos, puis envoyez : nous vous répondons au plus vite.'",
   "'Your offer has opened in WhatsApp. Add your 3 photos, then send it: we will reply as soon as possible.'"),
  ("'Votre demande s’est ouverte dans WhatsApp. Envoyez-la : nous lançons la recherche et revenons vers vous.'",

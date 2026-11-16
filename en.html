@@ -2157,7 +2157,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const leadItem = { id: 'l' + Date.now().toString(36), at: Date.now(), ...(k === 'sell'
       ? { ref: v('ref'), name: v('nom'), year: v('annee'), price: v('prix'), cond: v('etat'), set: v('fullset'), formula: v('formule'), client: v('client'), contact: v('contact') }
       : { ref: v('ref'), name: '', year: v('annee'), price: v('prix'), client: v('client'), contact: [v('tel'), v('email')].filter(Boolean).join(' · ') }) };
-    lines.push(sep, '➕ *Add to our lists:*', SITE_URL + '#ajout=' + leadKind + '.' + packLead(leadItem));
     window.open('https://wa.me/32484709109?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
     if (window.__saveLead) window.__saveLead(leadKind, leadItem);
     form.hidden = true; fsDone.hidden = false; fsheet.scrollTop = 0;
