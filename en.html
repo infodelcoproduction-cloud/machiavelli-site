@@ -750,7 +750,8 @@ img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select
 }
 .pdesc { color: var(--mute); white-space: pre-line; }
 .gmain .ph.photo img, .gth .ph.photo img, .gmain .ph.photo video, .gth .ph.photo video { width: 100%; height: 100%; object-fit: cover; }
-.gmain .ph.photo video { background: #1d1b19; }
+.gmain .ph.photo > video, .gth .ph.photo > video, .gth .ph.photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.gmain .ph.photo > video { background: #1d1b19; }
 .gth .vplay { position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 1.5px solid rgba(255,240,214,.95); box-shadow: 0 0 10px rgba(255,200,127,.6); background: rgba(34,32,30,.35); }
 .gth .vplay::after { content: ''; position: absolute; left: 11px; top: 8px; border-style: solid; border-width: 6.5px 0 6.5px 10px; border-color: transparent transparent transparent #fff; }
 /* ---------- demandes & correspondances ---------- */
@@ -2047,7 +2048,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const base = curPhotos.length || VIEWS.length, n = base + (curVideo ? 1 : 0);
     gv = (i + n) % n;
     const ph = document.getElementById('gph'); if (!ph) return;
-    if (gv === base) { ph.className = 'ph photo'; ph.innerHTML = `<video src="${videoURL(curVideo.web)}" ${curVideo.poster ? `poster="${photoURL(curVideo.poster)}"` : ''} autoplay controls controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback playsinline muted loop preload="metadata"></video>`; document.getElementById('gtag').textContent = 'Video'; }
+    if (gv === base) { ph.className = 'ph photo'; ph.innerHTML = `<video src="${videoURL(curVideo.web)}" ${curVideo.poster ? `poster="${photoURL(curVideo.poster)}"` : ''} autoplay controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback playsinline muted loop preload="auto"></video>`; document.getElementById('gtag').textContent = 'Video'; }
     else if (curPhotos.length) { ph.className = 'ph photo'; ph.innerHTML = `<img src="${photoURL(curPhotos[gv])}" alt="Photo ${gv + 1}">`; document.getElementById('gtag').textContent = `Photo ${gv + 1} / ${base}`; }
     else { ph.className = 'ph v' + gv; document.getElementById('gtag').textContent = `${VIEWS[gv]} view · real photo coming soon`; }
     pieceBody.querySelectorAll('.gth').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.v === gv)));
