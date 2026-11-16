@@ -63,8 +63,6 @@ T = {
  'Uniquement sur rendez-vous': 'By appointment only',
  'Parkings': 'Car parks',
  ', Place de l’Opéra': ', Place de l’Opéra',
- 'Itinéraire · Plans': 'Directions · Apple Maps',
- 'Itinéraire · Google Maps': 'Directions · Google Maps',
  'Mes favoris': 'My favourites',
  'Votre sélection, gardée sur cet appareil.': 'Your selection, saved on this device.',
  'Envoyer ma liste par WhatsApp': 'Send my list on WhatsApp',
