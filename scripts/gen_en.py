@@ -86,11 +86,6 @@ T = {
  'Dépôt-vente': 'Consignment',
  'Achat immédiat': 'Immediate purchase',
  'Peu importe': 'No preference',
- 'Importez ici 3 photos de votre montre, sous différents angles et représentatives de son état.': 'Upload 3 photos of your watch here, from different angles and showing its condition.',
- '3 photos de la montre': '3 photos of the watch',
- 'Face': 'Front',
- 'Dos': 'Back',
- 'Profil': 'Side',
  'Nom de la montre': 'Watch name',
  'Référence': 'Reference',
  'Année': 'Year',
@@ -304,14 +299,13 @@ J = [
  ("'*LA MONTRE*', `• Modèle : ${v('nom')}`, `• Référence : ${v('ref')}`, `• Année : ${v('annee')}`, `• État : ${v('etat')}`, `• Full set : ${v('fullset')}`",
   "'*THE WATCH*', `• Model: ${v('nom')}`, `• Reference: ${v('ref')}`, `• Year: ${v('annee')}`, `• Condition: ${v('etat')}`, `• Full set: ${v('fullset')}`"),
  ("'*LA DEMANDE*', `• Formule : ${v('formule')}`, `• Prix désiré : ${eur(v('prix'))}`", "'*THE REQUEST*', `• Option: ${v('formule')}`, `• Desired price: ${eur(v('prix'))}`"),
- ("'*LE CLIENT*', `• Nom : ${v('client')}`, `• Contact : ${v('contact')}`", "'*THE CLIENT*', `• Name: ${v('client')}`, `• Contact: ${v('contact')}`"),
- ("'_3 photos de la montre jointes à ce message._'", "'_3 photos of the watch attached to this message._'"),
+ ("'*LE CLIENT*', `• Nom : ${v('client')}`, `• Contact : ${v('contact')}`]", "'*THE CLIENT*', `• Name: ${v('client')}`, `• Contact: ${v('contact')}`]"),
  ("'*DEMANDE DE SOURCING*', '_Machiavelli Watches · formulaire du site_'", "'*SOURCING REQUEST*', '_Machiavelli Watches · website form (EN)_'"),
  ("'*LA MONTRE RECHERCHÉE*', `• Référence : ${v('ref')}`, `• Année : ${v('annee') || 'indifférente'}`, `• Budget maximum : ${eur(v('prix'))}`",
   "'*THE WATCH WANTED*', `• Reference: ${v('ref')}`, `• Year: ${v('annee') || 'any'}`, `• Maximum budget: ${eur(v('prix'))}`"),
  ("'*LE CLIENT*', `• Nom : ${v('client')}`, `• Téléphone : ${v('tel')}`, `• E-mail : ${v('email')}`", "'*THE CLIENT*', `• Name: ${v('client')}`, `• Phone: ${v('tel')}`, `• Email: ${v('email')}`"),
- ("'Votre proposition s’est ouverte dans WhatsApp. Ajoutez-y vos 3 photos, puis envoyez : nous vous répondons au plus vite.'",
-  "'Your offer has opened in WhatsApp. Add your 3 photos, then send it: we will reply as soon as possible.'"),
+ ("'Votre proposition s’est ouverte dans WhatsApp. Envoyez-la : nous vous répondons au plus vite.'",
+  "'Your offer has opened in WhatsApp. Send it: we will reply as soon as possible.'"),
  ("'Votre demande s’est ouverte dans WhatsApp. Envoyez-la : nous lançons la recherche et revenons vers vous.'",
   "'Your request has opened in WhatsApp. Send it: we will start the search and get back to you.'"),
  ("b.textContent = 'Copié'; setTimeout(() => (b.textContent = 'Copier'), 1600);", "b.textContent = 'Copied'; setTimeout(() => (b.textContent = 'Copy'), 1600);"),
@@ -377,6 +371,9 @@ def main():
     old_q = urllib.parse.quote('Bonjour, je souhaite des informations sur l’entretien de ma montre.', safe='')
     s = s.replace(old_q, urllib.parse.quote('Hello, I would like information about servicing my watch.', safe=''))
 
+    # 3 bis. valeurs des boutons « formule » (envoyées dans le message WhatsApp)
+    for fr_v, en_v in (('Dépôt-vente', 'Consignment'), ('Achat immédiat', 'Immediate purchase'), ('Peu importe', 'No preference')):
+        s = s.replace(f'name="formule" value="{fr_v}"', f'name="formule" value="{en_v}"')
     # 4. en-tête, langue, sélecteur
     s = s.replace('<html lang="fr"', '<html lang="en"', 1)
     s = s.replace('Machiavelli Watches — Montres de luxe d\'occasion à Liège', 'Machiavelli Watches — Pre-owned luxury watches in Liège')

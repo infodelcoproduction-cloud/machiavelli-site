@@ -944,7 +944,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         <a href="#services" data-glide><span class="k">III</span>Nos services</a>
         <a href="#contact" data-glide><span class="k">IV</span>Contact</a>
         <a href="#gestion" class="adm-link" hidden><span class="k">✦</span>Espace vendeur</a>
-        <a href="#demandes" class="adm-link" hidden><span class="k">✦</span>Demandes &amp; matchs</a>
         <a href="en.html" class="lang-sw" lang="en" hreflang="en"><span class="k">EN</span>English</a>
       </div>
     </div>
@@ -1147,14 +1146,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         <label><input type="radio" name="formule" value="Achat immédiat"><span>Achat immédiat</span></label>
         <label><input type="radio" name="formule" value="Peu importe"><span>Peu importe</span></label>
       </fieldset>
-      <fieldset class="fs-photos"><legend>3 photos de la montre</legend>
-        <p class="fs-hint">Importez ici 3 photos de votre montre, sous différents angles et représentatives de son état.</p>
-        <div class="slots">
-          <label class="slot"><input type="file" accept="image/*" name="photo1" required><span class="hc" aria-hidden="true"></span><img alt=""><span class="ledbox" aria-hidden="true"></span><span class="lbl">Face</span></label>
-          <label class="slot"><input type="file" accept="image/*" name="photo2" required><span class="hc" aria-hidden="true"></span><img alt=""><span class="ledbox" aria-hidden="true"></span><span class="lbl">Dos</span></label>
-          <label class="slot"><input type="file" accept="image/*" name="photo3" required><span class="hc" aria-hidden="true"></span><img alt=""><span class="ledbox" aria-hidden="true"></span><span class="lbl">Profil</span></label>
-        </div>
-      </fieldset>
       <div class="fs-grid">
         <label class="fld wide"><span>Nom de la montre</span><input name="nom" required placeholder="Marque et modèle"></label>
         <label class="fld"><span>Référence</span><input name="ref" required></label>
@@ -1196,7 +1187,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   <div class="fs-bar">
     <div class="wrap row1">
       <span class="kicker">Espace vendeur</span>
-      <span class="lead-nav"><a class="lnk" href="#demandes">Demandes &amp; matchs</a><a class="lnk" href="#hall">Site <span class="ar" aria-hidden="true">→</span></a></span>
+      <span class="lead-nav"><a class="lnk" href="#hall">Site <span class="ar" aria-hidden="true">→</span></a></span>
     </div>
     <div class="led" aria-hidden="true"></div>
   </div>
@@ -2138,8 +2129,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       ? ['*PROPOSITION DE VENTE*', '_Machiavelli Watches · formulaire du site_', sep,
          '*LA MONTRE*', `• Modèle : ${v('nom')}`, `• Référence : ${v('ref')}`, `• Année : ${v('annee')}`, `• État : ${v('etat')}`, `• Full set : ${v('fullset')}`, sep,
          '*LA DEMANDE*', `• Formule : ${v('formule')}`, `• Prix désiré : ${eur(v('prix'))}`, sep,
-         '*LE CLIENT*', `• Nom : ${v('client')}`, `• Contact : ${v('contact')}`, sep,
-         '_3 photos de la montre jointes à ce message._']
+         '*LE CLIENT*', `• Nom : ${v('client')}`, `• Contact : ${v('contact')}`]
       : ['*DEMANDE DE SOURCING*', '_Machiavelli Watches · formulaire du site_', sep,
          '*LA MONTRE RECHERCHÉE*', `• Référence : ${v('ref')}`, `• Année : ${v('annee') || 'indifférente'}`, `• Budget maximum : ${eur(v('prix'))}`, sep,
          '*LE CLIENT*', `• Nom : ${v('client')}`, `• Téléphone : ${v('tel')}`, `• E-mail : ${v('email')}`];
@@ -2150,10 +2140,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       ? { ref: v('ref'), name: v('nom'), year: v('annee'), price: v('prix'), cond: v('etat'), set: v('fullset'), formula: v('formule'), client: v('client'), contact: v('contact') }
       : { ref: v('ref'), name: '', year: v('annee'), price: v('prix'), client: v('client'), contact: [v('tel'), v('email')].filter(Boolean).join(' · ') }) };
     window.open('https://wa.me/32484709109?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
-    if (window.__saveLead) window.__saveLead(leadKind, leadItem);
     form.hidden = true; fsDone.hidden = false; fsheet.scrollTop = 0;
     document.getElementById('fs-done-txt').textContent = k === 'sell'
-      ? 'Votre proposition s’est ouverte dans WhatsApp. Ajoutez-y vos 3 photos, puis envoyez : nous vous répondons au plus vite.'
+      ? 'Votre proposition s’est ouverte dans WhatsApp. Envoyez-la : nous vous répondons au plus vite.'
       : 'Votre demande s’est ouverte dans WhatsApp. Envoyez-la : nous lançons la recherche et revenons vers vous.';
   });
 
@@ -2610,7 +2599,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   function showLead() {
     if (STATIC) { location.replace('#hall'); return; } if (lead.hidden) { if (adm.hidden) { leadY = scrollY; body.style.top = `-${leadY}px`; body.classList.add('locked'); } } adm.hidden = true; lead.hidden = false; lead.scrollTop = 0; paintLeads(); }
   function hideLead() { if (lead.hidden) return; lead.hidden = true; if (location.hash !== '#gestion' && location.hash !== '#stories' && view.hidden && fsheet.hidden) { body.classList.remove('locked'); body.style.top = ''; scrollTo(0, leadY); lastHp = 1; } }
-  const leadRoute = () => (location.hash === '#demandes' ? showLead() : hideLead());
+  // page « Demandes & matchs » retirée le 16 nov. 2026 (les demandes se retrouvent dans WhatsApp avec MW-VENTE / MW-RECHERCHE)
+  const leadRoute = () => { if (location.hash === '#demandes') history.replaceState(null, '', location.pathname + location.search); hideLead(); };
   addEventListener('hashchange', leadRoute);
   if (!readAjoutHash()) leadRoute();
   async function startLeads(db, user) {
