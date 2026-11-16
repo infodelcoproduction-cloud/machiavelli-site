@@ -2098,8 +2098,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const w = S.find((x) => x.id === id);
     if (!w && !stockReady && !quiet) { pendingPiece = id; setTimeout(() => { if (pendingPiece === id) { pendingPiece = null; stockReady = true; openPiece(id); } }, 6000); return; }
     if (!w) { if (!quiet) location.hash = 'stock'; return; }
-    const wa = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Hello, I am interested in the ${w.brand} ${w.model}${w.ref ? ' (ref. ' + w.ref + ')' : ''}.`);
-    const wv = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Hello, I would like to book an appointment to see the ${w.brand} ${w.model}${w.ref ? ' (ref. ' + w.ref + ')' : ''}.`);
+    const wa = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Hello, I am interested in the ${w.brand} ${w.model}${w.ref ? ' (ref. ' + w.ref + ')' : ''}.\n${shareBase()}m/${encodeURIComponent(w.id)}.html`);
+    const wv = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Hello, I would like to book an appointment to see the ${w.brand} ${w.model}${w.ref ? ' (ref. ' + w.ref + ')' : ''}.\n${shareBase()}m/${encodeURIComponent(w.id)}.html`);
     document.getElementById('piece-no').textContent = w.brand;
     curPhotos = w.photos || [];
     curVideos = (w.videos && w.videos.length ? w.videos : (w.video ? [w.video] : [])).filter((v) => v && v.web);
