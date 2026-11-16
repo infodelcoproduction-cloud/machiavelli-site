@@ -2108,7 +2108,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         <h2 id="piece-title"><small>${esc(w.brand)}</small>${esc(w.model)}</h2>
         ${w.price === null ? '<span class="reserved">Réservée</span>' : `<span class="price">${euro(w.price)}<span class="ttc">TTC</span></span>`}
         ${w.info ? `<p class="pdesc">${esc(w.info)}</p>` : ''}
-        <div class="ctas">${w.price === null ? `<a class="lnk lit" href="${wa}" target="_blank" rel="noopener">Être prévenu d'une pièce similaire <span class="ar" aria-hidden="true">→</span></a>` : `<a class="lnk lit" href="${wa}" target="_blank" rel="noopener">Demander sur WhatsApp <span class="ar" aria-hidden="true">→</span></a><a class="lnk" href="${wv}" target="_blank" rel="noopener">Prendre rendez-vous</a>`}</div>
+        <div class="ctas">${w.price === null ? `<a class="lnk lit" href="${wa}" target="_blank" rel="noopener">Être prévenu d'une pièce similaire <span class="ar" aria-hidden="true">→</span></a>` : `<a class="lnk lit" href="${wa}" target="_blank" rel="noopener">Contacter sur WhatsApp <span class="ar" aria-hidden="true">→</span></a>`}</div>
         <dl>
           <div><dt>Maison</dt><span class="dots"></span><dd>${esc(w.brand)}</dd></div>
           <div><dt>Modèle</dt><span class="dots"></span><dd>${esc(w.model)}</dd></div>
