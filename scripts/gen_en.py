@@ -270,6 +270,7 @@ J = [
  ("'Vue de face · photo réelle à venir'", "'Front view · real photo coming soon'"),
  ('aria-label="Photos de la montre"', 'aria-label="Watch photos"'),
  ("'Vidéo'", "'Video'"),
+ ("`Vidéo ${gv - base + 1} / ${curVideos.length}`", "`Video ${gv - base + 1} / ${curVideos.length}`"),
  ("const VIEWS = ['Face', 'Trois-quarts', 'Cadran', 'Profil'];", "const VIEWS = ['Front', 'Three-quarter', 'Dial', 'Side'];"),
  ("`Vue ${VIEWS[gv].toLowerCase()} · photo réelle à venir`", "`${VIEWS[gv]} view · real photo coming soon`"),
  ("Réf. ${esc(w.ref || 'à préciser')}", "Ref. ${esc(w.ref || 'to be confirmed')}"),
