@@ -1066,7 +1066,25 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   #site .contact { padding-top: var(--sec-y); }
   #site .manifest .qs, #site .svc h2, #site .vitrine h2, #site .wall h2 { font-size: var(--h2); }
   #site .manifest .qs { margin-bottom: var(--head-gap); }
-  #site .values { margin-top: calc(var(--head-gap) * 1.5); }
+  #site .mhead { display: flex; flex-direction: column; gap: var(--kick-gap); margin-bottom: var(--head-gap); }
+  #site .mhead .qs { margin: 0; }
+  #site .manifest .say .w { color: var(--ink); transition: none; }
+  #site .manifest .say .w.hot { color: var(--glow); text-shadow: 0 0 20px rgba(255,200,127,.35); }
+  .dial { position: relative; margin-top: calc(var(--head-gap) * 1.6); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 48px); padding-top: 34px; }
+  .dial .rail { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--glow-core); box-shadow: 0 0 6px 1px rgba(255,217,160,.85), 0 0 22px 4px rgba(255,200,127,.25); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.2,.7,.1,1); will-change: transform; }
+  .dial .ix { position: relative; display: flex; flex-direction: column; gap: 10px; opacity: 0; transform: translate3d(0, 18px, 0); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.1,1); transition-delay: calc(.35s + var(--i) * .14s); }
+  .dial .tick { position: absolute; left: 0; top: -40px; width: 2px; height: 14px; background: var(--glow-core); box-shadow: 0 0 6px 1px rgba(255,217,160,.9); }
+  .dial .ix b { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 2.3vw, 36px); line-height: 1; }
+  .dial .ix span:last-child { font-size: 15px; color: var(--mute); line-height: 1.55; }
+  .manifest.in .dial .rail { transform: none; }
+  .manifest.in .dial .ix { opacity: 1; transform: none; }
+  @media (max-width: 900px) {
+    .dial { grid-template-columns: minmax(0, 1fr); gap: 30px; padding: 0 0 0 28px; }
+    .dial .rail { left: 0; right: auto; top: 0; bottom: 0; width: 2px; height: auto; transform: scaleY(0); transform-origin: top; }
+    .manifest.in .dial .rail { transform: none; }
+    .dial .tick { left: -34px; top: 10px; width: 14px; height: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .dial .rail, .dial .ix { transition: none; transform: none; opacity: 1; } }
   #site .svc-head { gap: var(--kick-gap); margin-bottom: var(--head-gap); }
   #site .vitrine .head { margin-bottom: var(--head-gap); }
   #site .vitrine .head > div { display: flex; flex-direction: column; gap: var(--kick-gap); }
@@ -1092,18 +1110,16 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   </section>
 
   <!-- 3 · manifeste -->
-  <section class="manifest" id="maison" data-p aria-labelledby="maison-title">
-    <div class="wrap in">
-      <div class="vline" aria-hidden="true"><div class="led-v"></div><span class="k">THE HOUSE</span></div>
-      <div>
-        <h2 id="maison-title" class="qs">About <em>us.</em></h2>
-        <p class="say" data-words>Based in Liège, Machiavelli buys, selects and resells *exclusive* watches for collectors around the world. We do not make watches: we choose the *finest pieces* from the great houses.</p>
-        <div class="values" aria-label="Our commitments">
-          <div class="v" style="--i:0"><span class="led-v" aria-hidden="true"></span><span class="n">I</span><b>Availability</b><span>All our pieces are available immediately, with no waiting list.</span></div>
-          <div class="v" style="--i:1"><span class="led-v" aria-hidden="true"></span><span class="n">II</span><b>Authenticity</b><span>Every watch we buy and sell is authenticated by an expert.</span></div>
-          <div class="v" style="--i:2"><span class="led-v" aria-hidden="true"></span><span class="n">III</span><b>Warranty</b><span>One-year warranty on all our models, extendable to 2 years.</span></div>
-          <div class="v" style="--i:3"><span class="led-v" aria-hidden="true"></span><span class="n">IV</span><b>Transparency</b><span>Every model is shown from every angle, and its condition is clearly stated.</span></div>
-        </div>
+  <section class="manifest" id="maison" aria-labelledby="maison-title">
+    <div class="wrap">
+      <div class="mhead"><span class="kicker">The house</span><h2 id="maison-title" class="qs">About <em>us.</em></h2></div>
+      <p class="say" data-words>Based in Liège, Machiavelli buys, selects and resells *exclusive* watches for collectors around the world. We do not make watches: we choose the *finest pieces* from the great houses.</p>
+      <div class="dial" aria-label="Our commitments">
+        <span class="rail" aria-hidden="true"></span>
+        <div class="ix" style="--i:0"><span class="tick" aria-hidden="true"></span><b>Availability</b><span>All our pieces are available immediately, with no waiting list.</span></div>
+        <div class="ix" style="--i:1"><span class="tick" aria-hidden="true"></span><b>Authenticity</b><span>Every watch we buy and sell is authenticated by an expert.</span></div>
+        <div class="ix" style="--i:2"><span class="tick" aria-hidden="true"></span><b>Warranty</b><span>One-year warranty on all our models, extendable to 2 years.</span></div>
+        <div class="ix" style="--i:3"><span class="tick" aria-hidden="true"></span><b>Transparency</b><span>Every model is shown from every angle, and its condition is clearly stated.</span></div>
       </div>
     </div>
   </section>
@@ -1882,7 +1898,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const list = Object.keys(count).sort((a, b) => count[b] - count[a]);
     if (brand !== 'Toutes' && !count[brand]) brand = 'Toutes';
     [...fB].forEach((b) => { if (!count[b]) fB.delete(b); });
-    brandsEl.innerHTML = ['Toutes', ...list].map((b) => `<button type="button" data-b="${esc(b)}" aria-pressed="${b === 'Toutes' ? !fB.size : fB.size === 1 && fB.has(b)}">${esc(b)}</button>`).join('');
+    brandsEl.innerHTML = ['Toutes', ...list].map((b) => `<button type="button" data-b="${esc(b)}" aria-pressed="${b === 'Toutes' ? !fB.size : fB.size === 1 && fB.has(b)}">${esc(b === 'Toutes' ? 'All' : b)}</button>`).join('');
     fbrandsEl.innerHTML = list.map((b) => `<label><input type="checkbox" value="${esc(b)}"${fB.has(b) ? ' checked' : ''}><span>${esc(b)}<sup>${count[b]}</sup></span></label>`).join('');
     paintFlt();
   }
@@ -2829,8 +2845,11 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     if (!('IntersectionObserver' in window)) { v.classList.add('in'); return; }
     const o = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { v.classList.add('in'); o.disconnect(); } }), { rootMargin: '0px 0px -18% 0px' });
     o.observe(v); })();
+  (() => { const m = document.querySelector('.manifest'); if (!m) return;
+    if (!('IntersectionObserver' in window)) { m.classList.add('in'); return; }
+    const o = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { m.classList.add('in'); o.disconnect(); } }), { rootMargin: '0px 0px -20% 0px' });
+    o.observe(m.querySelector('.dial')); })();
   const tracked = [...document.querySelectorAll('[data-p]')];
-  const vline = document.querySelector('.manifest .vline');
   const hall = document.getElementById('hall');
   const hallCopy = hall.querySelector('.hall-copy');
   const hallStage = document.getElementById('hall-stage');
@@ -2864,12 +2883,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       const r = el.getBoundingClientRect();
       el.style.setProperty('--p', clamp((vh - r.top) / (vh + r.height)).toFixed(4));
     }
-    const m = say.getBoundingClientRect();
-    const wp = clamp((vh * .8 - m.top) / (m.height + vh * .3));
-    const lit = Math.round(wp * words.length);
-    words.forEach((w, i) => w.classList.toggle('on', i < lit));
-    const vr = vline.getBoundingClientRect();
-    vline.style.setProperty('--fill', clamp((vh * .6 - vr.top) / vr.height).toFixed(4));
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener('scroll', onScroll, { passive: true });
