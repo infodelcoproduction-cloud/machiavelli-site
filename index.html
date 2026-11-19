@@ -1066,12 +1066,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   #site .contact { padding-top: var(--sec-y); }
   #site .manifest .qs, #site .svc h2, #site .vitrine h2, #site .wall h2 { font-size: var(--h2); }
   #site .manifest .qs { margin-bottom: var(--head-gap); }
-  #site .mhead { display: flex; flex-direction: column; gap: var(--kick-gap); margin-bottom: var(--head-gap); }
-  #site .mhead .qs { margin: 0; }
-  #site .manifest .say .w { color: var(--ink); transition: none; }
-  #site .manifest .say .w.hot { color: var(--glow); text-shadow: 0 0 20px rgba(255,200,127,.35); }
-  .dial { position: relative; margin-top: calc(var(--head-gap) * 1.6); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 48px); padding-top: 30px; }
-  /* fondu entre le couloir et la suite de la page */
   #site .hall-stage { background: none; }
   #site .hall-stage > #corridor, #site .hall-stage > .whiteout, #site .hall-stage > .veil { -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,.6) 82%, rgba(0,0,0,.2) 92%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,.6) 82%, rgba(0,0,0,.2) 92%, transparent 100%); }
   .hall-copy, .hall .scroll-cue { z-index: 2; }
@@ -1090,6 +1084,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     .manifest.in .dial .rail { transform: none; }
   }
   @media (prefers-reduced-motion: reduce) { .dial .rail, .dial .ix { transition: none; transform: none; opacity: 1; } }
+  #site .values { margin-top: calc(var(--head-gap) * 1.5); }
   #site .svc-head { gap: var(--kick-gap); margin-bottom: var(--head-gap); }
   #site .vitrine .head { margin-bottom: var(--head-gap); }
   #site .vitrine .head > div { display: flex; flex-direction: column; gap: var(--kick-gap); }
@@ -1115,16 +1110,18 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   </section>
 
   <!-- 3 · manifeste -->
-  <section class="manifest" id="maison" aria-labelledby="maison-title">
-    <div class="wrap">
-      <div class="mhead"><span class="kicker">La maison</span><h2 id="maison-title" class="qs">Qui sommes-<em>nous ?</em></h2></div>
-      <p class="say" data-words>Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Nous ne fabriquons pas de montres : nous choisissons les *plus belles pièces* des grandes maisons.</p>
-      <div class="dial" aria-label="Nos engagements">
-        <span class="rail" aria-hidden="true"></span>
-        <div class="ix" style="--i:0"><span class="tick" aria-hidden="true"></span><b>Disponibilité</b><span>Toutes nos pièces sont disponibles immédiatement, sans liste d'attente.</span></div>
-        <div class="ix" style="--i:1"><span class="tick" aria-hidden="true"></span><b>Authenticité</b><span>Chaque montre achetée et vendue est authentifiée par un expert.</span></div>
-        <div class="ix" style="--i:2"><span class="tick" aria-hidden="true"></span><b>Garantie</b><span>Garantie d’un an sur tous nos modèles, extensible à 2 ans.</span></div>
-        <div class="ix" style="--i:3"><span class="tick" aria-hidden="true"></span><b>Transparence</b><span>Chaque modèle est montré sous tous ses angles, son état est précisé.</span></div>
+  <section class="manifest" id="maison" data-p aria-labelledby="maison-title">
+    <div class="wrap in">
+      <div class="vline" aria-hidden="true"><div class="led-v"></div><span class="k">LA MAISON</span></div>
+      <div>
+        <h2 id="maison-title" class="qs">Qui sommes-<em>nous ?</em></h2>
+        <p class="say" data-words>Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Nous ne fabriquons pas de montres : nous choisissons les *plus belles pièces* des grandes maisons.</p>
+        <div class="values" aria-label="Nos engagements">
+          <div class="v" style="--i:0"><span class="led-v" aria-hidden="true"></span><span class="n">I</span><b>Disponibilité</b><span>Toutes nos pièces sont disponibles immédiatement, sans liste d'attente.</span></div>
+          <div class="v" style="--i:1"><span class="led-v" aria-hidden="true"></span><span class="n">II</span><b>Authenticité</b><span>Chaque montre achetée et vendue est authentifiée par un expert.</span></div>
+          <div class="v" style="--i:2"><span class="led-v" aria-hidden="true"></span><span class="n">III</span><b>Garantie</b><span>Garantie d’un an sur tous nos modèles, extensible à 2 ans.</span></div>
+          <div class="v" style="--i:3"><span class="led-v" aria-hidden="true"></span><span class="n">IV</span><b>Transparence</b><span>Chaque modèle est montré sous tous ses angles, son état est précisé.</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1133,24 +1130,24 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   <!-- 5b · services condensés -->
   <section class="svc" id="services" aria-labelledby="svc-title">
     <div class="wrap">
-      <div class="svc-head"><span class="kicker">Nos services</span><h2 id="svc-title">Nous nous occupons <em>de tout.</em></h2></div>
+      <div class="svc-head"><span class="kicker">Nos services</span><h2 id="svc-title">Vendre, acheter, entretenir&nbsp;: <em>réglé comme une horloge.</em></h2></div>
       <div class="svc-grid">
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
           <h3>Vendre votre montre</h3>
-          <p>Dépôt-vente ou achat immédiat.</p>
+          <p>Dépôt-vente ou achat immédiat : vous choisissez la formule qui vous convient.</p>
           <div class="svc-ctas"><button class="lnk lit" type="button" data-form="sell">Proposer ma montre <span class="ar" aria-hidden="true">→</span></button></div>
         </article>
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
           <h3>Acheter votre montre</h3>
-          <p>Dans notre stock, ou trouvée pour vous.</p>
+          <p>Choisissez dans notre stock, ou confiez-nous la recherche de la pièce qui vous manque.</p>
           <div class="svc-ctas"><a class="lnk lit" href="#stock" data-open-stock>Voir le stock <span class="ar" aria-hidden="true">→</span></a><button class="lnk" type="button" data-form="source">Sourcer ma montre <span class="ar" aria-hidden="true">→</span></button></div>
         </article>
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
           <h3>Entretenir votre montre</h3>
-          <p>Révision, polissage, films de protection.</p>
+          <p>Révision, polissage et films de protection, posés en collaboration avec Chronoskin.</p>
           <div class="svc-ctas"><a class="lnk lit" href="https://wa.me/32484709109?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20l%E2%80%99entretien%20de%20ma%20montre." target="_blank" rel="noopener">Nous contacter <span class="ar" aria-hidden="true">→</span></a></div>
         </article>
       </div>
@@ -2840,11 +2837,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     if (!('IntersectionObserver' in window)) { v.classList.add('in'); return; }
     const o = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { v.classList.add('in'); o.disconnect(); } }), { rootMargin: '0px 0px -18% 0px' });
     o.observe(v); })();
-  (() => { const m = document.querySelector('.manifest'); if (!m) return;
-    if (!('IntersectionObserver' in window)) { m.classList.add('in'); return; }
-    const o = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { m.classList.add('in'); o.disconnect(); } }), { rootMargin: '0px 0px -20% 0px' });
-    o.observe(m.querySelector('.dial')); })();
   const tracked = [...document.querySelectorAll('[data-p]')];
+  const vline = document.querySelector('.manifest .vline');
   const hall = document.getElementById('hall');
   const hallCopy = hall.querySelector('.hall-copy');
   const hallStage = document.getElementById('hall-stage');
@@ -2878,6 +2872,12 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       const r = el.getBoundingClientRect();
       el.style.setProperty('--p', clamp((vh - r.top) / (vh + r.height)).toFixed(4));
     }
+    const m = say.getBoundingClientRect();
+    const wp = clamp((vh * .8 - m.top) / (m.height + vh * .3));
+    const lit = Math.round(wp * words.length);
+    words.forEach((w, i) => w.classList.toggle('on', i < lit));
+    const vr = vline.getBoundingClientRect();
+    vline.style.setProperty('--fill', clamp((vh * .6 - vr.top) / vr.height).toFixed(4));
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener('scroll', onScroll, { passive: true });

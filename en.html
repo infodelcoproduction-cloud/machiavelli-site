@@ -1066,12 +1066,6 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   #site .contact { padding-top: var(--sec-y); }
   #site .manifest .qs, #site .svc h2, #site .vitrine h2, #site .wall h2 { font-size: var(--h2); }
   #site .manifest .qs { margin-bottom: var(--head-gap); }
-  #site .mhead { display: flex; flex-direction: column; gap: var(--kick-gap); margin-bottom: var(--head-gap); }
-  #site .mhead .qs { margin: 0; }
-  #site .manifest .say .w { color: var(--ink); transition: none; }
-  #site .manifest .say .w.hot { color: var(--glow); text-shadow: 0 0 20px rgba(255,200,127,.35); }
-  .dial { position: relative; margin-top: calc(var(--head-gap) * 1.6); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 48px); padding-top: 30px; }
-  /* fondu entre le couloir et la suite de la page */
   #site .hall-stage { background: none; }
   #site .hall-stage > #corridor, #site .hall-stage > .whiteout, #site .hall-stage > .veil { -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,.6) 82%, rgba(0,0,0,.2) 92%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,.6) 82%, rgba(0,0,0,.2) 92%, transparent 100%); }
   .hall-copy, .hall .scroll-cue { z-index: 2; }
@@ -1090,6 +1084,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     .manifest.in .dial .rail { transform: none; }
   }
   @media (prefers-reduced-motion: reduce) { .dial .rail, .dial .ix { transition: none; transform: none; opacity: 1; } }
+  #site .values { margin-top: calc(var(--head-gap) * 1.5); }
   #site .svc-head { gap: var(--kick-gap); margin-bottom: var(--head-gap); }
   #site .vitrine .head { margin-bottom: var(--head-gap); }
   #site .vitrine .head > div { display: flex; flex-direction: column; gap: var(--kick-gap); }
@@ -1115,16 +1110,18 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   </section>
 
   <!-- 3 · manifeste -->
-  <section class="manifest" id="maison" aria-labelledby="maison-title">
-    <div class="wrap">
-      <div class="mhead"><span class="kicker">The house</span><h2 id="maison-title" class="qs">About <em>us.</em></h2></div>
-      <p class="say" data-words>Based in Liège, Machiavelli buys, selects and resells *exclusive* watches for collectors around the world. We do not make watches: we choose the *finest pieces* from the great houses.</p>
-      <div class="dial" aria-label="Our commitments">
-        <span class="rail" aria-hidden="true"></span>
-        <div class="ix" style="--i:0"><span class="tick" aria-hidden="true"></span><b>Availability</b><span>All our pieces are available immediately, with no waiting list.</span></div>
-        <div class="ix" style="--i:1"><span class="tick" aria-hidden="true"></span><b>Authenticity</b><span>Every watch we buy and sell is authenticated by an expert.</span></div>
-        <div class="ix" style="--i:2"><span class="tick" aria-hidden="true"></span><b>Warranty</b><span>One-year warranty on all our models, extendable to 2 years.</span></div>
-        <div class="ix" style="--i:3"><span class="tick" aria-hidden="true"></span><b>Transparency</b><span>Every model is shown from every angle, and its condition is clearly stated.</span></div>
+  <section class="manifest" id="maison" data-p aria-labelledby="maison-title">
+    <div class="wrap in">
+      <div class="vline" aria-hidden="true"><div class="led-v"></div><span class="k">THE HOUSE</span></div>
+      <div>
+        <h2 id="maison-title" class="qs">About <em>us.</em></h2>
+        <p class="say" data-words>Based in Liège, Machiavelli buys, selects and resells *exclusive* watches for collectors around the world. We do not make watches: we choose the *finest pieces* from the great houses.</p>
+        <div class="values" aria-label="Our commitments">
+          <div class="v" style="--i:0"><span class="led-v" aria-hidden="true"></span><span class="n">I</span><b>Availability</b><span>All our pieces are available immediately, with no waiting list.</span></div>
+          <div class="v" style="--i:1"><span class="led-v" aria-hidden="true"></span><span class="n">II</span><b>Authenticity</b><span>Every watch we buy and sell is authenticated by an expert.</span></div>
+          <div class="v" style="--i:2"><span class="led-v" aria-hidden="true"></span><span class="n">III</span><b>Warranty</b><span>One-year warranty on all our models, extendable to 2 years.</span></div>
+          <div class="v" style="--i:3"><span class="led-v" aria-hidden="true"></span><span class="n">IV</span><b>Transparency</b><span>Every model is shown from every angle, and its condition is clearly stated.</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1133,24 +1130,24 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   <!-- 5b · services condensés -->
   <section class="svc" id="services" aria-labelledby="svc-title">
     <div class="wrap">
-      <div class="svc-head"><span class="kicker">Our services</span><h2 id="svc-title">We take care <em>of everything.</em></h2></div>
+      <div class="svc-head"><span class="kicker">Our services</span><h2 id="svc-title">Selling, buying, servicing: <em>like clockwork.</em></h2></div>
       <div class="svc-grid">
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
           <h3>Sell your watch</h3>
-          <p>Consignment or immediate purchase.</p>
+          <p>Consignment or immediate purchase: you choose the option that suits you.</p>
           <div class="svc-ctas"><button class="lnk lit" type="button" data-form="sell">Offer my watch <span class="ar" aria-hidden="true">→</span></button></div>
         </article>
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
           <h3>Buy your watch</h3>
-          <p>From our stock, or sourced for you.</p>
+          <p>Choose from our stock, or let us find the piece you are missing.</p>
           <div class="svc-ctas"><a class="lnk lit" href="#stock" data-open-stock>View the stock <span class="ar" aria-hidden="true">→</span></a><button class="lnk" type="button" data-form="source">Source my watch <span class="ar" aria-hidden="true">→</span></button></div>
         </article>
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
           <h3>Care for your watch</h3>
-          <p>Servicing, polishing, protective films.</p>
+          <p>Servicing, polishing and protective films, applied in collaboration with Chronoskin.</p>
           <div class="svc-ctas"><a class="lnk lit" href="https://wa.me/32484709109?text=Hello%2C%20I%20would%20like%20information%20about%20servicing%20my%20watch." target="_blank" rel="noopener">Contact us <span class="ar" aria-hidden="true">→</span></a></div>
         </article>
       </div>
@@ -2850,11 +2847,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     if (!('IntersectionObserver' in window)) { v.classList.add('in'); return; }
     const o = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { v.classList.add('in'); o.disconnect(); } }), { rootMargin: '0px 0px -18% 0px' });
     o.observe(v); })();
-  (() => { const m = document.querySelector('.manifest'); if (!m) return;
-    if (!('IntersectionObserver' in window)) { m.classList.add('in'); return; }
-    const o = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { m.classList.add('in'); o.disconnect(); } }), { rootMargin: '0px 0px -20% 0px' });
-    o.observe(m.querySelector('.dial')); })();
   const tracked = [...document.querySelectorAll('[data-p]')];
+  const vline = document.querySelector('.manifest .vline');
   const hall = document.getElementById('hall');
   const hallCopy = hall.querySelector('.hall-copy');
   const hallStage = document.getElementById('hall-stage');
@@ -2888,6 +2882,12 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       const r = el.getBoundingClientRect();
       el.style.setProperty('--p', clamp((vh - r.top) / (vh + r.height)).toFixed(4));
     }
+    const m = say.getBoundingClientRect();
+    const wp = clamp((vh * .8 - m.top) / (m.height + vh * .3));
+    const lit = Math.round(wp * words.length);
+    words.forEach((w, i) => w.classList.toggle('on', i < lit));
+    const vr = vline.getBoundingClientRect();
+    vline.style.setProperty('--fill', clamp((vh * .6 - vr.top) / vr.height).toFixed(4));
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener('scroll', onScroll, { passive: true });
