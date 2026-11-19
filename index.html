@@ -1088,7 +1088,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   #site .hall-stage::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: min(1360px, calc(100% - var(--g-l) - var(--g-r))); height: 1px; transform: translateX(-50%); z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(255,240,214,0), var(--glow-core) 12%, var(--glow-core) 88%, rgba(255,240,214,0)); box-shadow: 0 0 6px 0 rgba(255,217,160,.8), 0 0 22px 3px rgba(255,200,127,.22); }
   #site .manifest .vline .led-v { transform: scaleY(0); transform-origin: top; transition: transform 1.8s cubic-bezier(.25,.7,.15,1) .1s; will-change: transform; }
   #site .manifest .values .v .led-v { transform: scaleY(0); transform-origin: bottom; transition: transform 1.1s cubic-bezier(.25,.7,.15,1); transition-delay: calc(.2s + var(--i) * .18s); will-change: transform; }
-  @media (max-width: 700px) { #site .manifest .say { font-size: 24px; line-height: 1.25; } }
+  @media (max-width: 700px) { #site .manifest .say { font-size: clamp(19px, 5.6vw, 24px); line-height: 1.28; } }
   #site .manifest .say .w { transition: color .6s ease, text-shadow .6s ease; transition-delay: calc(.25s + var(--k, 0) * 28ms); }
   #site .manifest.in .vline .led-v, #site .values.vshow .v .led-v { transform: none; }
   #site .manifest.in .say .w { color: var(--ink); }
@@ -1139,7 +1139,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <div class="vline" aria-hidden="true"><div class="led-v"></div><span class="k">LA MAISON</span></div>
       <div>
         <h2 id="maison-title" class="qs">Qui sommes-<em>nous ?</em></h2>
-        <p class="say" data-words>Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Nous ne fabriquons pas de montres : nous choisissons les *plus belles pièces* des grandes maisons.</p>
+        <p class="say" data-words>Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Notre mission : vous présenter les *plus belles pièces* des grandes maisons.</p>
         <div class="values" aria-label="Nos engagements">
           <div class="v" style="--i:0"><span class="led-v" aria-hidden="true"></span><span class="n">I</span><b>Disponibilité</b><span>Toutes nos pièces sont disponibles immédiatement, sans liste d'attente.</span></div>
           <div class="v" style="--i:1"><span class="led-v" aria-hidden="true"></span><span class="n">II</span><b>Authenticité</b><span>Chaque montre achetée et vendue est authentifiée par un expert.</span></div>
