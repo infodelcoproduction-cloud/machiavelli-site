@@ -103,6 +103,7 @@ T = {
  # stock
  'Accueil': 'Home',
  'Le stock': 'The stock',
+ 'Collection': 'Collection',
  'Notre': 'Our',
  'stock.': 'stock.',
  'Chercher': 'Search',
