@@ -1897,7 +1897,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   // manifeste mot à mot
   const say = document.querySelector('[data-words]');
   let hot = false;
-  say.innerHTML = say.textContent.trim().split(/\s+/).map((t) => {
+  say.innerHTML = say.textContent.trim().split(/[ \t\n\r]+/).map((t) => {
     let h = false;
     if (t.startsWith('*')) { hot = true; t = t.slice(1); }
     h = hot;

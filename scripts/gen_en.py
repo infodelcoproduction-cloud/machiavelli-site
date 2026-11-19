@@ -286,7 +286,7 @@ A = {
 
 # manifeste (texte découpé mot à mot par le script : les *…* marquent les mots lumineux)
 MANIFESTE = (
- 'Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Notre mission : vous présenter les *plus belles pièces* des grandes maisons.',
+ 'Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Notre mission : vous présenter les *plus belles pièces* des grandes maisons.',
  'Based in Liège, Machiavelli buys, selects and resells *exclusive* watches for collectors around the world. Our mission: to present you the *finest pieces* from the great houses.')
 
 # ---------- textes générés par le script ----------

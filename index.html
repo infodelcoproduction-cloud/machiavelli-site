@@ -1139,7 +1139,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <div class="vline" aria-hidden="true"><div class="led-v"></div><span class="k">LA MAISON</span></div>
       <div>
         <h2 id="maison-title" class="qs">Qui sommes-<em>nous ?</em></h2>
-        <p class="say" data-words>Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Notre mission : vous présenter les *plus belles pièces* des grandes maisons.</p>
+        <p class="say" data-words>Basé à Liège, Machiavelli achète, sélectionne et revend des montres *exclusives* pour des collectionneurs du monde entier. Notre mission : vous présenter les *plus belles pièces* des grandes maisons.</p>
         <div class="values" aria-label="Nos engagements">
           <div class="v" style="--i:0"><span class="led-v" aria-hidden="true"></span><span class="n">I</span><b>Disponibilité</b><span>Toutes nos pièces sont disponibles immédiatement, sans liste d'attente.</span></div>
           <div class="v" style="--i:1"><span class="led-v" aria-hidden="true"></span><span class="n">II</span><b>Authenticité</b><span>Chaque montre achetée et vendue est authentifiée par un expert.</span></div>
@@ -1888,7 +1888,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   // manifeste mot à mot
   const say = document.querySelector('[data-words]');
   let hot = false;
-  say.innerHTML = say.textContent.trim().split(/\s+/).map((t) => {
+  say.innerHTML = say.textContent.trim().split(/[ \t\n\r]+/).map((t) => {
     let h = false;
     if (t.startsWith('*')) { hot = true; t = t.slice(1); }
     h = hot;
