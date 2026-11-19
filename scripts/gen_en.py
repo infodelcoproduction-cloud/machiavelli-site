@@ -51,7 +51,15 @@ T = {
  'Voir toutes nos montres': 'View all our watches',
  'Prenez': 'Book an',
  'rendez-vous.': 'appointment.',
- 'Nous vous recevons uniquement sur rendez-vous, Rue des Dominicains 15-17 à Liège.': 'We welcome you by appointment only, Rue des Dominicains 15-17 in Liège.',
+ 'Ouvert tous les jours de 11 h à 18 h, Rue des Dominicains 15-17 à Liège.': 'Open every day from 11 am to 6 pm, Rue des Dominicains 15-17 in Liège.',
+ 'Horaires': 'Opening hours',
+ 'Tous les jours': 'Every day',
+ '11 h – 18 h': '11 am – 6 pm',
+ 'L’adresse': 'The address',
+ 'Ouvert tous les jours': 'Open every day',
+ 'Se garer': 'Parking',
+ 'Place de l’Opéra': 'Place de l’Opéra',
+ 'Place de la Cathédrale': 'Place de la Cathédrale',
  'Copier': 'Copy',
  'Rendez-vous': 'Appointments',
  # boutique, favoris, dépôt-vente
@@ -131,7 +139,7 @@ T = {
  'Le site machiavelliwatches.com est édité par Machiavelli Trading SRL, société à responsabilité limitée de droit belge, qui exploite la marque Machiavelli Watches.':
    'The machiavelliwatches.com website is published by Machiavelli Trading SRL, a Belgian private limited company, which operates the Machiavelli Watches brand.',
  'Siège social : Place des Combattants 11-13, 6852 Paliseul (Belgique)': 'Registered office: Place des Combattants 11-13, 6852 Paliseul (Belgium)',
- 'Boutique, sur rendez-vous : Rue des Dominicains 15-17, 4000 Liège': 'Boutique, by appointment: Rue des Dominicains 15-17, 4000 Liège',
+ 'Boutique : Rue des Dominicains 15-17, 4000 Liège, ouverte tous les jours de 11 h à 18 h': 'Boutique: Rue des Dominicains 15-17, 4000 Liège, open every day from 11 am to 6 pm',
  "Numéro d'entreprise (BCE) : 1021.229.955 · RPM Liège": 'Company number (BCE): 1021.229.955 · RPM Liège',
  'TVA : BE 1021.229.955': 'VAT: BE 1021.229.955',
  'Téléphone et WhatsApp :': 'Phone and WhatsApp:',
@@ -162,8 +170,8 @@ T = {
    'This website and its use are governed by Belgian law. In the event of a dispute, the courts of Liège have jurisdiction, without prejudice to the mandatory rules protecting consumers. A consumer may also contact the Consumer Mediation Service free of charge (',
  'Conditions générales': 'Terms and conditions',
  'de vente.': 'of sale.',
- "Les présentes conditions s'appliquent aux ventes, réservations, rachats et dépôts-ventes de montres conclus avec Machiavelli Trading SRL (Machiavelli Watches), Place des Combattants 11-13, 6852 Paliseul, BCE 1021.229.955, boutique sur rendez-vous Rue des Dominicains 15-17, 4000 Liège, +32 484 70 91 09,":
-   'These terms apply to sales, reservations, buybacks and consignments of watches concluded with Machiavelli Trading SRL (Machiavelli Watches), Place des Combattants 11-13, 6852 Paliseul, BCE 1021.229.955, boutique by appointment at Rue des Dominicains 15-17, 4000 Liège, +32 484 70 91 09,',
+ "Les présentes conditions s'appliquent aux ventes, réservations, rachats et dépôts-ventes de montres conclus avec Machiavelli Trading SRL (Machiavelli Watches), Place des Combattants 11-13, 6852 Paliseul, BCE 1021.229.955, boutique Rue des Dominicains 15-17, 4000 Liège, +32 484 70 91 09,":
+   'These terms apply to sales, reservations, buybacks and consignments of watches concluded with Machiavelli Trading SRL (Machiavelli Watches), Place des Combattants 11-13, 6852 Paliseul, BCE 1021.229.955, boutique at Rue des Dominicains 15-17, 4000 Liège, +32 484 70 91 09,',
  '. Les dispositions plus favorables que la loi accorde aux consommateurs prévalent toujours.': '. Any more favourable provisions granted to consumers by law always prevail.',
  '1. Les montres': '1. The watches',
  "Toutes les montres proposées sont des montres d'occasion, authentifiées par un expert avant leur mise en vente. Leurs caractéristiques principales (maison, modèle, référence, année, boîte et papiers, état) figurent sur leur fiche. Les photos représentent la pièce vendue ; les traces d'usage propres à une montre d'occasion ne constituent pas un défaut. Les offres sont valables dans la limite des pièces disponibles.":
@@ -180,8 +188,8 @@ T = {
  'Moyens de paiement acceptés : virement bancaire, carte bancaire, Bancontact et espèces. Conformément à la loi belge, un paiement en espèces est limité à 3.000 € par achat ; au-delà, le paiement s\'effectue par virement ou par carte. La montre reste la propriété de Machiavelli Watches jusqu\'au paiement complet du prix.':
    'Accepted payment methods: bank transfer, bank card, Bancontact and cash. In accordance with Belgian law, cash payments are limited to €3,000 per purchase; above that, payment is made by bank transfer or card. The watch remains the property of Machiavelli Watches until the price has been paid in full.',
  '5. Livraison': '5. Delivery',
- "La montre peut être retirée en boutique sur rendez-vous ou envoyée partout en Europe. Les frais d'envoi, communiqués avant la vente, sont à la charge de l'acheteur. Les envois se font par transporteur, avec suivi et assurance couvrant la valeur de la montre. Pour un consommateur, les risques lui sont transférés lorsqu'il prend physiquement possession de la montre. Pour un envoi hors de l'Union européenne, les éventuels droits de douane et taxes d'importation sont à la charge de l'acheteur.":
-   'The watch can be collected in the boutique by appointment or shipped anywhere in Europe. Shipping costs, communicated before the sale, are paid by the buyer. Shipments are made by carrier, tracked and insured for the value of the watch. For a consumer, risk passes when they take physical possession of the watch. For shipments outside the European Union, any customs duties and import taxes are paid by the buyer.',
+ "La montre peut être retirée en boutique ou envoyée partout en Europe. Les frais d'envoi, communiqués avant la vente, sont à la charge de l'acheteur. Les envois se font par transporteur, avec suivi et assurance couvrant la valeur de la montre. Pour un consommateur, les risques lui sont transférés lorsqu'il prend physiquement possession de la montre. Pour un envoi hors de l'Union européenne, les éventuels droits de douane et taxes d'importation sont à la charge de l'acheteur.":
+   'The watch can be collected in the boutique or shipped anywhere in Europe. Shipping costs, communicated before the sale, are paid by the buyer. Shipments are made by carrier, tracked and insured for the value of the watch. For a consumer, risk passes when they take physical possession of the watch. For shipments outside the European Union, any customs duties and import taxes are paid by the buyer.',
  '6. Garantie': '6. Warranty',
  "Les montres vendues sont des biens d'occasion : la garantie légale de conformité est limitée à 12 mois à compter de la livraison, durée expressément convenue avec l'acheteur avant la vente et mentionnée sur le bon de commande et la facture. Elle couvre les défauts de conformité existant à la livraison ; elle ne couvre pas l'usure normale, les dommages survenus après la livraison (chocs, chutes, contact avec l'eau au-delà de l'étanchéité garantie, ouverture ou réparation par un tiers), ni les défauts signalés à l'acheteur avant la vente.":
    'The watches sold are second-hand goods: the legal guarantee of conformity is limited to 12 months from delivery, a period expressly agreed with the buyer before the sale and stated on the order form and the invoice. It covers lack of conformity existing at delivery; it does not cover normal wear, damage occurring after delivery (impacts, falls, contact with water beyond the guaranteed water resistance, opening or repair by a third party), or defects disclosed to the buyer before the sale.',
