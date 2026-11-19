@@ -1069,7 +1069,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   #site .hall-stage { background: none; }
   #site .hall-stage > #corridor, #site .hall-stage > .whiteout, #site .hall-stage > .veil { -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,.6) 82%, rgba(0,0,0,.2) 92%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,.6) 82%, rgba(0,0,0,.2) 92%, transparent 100%); }
   .hall-copy, .hall .scroll-cue { z-index: 2; }
-  #site > .hall + .manifest::before { z-index: 3; }
+  #site > .hall + .manifest::before { display: none; }
+  #site .hall-stage::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: min(1360px, calc(100% - var(--g-l) - var(--g-r))); height: 1px; transform: translateX(-50%); z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(255,240,214,0), var(--glow-core) 12%, var(--glow-core) 88%, rgba(255,240,214,0)); box-shadow: 0 0 6px 0 rgba(255,217,160,.8), 0 0 22px 3px rgba(255,200,127,.22); }
   .manifest .vline .led-v, .values .v .led-v { will-change: transform; }
   #site .manifest > .wrap { position: relative; z-index: 1; }
   .dial .rail { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--glow-core); box-shadow: 0 0 6px 1px rgba(255,217,160,.85), 0 0 22px 4px rgba(255,200,127,.25); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.2,.7,.1,1); will-change: transform; }
@@ -1131,7 +1132,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   <!-- 5b · services condensés -->
   <section class="svc" id="services" aria-labelledby="svc-title">
     <div class="wrap">
-      <div class="svc-head"><span class="kicker">Nos services</span><h2 id="svc-title">Réglé comme <em>une horloge.</em></h2></div>
+      <div class="svc-head"><span class="kicker">Nos services</span><h2 id="svc-title">Votre montre, <em>entre de bonnes mains.</em></h2></div>
       <div class="svc-grid">
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
