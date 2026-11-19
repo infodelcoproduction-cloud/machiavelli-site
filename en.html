@@ -663,7 +663,8 @@ img, video { -webkit-touch-callout: none; -webkit-user-select: none; user-select
 .svc-grid { gap: clamp(48px, 5vw, 64px) clamp(40px, 4vw, 64px); padding: 12px; }
 .svc-col { position: relative; padding: clamp(34px, 3.2vw, 46px) clamp(26px, 2.6vw, 38px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; background: linear-gradient(160deg, rgba(58,56,53,.55), rgba(34,32,30,.72)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .svc-col .n { display: none; }
-.svc-col p { text-align: center; margin: 0 auto; }
+.svc-col p { text-align: center; margin: 0 auto; max-width: 25ch; }
+@media (min-width: 901px) and (max-width: 1180px) { .svc-col p { font-size: 15px; max-width: 24ch; } .svc-col { padding-left: 20px; padding-right: 20px; } }
 .svc-col .svc-ctas { margin-top: auto; padding-top: 10px; justify-content: center; }
 .svc-col h3 { font-size: clamp(32px, 2.7vw, 44px); font-weight: 400; }
 .svc-col p { color: var(--mute); }
@@ -1136,20 +1137,20 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
       <div class="svc-grid">
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
-          <h3>Sell your watch</h3>
-          <p>Consignment or immediate purchase: you choose the option that suits you.</p>
+          <h3>Sell<br>your watch</h3>
+          <p>Consignment or immediate purchase, whichever suits you best.</p>
           <div class="svc-ctas"><button class="lnk lit" type="button" data-form="sell">Offer my watch <span class="ar" aria-hidden="true">→</span></button></div>
         </article>
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
-          <h3>Buy your watch</h3>
-          <p>Choose from our stock, or let us find the piece you are missing.</p>
+          <h3>Buy<br>your watch</h3>
+          <p>Choose a piece from our stock, or let us search for the one you want.</p>
           <div class="svc-ctas"><a class="lnk lit" href="#stock" data-open-stock>View the stock <span class="ar" aria-hidden="true">→</span></a><button class="lnk" type="button" data-form="source">Source my watch <span class="ar" aria-hidden="true">→</span></button></div>
         </article>
         <article class="svc-col">
           <span class="ledbox" aria-hidden="true"></span>
-          <h3>Care for your watch</h3>
-          <p>Servicing, polishing and protective films, applied in collaboration with Chronoskin.</p>
+          <h3>Care for<br>your watch</h3>
+          <p>Servicing, polishing and protective films, in collaboration with Chronoskin.</p>
           <div class="svc-ctas"><a class="lnk lit" href="https://wa.me/32484709109?text=Hello%2C%20I%20would%20like%20information%20about%20servicing%20my%20watch." target="_blank" rel="noopener">Contact us <span class="ar" aria-hidden="true">→</span></a></div>
         </article>
       </div>
@@ -3259,7 +3260,8 @@ if (renderer) {
   }
   function frame() {
     requestAnimationFrame(frame);
-    const vis = scrollY < hall.offsetTop + hall.offsetHeight && document.getElementById('stock').hidden;
+    // on arrête de dessiner dès que la section suivante occupe plus d'un quart de l'écran (allège le passage vers « Qui sommes-nous »)
+    const vis = hall.offsetTop + hall.offsetHeight - scrollY > innerHeight * 0.75 && document.getElementById('stock').hidden;
     const t = targets();
     const k = reduce ? 1 : 0.42; // la caméra suit le défilement presque sans retard
     const moving = Math.abs(t.unlock - cur.unlock) > 0.0005 || Math.abs(t.z - cur.z) > 0.0005 || Math.abs(t.open - cur.open) > 0.0005 || Math.abs(t.mx - cur.mx) > 0.0005 || Math.abs(t.my - cur.my) > 0.0005;
