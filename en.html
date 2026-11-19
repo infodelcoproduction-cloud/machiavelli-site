@@ -29,8 +29,8 @@
   --hex: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='17.320' height='30' viewBox='0 0 17.320 30'><path d='M0.00,-10.00L8.66,-5.00L8.66,5.00L0.00,10.00L-8.66,5.00L-8.66,-5.00ZM17.32,-10.00L25.98,-5.00L25.98,5.00L17.32,10.00L8.66,5.00L8.66,-5.00ZM8.66,5.00L17.32,10.00L17.32,20.00L8.66,25.00L0.00,20.00L0.00,10.00ZM0.00,20.00L8.66,25.00L8.66,35.00L0.00,40.00L-8.66,35.00L-8.66,25.00ZM17.32,20.00L25.98,25.00L25.98,35.00L17.32,40.00L8.66,35.00L8.66,25.00Z' fill='none' stroke='%2321201E' stroke-width='3.4' stroke-linejoin='round'/><path d='M0.00,-10.00L8.66,-5.00L8.66,5.00L0.00,10.00L-8.66,5.00L-8.66,-5.00ZM17.32,-10.00L25.98,-5.00L25.98,5.00L17.32,10.00L8.66,5.00L8.66,-5.00ZM8.66,5.00L17.32,10.00L17.32,20.00L8.66,25.00L0.00,20.00L0.00,10.00ZM0.00,20.00L8.66,25.00L8.66,35.00L0.00,40.00L-8.66,35.00L-8.66,25.00ZM17.32,20.00L25.98,25.00L25.98,35.00L17.32,40.00L8.66,35.00L8.66,25.00Z' fill='none' stroke='%23FFE2B8' stroke-opacity='.22' stroke-width='.7' transform='translate(-.5 -.6)'/></svg>");
   --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, serif;
   --font-text: 'Alike', Georgia, 'Times New Roman', serif;
-  --g-l: max(clamp(28px, 6vw, 96px), env(safe-area-inset-left, 0px));
-  --g-r: max(clamp(28px, 6vw, 96px), env(safe-area-inset-right, 0px));
+  --g-l: max(clamp(22px, 4.2vw, 68px), env(safe-area-inset-left, 0px));
+  --g-r: max(clamp(22px, 4.2vw, 68px), env(safe-area-inset-right, 0px));
   --hh: 76px;
   --ease: cubic-bezier(.76,0,.24,1);
   color-scheme: dark;
@@ -462,11 +462,11 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 
 .scard .item { padding: 0 4px; }
 .scard .item + .item::before { content: none; }
-@media (max-width: 900px) { .shelves { gap: 44px 16px; } .sfr { margin: 7px; } .sfr .ledbox { inset: -7px; } .sfr .watch { --s: clamp(70px, 22vw, 110px); } }
+@media (max-width: 900px) { .stock .wrap { padding-left: max(14px, env(safe-area-inset-left, 0px)); padding-right: max(14px, env(safe-area-inset-right, 0px)); } .shelves { gap: 40px 10px; } .sfr { margin: 7px; } .sfr .ledbox { inset: -7px; } .sfr .watch { --s: clamp(70px, 22vw, 110px); } }
 .scard { text-decoration: none; color: inherit; }
 .scard .meta { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 0 4%; }
 .scard .ref { font-size: 12.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--glow); text-shadow: 0 0 12px rgba(255,200,127,.35); overflow-wrap: anywhere; }
-.scard .nm { font-family: var(--font-display); font-size: clamp(26px, 2.5vw, 38px); line-height: 1.08; width: 100%; overflow-wrap: anywhere; text-wrap: balance; }
+.scard .nm { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; font-family: var(--font-display); font-size: clamp(26px, 2.5vw, 38px); line-height: 1.08; width: 100%; overflow-wrap: anywhere; text-wrap: balance; }
 .scard .pr { font-family: var(--font-display); font-size: clamp(23px, 2vw, 30px); color: var(--mute); font-variant-numeric: tabular-nums; }
 @media (max-width: 900px) { .scard .nm { font-size: 24px; } .scard .pr { font-size: 21px; } .scard .ref { font-size: 11px; letter-spacing: .16em; } }
 
@@ -1019,7 +1019,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   .stock-tools { gap: 0 20px; margin-bottom: 36px; }
   .fields { width: 100%; gap: 16px; padding-bottom: 6px; }
   .fields input { flex: 1; width: auto; min-width: 0; }
-  .shelves { gap: 50px; }
+  .shelves { gap: 40px 10px; }
   .item { padding: 0 8px; }
   .item dl div { flex-direction: column; align-items: center; gap: 0; padding: 4px 0; }
   .item .dots { display: none; }
