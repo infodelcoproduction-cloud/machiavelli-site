@@ -404,6 +404,12 @@ body.entering .hall h1 .ln:nth-child(1) > span { transition-delay: .85s; }
 .stock-bar .row1 { height: var(--hh); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .stock-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 30px; padding: 0 0 14px; margin: -10px 0 48px; border-bottom: 1px solid rgba(255,240,214,.3); }
 .stock-bar .led { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; }
+.brands[hidden] { display: none !important; }
+.sortbtn { position: relative; }
+.sortbtn select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; }
+.sortbtn select option { background: #2a2826; color: #fff; }
+.stock-tools .fields { margin-left: auto; }
+.stock-tools .fields input { width: 270px; }
 .brands { display: flex; gap: 26px; overflow-x: auto; flex: 1 1 480px; min-width: 0; scrollbar-width: none; }
 .brands::-webkit-scrollbar { display: none; }
 .brands button { position: relative; flex: none; background: none; border: 0; cursor: pointer; padding: 12px 0; min-height: 44px; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--dim); white-space: nowrap; transition: color .3s; }
@@ -1018,7 +1024,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   .coords > div + div { box-shadow: 0 -1px 0 var(--hair); }
   .frames { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
   .stock-tools { gap: 0 20px; margin-bottom: 36px; }
-  .fields { width: 100%; gap: 16px; padding-bottom: 6px; }
+  .fields { width: 100%; gap: 16px; padding-bottom: 6px; margin-left: 0 !important; }
+  .stock-tools { row-gap: 14px; column-gap: 8px !important; } .stock-tools .favbtn { flex: 1 1 auto; justify-content: center; padding: 0 8px; gap: 6px; letter-spacing: .12em; font-size: 10px; white-space: nowrap; }
   .fields input { flex: 1; width: auto; min-width: 0; }
   .shelves { gap: 40px 10px; }
   .item { padding: 0 8px; }
@@ -1260,12 +1267,12 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
         <div><span class="kicker">Collection</span><h2 id="stock-title">Notre <em>stock.</em></h2></div>
       </div>
         <div class="row2 stock-tools">
-          <div class="brands" id="brands" role="group" aria-label="Filtrer par maison"></div>
+          <div class="brands" id="brands" role="group" aria-label="Filtrer par maison" hidden></div>
           <button class="favbtn" type="button" id="favbtn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3s-7.4-4.5-9.1-9.2C1.7 7.6 4 4.6 7.3 4.6c2 0 3.6 1.1 4.7 2.7 1.1-1.6 2.7-2.7 4.7-2.7 3.3 0 5.6 3 4.4 6.5-1.7 4.7-9.1 9.2-9.1 9.2z"/></svg>Mes favoris <span id="favn"></span></button>
           <button class="favbtn" type="button" id="fltbtn" aria-expanded="false" aria-controls="fpanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8.5V19l-4 1.5v-7z"/></svg>Filtrer <span id="fltn"></span></button>
+          <label class="favbtn sortbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M3.5 16.5 7 20l3.5-3.5M17 20V4m-3.5 3.5L17 4l3.5 3.5"/></svg>Trier<select id="sort" aria-label="Trier"><option value="new">Plus récentes</option><option value="asc">Prix croissant</option><option value="desc" selected>Prix décroissant</option></select></label>
           <div class="fields">
             <label for="q">Chercher</label><input id="q" type="search" placeholder="Chercher un modèle, une référence" autocomplete="off">
-            <label for="sort">Trier</label><select id="sort"><option value="new">Plus récentes</option><option value="asc">Prix croissant</option><option value="desc" selected>Prix décroissant</option></select>
           </div>
         </div>
       <div class="fpanel" id="fpanel" hidden>
