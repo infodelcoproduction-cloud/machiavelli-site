@@ -1837,7 +1837,25 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const STATIC = true;
   const photoURL = (id) => 'photos/' + id + '.jpg';
   const videoURL = (id) => 'videos/' + id + '.mp4';
-  const phHTML = (w, k) => (w.photos && w.photos.length ? `<img src="${photoURL(w.photos[0])}" alt="${esc(w.brand + ' ' + w.model)}" loading="lazy">` : watchHTML(w, k));
+  // vignettes légères (photos/t/, 540 px) pour les grilles, préchargées dès l'arrivée sur le site ; la fiche garde la photo pleine
+  const thumbURL = (id) => 'photos/t/' + id + '.jpg';
+  const phHTML = (w, k) => (w.photos && w.photos.length ? `<img src="${thumbURL(w.photos[0])}" alt="${esc(w.brand + ' ' + w.model)}" decoding="async" onerror="this.onerror=null;this.src='${photoURL(w.photos[0])}'">` : watchHTML(w, k));
+  const PRE = new Map();
+  const idle = (f, t) => ('requestIdleCallback' in window ? window.requestIdleCallback(f, { timeout: t * 4 }) : setTimeout(f, t));
+  function preloadThumbs(list) {
+    const ids = list.filter((w) => w.photos && w.photos.length).map((w) => w.photos[0]).filter((id) => !PRE.has(id));
+    const load = (id) => { const im = new Image(); im.decoding = 'async'; im.onerror = () => { im.onerror = null; im.src = photoURL(id); }; im.src = thumbURL(id); PRE.set(id, im); return im; };
+    ids.slice(0, 16).forEach(load);
+    const rest = ids.slice(16); let i = 0;
+    const next = () => { const end = Math.min(rest.length, i + 8); for (; i < end; i++) load(rest[i]); if (i < rest.length) idle(next, 120); };
+    if (rest.length) idle(next, 300);
+  }
+  // attend que les premières vignettes visibles soient prêtes (900 ms au plus) avant d'afficher le stock
+  function thumbsReady(list, n) {
+    const ims = list.slice(0, n).filter((w) => w.photos && w.photos.length).map((w) => PRE.get(w.photos[0])).filter(Boolean);
+    const all = Promise.all(ims.map((im) => (im.complete ? Promise.resolve() : (im.decode ? im.decode().catch(() => {}) : new Promise((r) => { im.onload = im.onerror = r; })))));
+    return Promise.race([all, new Promise((r) => setTimeout(r, 900))]);
+  }
   // ---------- favoris (gardés dans ce navigateur), badge nouveauté, montres similaires ----------
   const FAVK = 'mw-favoris'; let FAV = [], favOnly = false;
   try { FAV = JSON.parse(localStorage.getItem(FAVK) || '[]') || []; } catch (e) {}
@@ -1933,6 +1951,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     stockReady = true;
     S = [...list].sort((a, b) => (b.added || 0) - (a.added || 0));
     S.forEach((w, i) => (w.i = i));
+    preloadThumbs(S);
     paintBrands(); paintLatest();
     if (!view.hidden) render();
     const m = location.hash.match(/^#montre-([A-Za-z0-9_-]+)$/);
@@ -1995,6 +2014,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const lightout = document.createElement('div'); lightout.className = 'lightout'; lightout.setAttribute('aria-hidden', 'true'); body.appendChild(lightout);
   lightout.addEventListener('animationend', () => lightout.classList.remove('on', 'soft'));
   function showStock(anim = true) {
+    if (!showStock.ok) { thumbsReady(S, mq.matches ? 6 : 12).then(() => { showStock.ok = true; showStock(anim); showStock.ok = false; }); return; }
     const go = () => { savedY = scrollY; render(); view.hidden = false; document.documentElement.classList.remove('hall-lock'); view.scrollTop = 0; body.style.top = `-${savedY}px`; body.classList.add('locked'); view.classList.remove('arrive', 'arrive-light'); void view.offsetWidth; if (anim && !reduce) view.classList.add('arrive'); };
     if (fromLight) {
       // fin du couloir : on garde exactement le même blanc que la lumière du fond, on prépare le stock dessous,
