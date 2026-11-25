@@ -1902,7 +1902,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     if (!best.length) return '';
     return `<section class="similar" aria-label="Montres similaires"><span class="kicker">Dans le stock</span><h3>Montres <em>similaires.</em></h3><div class="frames">${best.map((x, k) => `<a class="frame scard" href="#montre-${esc(x.id)}" style="--k:${k}" aria-label="${esc(x.brand + ' ' + x.model)}, voir la fiche"><span class="fr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(x, k)}</span>${newHTML(x)}${heartHTML(x.id)}<span class="ledbox" aria-hidden="true"></span></span>${metaHTML(x)}</a>`).join('')}</div></section>`;
   }
-  const metaHTML = (w) => `<span class="meta"><span class="ref">${esc(w.ref || 'Réf. à préciser')}</span><span class="nm">${esc(w.brand)} ${esc(w.model)}</span><span class="pr">${w.price === null ? 'Réservée' : euro(w.price)}</span></span>`;
+  const metaHTML = (w) => `<span class="meta"><span class="ref">${esc(w.ref || w.model)}</span><span class="nm">${esc(w.brand)} ${esc(w.model)}</span><span class="pr">${w.price === null ? 'Réservée' : euro(w.price)}</span></span>`;
   syncSeconds(document);
 
   // manifeste mot à mot
