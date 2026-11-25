@@ -2222,8 +2222,9 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const wa = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Bonjour, je suis intéressé par la ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''}.\n${shareBase()}m/${encodeURIComponent(w.id)}.html`);
     const wv = 'https://wa.me/32484709109?text=' + encodeURIComponent(`Bonjour, je souhaite prendre rendez-vous pour voir la ${w.brand} ${w.model}${w.ref ? ' (réf. ' + w.ref + ')' : ''}.\n${shareBase()}m/${encodeURIComponent(w.id)}.html`);
     document.getElementById('piece-no').textContent = w.brand;
-    curPhotos = w.photos || [];
-    curVideos = (w.videos && w.videos.length ? w.videos : (w.video ? [w.video] : [])).filter((v) => v && v.web);
+    // page produit : uniquement la première photo et la première vidéo de chaque montre
+    curPhotos = (w.photos || []).slice(0, 1);
+    curVideos = (w.videos && w.videos.length ? w.videos : (w.video ? [w.video] : [])).filter((v) => v && v.web).slice(0, 1);
     const watch = watchHTML(w, 0);
     const base = curPhotos.length || VIEWS.length, n = base + curVideos.length;
     const thumb = (i) => (i >= base ? ((v) => (v.poster ? `<img src="${photoURL(v.poster)}" alt="">` : `<video src="${videoURL(v.web)}#t=0.5" muted playsinline preload="metadata"></video>`))(curVideos[i - base]) + '<span class="vplay" aria-hidden="true"></span>' : curPhotos.length ? `<img src="${photoURL(curPhotos[i])}" alt="">` : watch);
@@ -2436,7 +2437,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     const x = d.data() || {};
     return { id: d.id, brand: x.brand || '', model: x.model || '', ref: x.ref || '', price: typeof x.price === 'number' ? x.price : null,
       year: x.year || 'Non communiquée', set: x.set || 'Non communiqué', cond: x.cond || 'Non communiqué', photos: Array.isArray(x.photos) ? x.photos : [],
-      info: x.info || '', added: x.added || 0, deleted: !!x.deleted, deletedAt: x.deletedAt || 0 };
+      info: x.info || '', added: x.added || 0, deleted: !!x.deleted || !!x.hidden, deletedAt: x.deletedAt || 0 };
   }
   const pv = (w) => (w.price === null ? -1 : w.price);
   const SORTS = { new: (a, b) => b.added - a.added, old: (a, b) => a.added - b.added, pdesc: (a, b) => pv(b) - pv(a), pasc: (a, b) => pv(a) - pv(b),
