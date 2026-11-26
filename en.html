@@ -2282,6 +2282,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
           <div><dt>Brand</dt><span class="dots"></span><dd>${esc(w.brand)}</dd></div>
           <div><dt>Model</dt><span class="dots"></span><dd>${esc(w.model)}</dd></div>
           <div><dt>Reference</dt><span class="dots"></span><dd>${esc(w.ref || 'To be confirmed')}</dd></div>
+          ${w.dia ? `<div><dt>Diameter</dt><span class="dots"></span><dd>${esc(w.dia)}</dd></div>` : ''}
           <div><dt>Year</dt><span class="dots"></span><dd>${esc(w.year)}</dd></div>
           <div><dt>Box &amp; papers</dt><span class="dots"></span><dd>${esc(w.set)}</dd></div>
           <div><dt>Condition</dt><span class="dots"></span><dd>${esc(w.cond)}</dd></div>
@@ -2604,6 +2605,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     // bas : prix, fiche à pointillés, site
     const rows = [];
     if (w.ref) rows.push(['Référence', w.ref]);
+    if (w.dia) rows.push(['Diamètre', w.dia]);
     if (w.year && w.year !== 'Non communiquée') rows.push(['Année', w.year]);
     if (w.set && w.set !== 'Non communiqué') rows.push(['Boîte & papiers', setShort(w.set)]);
     if (w.cond && w.cond !== 'Non communiqué') rows.push(['État', w.cond]);
