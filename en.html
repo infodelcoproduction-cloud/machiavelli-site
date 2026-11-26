@@ -2473,7 +2473,7 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
   const thumbOf = (w) => (w.photos && w.photos.length ? `<img src="${photoURL(w.photos[0])}" alt="" loading="lazy">` : watchHTML(w, 0));
   function docToWatch(d) {
     const x = d.data() || {};
-    return { id: d.id, brand: x.brand || '', model: x.model || '', ref: x.ref || '', price: typeof x.price === 'number' ? x.price : null,
+    return { id: d.id, brand: x.brand || '', model: x.model || '', ref: x.ref || '', dia: x.dia || '', price: typeof x.price === 'number' ? x.price : null,
       year: x.year || 'Non communiquée', set: x.set || 'Non communiqué', cond: x.cond || 'Non communiqué', photos: Array.isArray(x.photos) ? x.photos : [],
       info: x.info || '', added: x.added || 0, deleted: !!x.deleted || !!x.hidden, deletedAt: x.deletedAt || 0 };
   }
