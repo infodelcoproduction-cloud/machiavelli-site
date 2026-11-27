@@ -1919,7 +1919,8 @@ html.hall-lock, html.hall-lock body { overflow: hidden; overscroll-behavior: non
     if (!best.length) return '';
     return `<section class="similar" aria-label="Similar watches"><span class="kicker">In stock</span><h3>Similar <em>watches.</em></h3><div class="frames">${best.map((x, k) => `<a class="frame scard" href="#montre-${esc(x.id)}" style="--k:${k}" aria-label="${esc(x.brand + ' ' + x.model)}, view details"><span class="fr"><span class="hc" aria-hidden="true"></span><span class="ph">${phHTML(x, k)}</span>${newHTML(x)}${heartHTML(x.id)}<span class="ledbox" aria-hidden="true"></span></span>${metaHTML(x)}</a>`).join('')}</div></section>`;
   }
-  const metaHTML = (w) => `<span class="meta"><span class="ref">${esc(w.ref || w.model)}</span><span class="nm">${esc(w.brand)} ${esc(w.model)}</span><span class="pr">${w.price === null ? 'Reserved' : euro(w.price)}</span></span>`;
+  const cardName = (w) => { const m = String(w.model || ''), n = String(w.dia || '').replace(/\s*mm$/i, ''); return (/rolex/i.test(w.brand || '') && n && /(Datejust|Oyster Perpetual)/i.test(m) && !new RegExp('\\b' + n.replace(',', '[.,]') + '\\b').test(m)) ? m.replace(/(Datejust|Oyster Perpetual)/i, '$1 ' + n) : m; };
+  const metaHTML = (w) => `<span class="meta"><span class="ref">${esc(w.ref || w.model)}</span><span class="nm">${esc(w.brand)} ${esc(cardName(w))}</span><span class="pr">${w.price === null ? 'Reserved' : euro(w.price)}</span></span>`;
   syncSeconds(document);
 
   // manifeste mot à mot
