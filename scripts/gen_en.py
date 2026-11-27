@@ -429,8 +429,8 @@ def main():
     # 4. en-tête, langue, sélecteur
     s = s.replace('<html lang="fr"', '<html lang="en"', 1)
     s = s.replace('Machiavelli Watches — Montres de luxe d\'occasion à Liège', 'Machiavelli Watches — Pre-owned luxury watches in Liège')
-    s = s.replace("Machiavelli Watches, Liège : vente, rachat, dépôt-vente et sourcing de montres de luxe d'occasion. Chaque pièce est authentifiée par un expert.",
-                  'Machiavelli Watches, Liège: sale, buyback, consignment and sourcing of pre-owned luxury watches. Every piece is authenticated by an expert.')
+    s = s.replace("Montres de luxe d'occasion à Liège : Rolex, Audemars Piguet, Patek Philippe. Achat, vente, dépôt-vente, authentification et entretien par un expert.",
+                  'Pre-owned luxury watches in Liège: Rolex, Audemars Piguet, Patek Philippe. Buying, selling, consignment, authentication and servicing by an expert.')
     s = s.replace('Vente, rachat, dépôt-vente et sourcing de montres de luxe. Chaque pièce authentifiée par un expert.',
                   'Sale, buyback, consignment and sourcing of luxury watches. Every piece authenticated by an expert.')
     s = s.replace('content="fr_BE"', 'content="en_GB"')
