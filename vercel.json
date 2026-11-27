@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/catalogue.html", "destination": "/#stock", "permanent": true },
+    { "source": "/a-propos.html", "destination": "/#maison", "permanent": true },
+    { "source": "/our-socials.html", "destination": "/#contact", "permanent": true },
+    { "source": "/vendez-vos-montres.html", "destination": "/#services", "permanent": true }
+  ]
+}
