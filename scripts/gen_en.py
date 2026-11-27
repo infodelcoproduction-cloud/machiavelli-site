@@ -55,6 +55,7 @@ T = {
  'rendez-vous.': 'appointment.',
  'Du mardi au samedi, de 10 h à 18 h, Rue des Dominicains 15-17 à Liège. Fermé le dimanche et le lundi.': 'Tuesday to Saturday, 10 am to 6 pm, Rue des Dominicains 15-17 in Liège. Closed on Sunday and Monday.',
  'Fermé': 'Closed',
+ 'En travaux': 'Under renovation',
  '10 h – 18 h': '10 am – 6 pm',
  'Horaires d’ouverture': 'Opening hours',
  'Lundi': 'Monday', 'Mardi': 'Tuesday', 'Mercredi': 'Wednesday', 'Jeudi': 'Thursday', 'Vendredi': 'Friday', 'Samedi': 'Saturday', 'Dimanche': 'Sunday',
