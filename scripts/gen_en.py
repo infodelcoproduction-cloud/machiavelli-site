@@ -53,7 +53,7 @@ T = {
  'Voir toutes nos montres': 'View all our watches',
  'Prenez': 'Book an',
  'rendez-vous.': 'appointment.',
- 'Du mardi au samedi, de 10 h à 18 h, Rue des Dominicains 15-17 à Liège. Fermé le dimanche et le lundi.': 'Tuesday to Saturday, 10 am to 6 pm, Rue des Dominicains 15-17 in Liège. Closed on Sunday and Monday.',
+ 'Du mercredi au samedi, Rue des Dominicains 15-17 à Liège. Mardi sur rendez-vous, lundi et dimanche fermé.': 'Wednesday to Saturday, Rue des Dominicains 15-17 in Liège. Tuesday by appointment, Monday and Sunday closed.',
  'Fermé': 'Closed',
  '10 h – 18 h': '10 am – 6 pm',
  'Horaires d’ouverture': 'Opening hours',
@@ -159,7 +159,7 @@ T = {
  'Le site machiavelliwatches.com est édité par Machiavelli Trading SRL, société à responsabilité limitée de droit belge, qui exploite la marque Machiavelli Watches.':
    'The machiavelliwatches.com website is published by Machiavelli Trading SRL, a Belgian private limited company, which operates the Machiavelli Watches brand.',
  'Siège social : Place des Combattants 11-13, 6852 Paliseul (Belgique)': 'Registered office: Place des Combattants 11-13, 6852 Paliseul (Belgium)',
- 'Boutique : Rue des Dominicains 15-17, 4000 Liège, ouverte du mardi au samedi de 10 h à 18 h, fermée le dimanche et le lundi': 'Boutique: Rue des Dominicains 15-17, 4000 Liège, open Tuesday to Saturday from 10 am to 6 pm, closed on Sunday and Monday',
+ 'Boutique : Rue des Dominicains 15-17, 4000 Liège, ouverte du mercredi au jeudi de 10 h à 18 h, le vendredi et le samedi de 11 h à 20 h, le mardi sur rendez-vous, le lundi et le dimanche fermé': 'Boutique: Rue des Dominicains 15-17, 4000 Liège, open Wednesday and Thursday 10 am to 6 pm, Friday and Saturday 11 am to 8 pm, Tuesday by appointment, Monday and Sunday closed',
  "Numéro d'entreprise (BCE) : 1021.229.955 · RPM Liège": 'Company number (BCE): 1021.229.955 · RPM Liège',
  'TVA : BE 1021.229.955': 'VAT: BE 1021.229.955',
  'Téléphone et WhatsApp :': 'Phone and WhatsApp:',
